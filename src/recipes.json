@@ -3,20 +3,23 @@
         {
             "name": "Instant-pot Lentil Stew",
             "ingredients": [
-                "1 Tbsp olive oil",
-                "1 carrot, peeled and chopped",
-                "1 onion, chopped or diced",
-                "1 lb? beef chunks or stew meet",
-                "1-3 cloves garlic, minced",
-                "---",
-                "1 Russet Potato, peeled and chopped",
-                "1 box beef broth (about 4 cups)",
-                "1.5 cups brown lentils",
-                "14.5oz can Fire Roasted Tomatoes, diced",
-                "1 tsp salt (or less)",
-                "1 tsp Oregano",
-                "1/2 tsp Paprika",
-                "1/4 tsp Cumin"
+                [
+                    "1 Tbsp olive oil",
+                    "1 carrot, peeled and chopped",
+                    "1 onion, chopped or diced",
+                    "1 lb? beef chunks or stew meet",
+                    "1-3 cloves garlic, minced"
+                ],
+                [
+                    "1 Russet Potato, peeled and chopped",
+                    "1 box beef broth (about 4 cups)",
+                    "1.5 cups brown lentils",
+                    "14.5oz can Fire Roasted Tomatoes, diced",
+                    "1 tsp salt (or less)",
+                    "1 tsp Oregano",
+                    "1/2 tsp Paprika",
+                    "1/4 tsp Cumin"
+                ]
             ],
             "instructions": [
                 "Set instant pot to sauté and add olive oil",
@@ -31,18 +34,22 @@
         {
             "name": "Instant-pot Creamy Sausage Pasta",
             "ingredients": [
-                "1 Tbsp olive oil",
-                "1 yellow onion, diced",
-                "1 lb mild italian sausage, ground",
-                "1-2 cloves garlic, minced",
-                "---",
-                "1 box Noodles (elbows or shells work well)",
-                "1-3 cups water (enough to just barely cover the noodles)",
-                "1 jar Pasta Sauce (enough to cover the top layer of the noodles)",
-                "1 Tbsp Italian Seasoning",
-                "---",
-                "1-2 cups heavy cream",
-                "parmesan cheese, as a topping"
+                [
+                    "1 Tbsp olive oil",
+                    "1 yellow onion, diced",
+                    "1 lb mild italian sausage, ground",
+                    "1-2 cloves garlic, minced"
+                ],
+                [
+                    "1 box Noodles (elbows or shells work well)",
+                    "1-3 cups water (enough to just barely cover the noodles)",
+                    "1 jar Pasta Sauce (enough to cover the top layer of the noodles)",
+                    "1 Tbsp Italian Seasoning"
+                ],
+                [
+                    "1-2 cups heavy cream",
+                    "parmesan cheese, as a topping"
+                ]
             ],
             "instructions": [
                 "Set instant pot to sauté and add olive oil",

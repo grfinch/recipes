@@ -1,0 +1,120 @@
+.li_no_bullets {
+    list-style-type: none;
+}
+
+.label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+:root {
+    /* shared interactive blue used for number hover and checkbox hover */
+    --interactive-blue: rgb(99, 102, 241);
+    --checked-green: rgb(47, 133, 90);
+    --checked-fill: rgba(99, 102, 241, 0.12);
+    --muted: #666;
+}
+
+.checkbox {
+    /* custom checkbox so we can color the check independently */
+    width: 1rem;
+    height: 1rem;
+    display: inline-grid;
+    place-items: center;
+    cursor: pointer;
+    /* reset native appearance */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    border: 2px solid var(--muted);
+    border-radius: 4px;
+    background: transparent;
+    transition: border-color 120ms ease, background-color 120ms ease, transform 120ms ease;
+}
+
+/* remove visual checkmark; use a subtle filled background instead */
+.checkbox::after {
+    /* removed: we intentionally don't display a textual checkmark */
+    content: none;
+}
+
+.checkbox:checked {
+    background-color: var(--checked-fill);
+    border-color: var(--interactive-blue);
+}
+
+/* keyboard focus: change border/background color instead of outline */
+.checkbox:focus-visible {
+    outline: none;
+    box-shadow: none;
+    border-color: var(--interactive-blue);
+    background-color: rgba(99, 102, 241, 0.06);
+}
+
+/* strike-through when checked, but not the check-mark*/
+.done span:not(.numberBtn) {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
+
+.divider {
+    color: #666
+}
+
+/* small numbered button that becomes a check when active */
+.numberBtn {
+    min-width: 2rem;
+    display: inline-grid;
+    place-items: center;
+    background: transparent;
+    border: none;
+    color: var(--muted, #666);
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 120ms ease, color 120ms ease;
+}
+
+.numberChecked {
+    /* always green when checked */
+    color: var(--checked-green);
+}
+
+/* hover/focus glow to indicate interactivity */
+.numberBtn:hover,
+.numberBtn:focus-visible,
+.label:hover .numberBtn,
+.label:focus-visible .numberBtn {
+    /* lift and color change; no shadow */
+    transform: translateY(-2px);
+    color: var(--interactive-blue);
+}
+
+/* when hovering the row, tint the native checkbox to the interactive blue */
+.label:hover .checkbox,
+.label:focus-visible .checkbox {
+    /* tint the checkbox border to the interactive blue on hover/focus of the row */
+    border-color: var(--interactive-blue);
+}
+
+.label:hover .checkbox:checked,
+.label:focus-visible .checkbox:checked {
+    /* keep checkmark green but show the box border as blue when hovered */
+    border-color: var(--interactive-blue);
+}
+
+/* show a focus ring around the number only when the row is focused via keyboard */
+.label:focus {
+    outline: none;
+}
+
+.label:focus-visible .numberBtn {
+    /* keyboard-only focus ring around the number */
+    outline: 3px solid rgba(99, 102, 241, 0.5);
+    border-radius: 6px;
+    transition: outline 120ms ease;
+}
+
+
+/* TODO: fix the fill color of the checkboxes and don't let the checkmark turn green when hovered. */

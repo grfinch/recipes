@@ -15,7 +15,6 @@ function App() {
   return (
     <>
       <Recipe recipe={recipesData.recipes[randomIndex]} />
-      <h1>hi</h1>
     </>
   )
 }

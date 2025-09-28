@@ -29,6 +29,10 @@
                 "Add remaining ingredients and stir",
                 "Pressure cook on high for 12-13 minutes",
                 "Quick release pressure after time is up"
+            ],
+            "notes": [
+                "a note for testing",
+                "another note for testing"
             ]
         },
         {
@@ -62,6 +66,10 @@
                 "Pressure cook on high for half the cook time recommended on the noodle box (usually 3 minutes)",
                 "Quick release pressure after time is up",
                 "Stir in heavy cream and top with parmesan cheese"
+            ],
+            "notes": [
+                "a note for testing",
+                "another note for testing"
             ]
         }
     ]

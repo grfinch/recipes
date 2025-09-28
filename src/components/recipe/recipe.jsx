@@ -1,13 +1,13 @@
-import styles from './recipe.module.css';
-import Ingredients from "../ingredients/ingredients";
-import Instructions from "../instructions/instructions";
 
-export default function Recipe({ recipe: { name, ingredients, instructions } }) {
+import RecipeSection from './recipeSection';
+
+export default function Recipe({ recipe: { name, ingredients, instructions, notes } }) {
     return (
         <>
             <h1>{name}</h1>
-            <Ingredients ingredients={ingredients} />
-            <Instructions instructions={instructions} />
+            <RecipeSection header={"Ingredients"} listItems={ingredients} ordered={false} clickable={true} />
+            <RecipeSection header={"Instructions"} listItems={instructions} ordered={true} clickable={true} />
+            <RecipeSection header={"Notes"} listItems={notes} ordered={false} clickable={false} />
         </>
     )
 

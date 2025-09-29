@@ -1,5 +1,33 @@
+:root {
+    --interactive-blue: rgb(99, 102, 241);
+    --checked-border: #666;
+    --checked-fill: rgba(99, 102, 241, 0.25);
+    --checked-green: rgb(47, 133, 90);
+    --muted: #666;
+}
+
+.divider {
+    color: #666
+}
+
 .li_no_bullets {
     list-style-type: none;
+}
+
+.withBullet {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.withBullet::before {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    background: var(--muted);
+    border-radius: 50%;
+    flex: 0 0 auto;
+    margin-left: 0.25rem;
 }
 
 .label {
@@ -9,13 +37,7 @@
     cursor: pointer;
 }
 
-:root {
-    /* shared interactive blue used for number hover and checkbox hover */
-    --interactive-blue: rgb(99, 102, 241);
-    --checked-green: rgb(47, 133, 90);
-    --checked-fill: rgba(99, 102, 241, 0.12);
-    --muted: #666;
-}
+/* | Checkbox Styles | */
 
 .checkbox {
     /* custom checkbox so we can color the check independently */
@@ -34,15 +56,9 @@
     transition: border-color 120ms ease, background-color 120ms ease, transform 120ms ease;
 }
 
-/* remove visual checkmark; use a subtle filled background instead */
-.checkbox::after {
-    /* removed: we intentionally don't display a textual checkmark */
-    content: none;
-}
-
 .checkbox:checked {
     background-color: var(--checked-fill);
-    border-color: var(--interactive-blue);
+    border-color: var(--checked-border);
 }
 
 /* keyboard focus: change border/background color instead of outline */
@@ -51,44 +67,6 @@
     box-shadow: none;
     border-color: var(--interactive-blue);
     background-color: rgba(99, 102, 241, 0.06);
-}
-
-/* strike-through when checked, but not the check-mark*/
-.done span:not(.numberBtn) {
-    text-decoration: line-through;
-    opacity: 0.7;
-}
-
-.divider {
-    color: #666
-}
-
-/* small numbered button that becomes a check when active */
-.numberBtn {
-    min-width: 2rem;
-    display: inline-grid;
-    place-items: center;
-    background: transparent;
-    border: none;
-    color: var(--muted, #666);
-    cursor: pointer;
-    font-weight: 600;
-    transition: transform 120ms ease, color 120ms ease;
-}
-
-.numberChecked {
-    /* always green when checked */
-    color: var(--checked-green);
-}
-
-/* hover/focus glow to indicate interactivity */
-.numberBtn:hover,
-.numberBtn:focus-visible,
-.label:hover .numberBtn,
-.label:focus-visible .numberBtn {
-    /* lift and color change; no shadow */
-    transform: translateY(-2px);
-    color: var(--interactive-blue);
 }
 
 /* when hovering the row, tint the native checkbox to the interactive blue */
@@ -104,17 +82,55 @@
     border-color: var(--interactive-blue);
 }
 
-/* show a focus ring around the number only when the row is focused via keyboard */
-.label:focus {
-    outline: none;
+/* | END Checkbox Styles | */
+
+/* | number/check-mark Styles | */
+
+/* item index number that becomes a check when active */
+.numberBtn {
+    min-width: 2rem;
+    display: inline-grid;
+    place-items: center;
+    background: transparent;
+    border: none;
+    color: var(--muted, #666);
+    cursor: pointer;
+    font-weight: 600;
+    transition: transform 120ms ease, color 120ms ease;
 }
 
+.checkMark {
+    color: var(--checked-green);
+}
+
+/* hover/focus glow to indicate interactivity */
+.numberBtn:hover,
+.numberBtn:focus-visible,
+.label:hover .numberBtn,
 .label:focus-visible .numberBtn {
-    /* keyboard-only focus ring around the number */
+    transform: translateY(-2px);
+    color: var(--interactive-blue);
+}
+
+/* keyboard-only focus ring around the number */
+.label:focus-visible .numberBtn {
     outline: 3px solid rgba(99, 102, 241, 0.5);
     border-radius: 6px;
     transition: outline 120ms ease;
 }
 
+/* | END number/check-mark Styles | */
+
+
+/* show a focus ring around the number only, not the row of text */
+.label:focus {
+    outline: none;
+}
+
+/* strike-through when checked, but not the check-mark*/
+.checked span:not(.numberBtn) {
+    text-decoration: line-through;
+    opacity: 0.7;
+}
 
 /* TODO: fix the fill color of the checkboxes and don't let the checkmark turn green when hovered. */

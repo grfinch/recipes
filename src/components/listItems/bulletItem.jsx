@@ -4,7 +4,7 @@
 export default function BulletItem({ item }) {
 
     return (
-        <li>
+        <li className="withBullet">
             {item}
         </li>
     );

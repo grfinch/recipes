@@ -18,8 +18,8 @@ export default function NumberedClickableItem({ item, index }) {
     }
 
     return (
-        <li className={`${styles.li_no_bullets} ${checked ? styles.done : ''}`}>
-            <div
+        <li className={`${styles.li_no_bullets} ${checked ? styles.checked : ''}`}>
+            <div //TODO: change this to a label?
                 role="button"
                 tabIndex={0}
                 aria-pressed={!!checked}
@@ -28,7 +28,7 @@ export default function NumberedClickableItem({ item, index }) {
                 onKeyDown={onKeyDown}
                 className={styles.label}
             >
-                <span className={`${styles.numberBtn} ${checked ? styles.numberChecked : ''}`}>
+                <span className={`${styles.numberBtn} ${checked ? styles.checkMark : ''}`}>
                     {checked ? '✓' : `${index}.`}
                 </span>
                 <span>{item}</span>

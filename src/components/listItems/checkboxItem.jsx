@@ -10,7 +10,7 @@ export default function CheckboxItem({ item }) {
     }
 
     return (
-        <li className={`${styles.li_no_bullets} ${checked ? styles.done : ''}`}>
+        <li className={`${styles.li_no_bullets} ${checked ? styles.checked : ''}`}>
             <label className={styles.label}>
                 <input
                     type="checkbox"

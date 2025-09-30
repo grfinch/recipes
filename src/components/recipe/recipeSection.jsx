@@ -14,37 +14,31 @@ export default function RecipeSection({ header, listItems, ordered, clickable })
         ? listItems
         : (Array.isArray(listItems) ? splitFlatNotes(listItems) : [])
 
-    return (
-        <>
-            <h2>{header}</h2>
-            <ul className={styles.list_no_bullets}>
-                {
-                    groups.map((group, gIdx) => {
-                        const items = group.map((item, iIdx) => {
-                            const key = `${item}-${gIdx}`
-                            return (
-                                !ordered && clickable ?
-                                    <CheckboxItem key={key} item={item} />
-                                    :
-                                    ordered && clickable ?
-                                        <NumberedClickableItem key={key} item={item} index={iIdx + 1} />
-                                        :
-                                        <BulletItem key={key} item={item} />
-                            )
-                        })
+    function renderListItem(item, iIdx, gIdx) {
+        const key = `${item}-${gIdx}`;
+        if (!ordered && clickable) return <CheckboxItem key={key} item={item} />;
+        if (ordered && clickable) return <NumberedClickableItem key={key} item={item} index={iIdx + 1} />;
+        return <BulletItem key={key} item={item} />;
+    }
 
-                        if (gIdx < groups.length - 1) {
-                            items.push(
-                                <Divider key={`divider-${gIdx}`} />
-                            )
-                        }
+    return (<>
+        <h2>{header}</h2>
+        <ul className={styles.list_no_bullets}>
+            {groups.map((group, gIdx) => {
+                const items = group.map(
+                    (item, iIdx) => renderListItem(item, iIdx, gIdx)
+                );
 
-                        return items
-                    })
+                if (gIdx < groups.length - 1) {
+                    items.push(
+                        <Divider key={`divider-${gIdx}`} />
+                    )
                 }
-            </ul>
-        </>
-    )
+
+                return items
+            })}
+        </ul>
+    </>)
 }
 
 function splitFlatNotes(flat) {

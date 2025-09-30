@@ -2,17 +2,19 @@
     "recipes": [
         {
             "name": "Instant-pot Lentil Stew",
+            "course": "Main",
+            "cookingMethod": "Instant-pot",
             "ingredients": [
                 [
                     "1 Tbsp olive oil",
                     "1 carrot, peeled and chopped",
                     "1 onion, chopped or diced",
-                    "1 lb? beef chunks or stew meet",
+                    "1 lb beef chunks or stew meet",
                     "1-3 cloves garlic, minced"
                 ],
                 [
-                    "1 Russet Potato, peeled and chopped",
                     "1 box beef broth (about 4 cups)",
+                    "1 Russet Potato, peeled and chopped",
                     "1.5 cups brown lentils",
                     "14.5oz can Fire Roasted Tomatoes, diced",
                     "1 tsp salt (or less)",
@@ -24,19 +26,22 @@
             "instructions": [
                 "Set instant pot to sauté and add olive oil",
                 "add carrots, then onion. sauté for 2-3 minutes (can sauté at the same time as browning the beef)",
-                "Add beef chunks and brown on all sides",
+                "Add beef chunks and brown on all sides *",
                 "Add garlic and sauté for 30 seconds",
+                "---",
+                "Add beef broth and scrape the bottom of the pot to deglaze",
                 "Add remaining ingredients and stir",
-                "Pressure cook on high for 12-13 minutes",
+                "Pressure cook on high for 10-11 minutes",
                 "Quick release pressure after time is up"
             ],
             "notes": [
-                "a note for testing",
-                "another note for testing"
+                "Cook longer for more tender meat, but also more mushy vegetables."
             ]
         },
         {
             "name": "Instant-pot Creamy Sausage Pasta",
+            "course": "Main",
+            "cookingMethod": "Instant-pot",
             "ingredients": [
                 [
                     "1 Tbsp olive oil",
@@ -67,10 +72,7 @@
                 "Quick release pressure after time is up",
                 "Stir in heavy cream and top with parmesan cheese"
             ],
-            "notes": [
-                "a note for testing",
-                "another note for testing"
-            ]
+            "notes": []
         }
     ]
 }

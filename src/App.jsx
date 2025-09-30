@@ -2,19 +2,24 @@ import { useState } from 'react'
 import './App.css'
 import recipesData from './recipes.json'
 import Recipe from './components/recipe/recipe';
+import SearchBox from './components/search/SearchBox';
 
 function App() {
+  const allRecipes = Array.isArray(recipesData?.recipes) ? recipesData.recipes : [];
 
-
-  console.log(recipesData);
-
-  //random number generator between 0 and length of recipes array -1
-  const randomIndex = Math.floor(Math.random() * recipesData.recipes.length);
-  console.log("random index: ", randomIndex);
+  // random initial selection
+  const initialIndex = Math.floor(Math.random() * allRecipes.length);
+  const [selected, setSelected] = useState(allRecipes[initialIndex] || null);
 
   return (
     <>
-      <Recipe recipe={recipesData.recipes[randomIndex]} />
+      <header>
+        <SearchBox recipes={allRecipes} onSelect={r => setSelected(r)} />
+      </header>
+
+      <main>
+        <Recipe recipe={selected} />
+      </main>
     </>
   )
 }

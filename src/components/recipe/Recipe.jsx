@@ -1,5 +1,5 @@
 
-import RecipeSection from './recipeSection';
+import RecipeSection from './RecipeSection';
 
 export default function Recipe({ recipe: { name, ingredients, instructions, notes } }) {
     return (

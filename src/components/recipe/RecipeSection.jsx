@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
 import styles from './recipe.module.css';
-import CheckboxItem from '../listItems/checkboxItem';
-import Divider from '../listItems/divider';
-import BulletItem from '../listItems/bulletItem';
-import NumberedClickableItem from '../listItems/numberedClickableItem';
+import CheckboxItem from '../listItems/CheckboxItem';
+import Divider from '../listItems/Divider';
+import BulletItem from '../listItems/BulletItem';
+import NumberedClickableItem from '../listItems/NumberedClickableItem';
 
 export default function RecipeSection({ header, listItems, ordered, clickable }) {
     // Normalize listItems into an array of groups (array of arrays).

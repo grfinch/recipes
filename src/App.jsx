@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import recipesData from './recipes.json'
-import Recipe from './components/recipe/recipe';
+import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
 
 function App() {

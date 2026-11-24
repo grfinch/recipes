@@ -13,7 +13,7 @@ There is no test framework set up yet.
 
 ## Deployment
 
-Pushing to `main` deploys to GitHub Pages through `.github/workflows/deploy.yml` (Node 20, `npm install` then `npm run build`). `vite.config.js` sets `base: '/recipes'`, so the app is served from a sub-path. Asset URLs and any future routing must respect that base: use `import.meta.env.BASE_URL` or imported assets rather than root-absolute paths.
+Pushing to `main` deploys to GitHub Pages through `.github/workflows/deploy.yml` (Node 20, `npm ci` then `npm run build`). `vite.config.js` sets `base: '/recipes'`, so the app is served from a sub-path. Asset URLs and any future routing must respect that base: use `import.meta.env.BASE_URL` or imported assets rather than root-absolute paths.
 
 ## Architecture
 
@@ -41,4 +41,4 @@ The "checked" state on each item is local component state and is not persisted.
 - Component styles use CSS Modules (`*.module.css` imported as `styles`). Global styles live in `src/index.css` and `src/App.css`.
 - Component files are in PascalCase and match their default export (`RecipeSection.jsx` → `RecipeSection`). Hooks are camelCase (`useDebounce.js`). Folders and CSS modules are camelCase.
 - Import paths must match the file name's case exactly. Windows ignores case, but the Linux CI build doesn't, so a mismatch passes locally and breaks the deploy.
-- ESLint `no-unused-vars` ignores identifiers that start with an uppercase letter or `_`.
+- ESLint uses `eslint-plugin-react`, so components used only in JSX count as used. `no-unused-vars` exempts only `_`-prefixed names, and `react/prop-types` is off (React 19 ignores propTypes).

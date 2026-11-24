@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import styles from './recipe.module.css';
 import CheckboxItem from '../listItems/CheckboxItem';
 import Divider from '../listItems/Divider';

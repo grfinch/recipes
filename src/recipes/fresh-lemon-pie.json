@@ -1,0 +1,31 @@
+{
+  "id": "fresh-lemon-pie",
+  "name": "Fresh Lemon Pie",
+  "course": "Dessert",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "4 cups hot water (not boiling but hot)",
+        "2 cups sugar",
+        "1 cup cornstarch",
+        "4 eggs",
+        "Juice from 3-4 lemons",
+        "1/2 tsp salt",
+        "2 Tbsp butter",
+        "Lemon extract (optional)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix sugar and cornstarch. Gradually add to hot water and cook and stir but do not boil for 10 minutes.",
+        "In a blender, combine eggs and lemon juice.",
+        "Add half of hot mixture to eggs and juice while blender is running.",
+        "Pour back in pan and cook 4 to 5 minutes on medium.",
+        "Add salt, butter and lemon extract (optional)."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "cranberry-salsa-dip",
+  "name": "Cranberry Salsa Dip",
+  "course": "Appetizer",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "1 pkg fresh cranberries, rinsed and drained",
+        "2 jalapeño peppers, seeded",
+        "3 green onions",
+        "1/4 bunch cilantro",
+        "1 cup sugar",
+        "Juice of 1 lime",
+        "2 bricks cream cheese",
+        "Crackers, for serving"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Pulse cranberries, peppers, onions, and cilantro in food processor.",
+        "Add sugar and lime and combine.",
+        "Let it sit and sugar out (30 minutes).",
+        "Serve over cream cheese with crackers."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "fettuccine-alfredo",
+  "name": "Fettuccine Alfredo",
+  "course": "Dinner",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "1 can cream of mushroom soup",
+        "1 pkg (8 oz) cream cheese",
+        "1 1/2 cups milk",
+        "1/2 Parmesan cheese",
+        "2 garlic cloves, minced",
+        "1 Tbsp dried parsley",
+        "Cooked fettuccine noodles"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix all ingredients together and bring to a simmer.",
+        "Add additional milk if needed.",
+        "Serve over cooked fettuccine noodles."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Can add chicken, mushrooms, or broccoli for variety."]
+    }
+  ]
+}

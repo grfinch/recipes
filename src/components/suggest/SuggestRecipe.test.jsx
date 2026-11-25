@@ -3,6 +3,8 @@ import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import SuggestRecipe from './SuggestRecipe';
 
+// Tests pass endpoint and turnstileSiteKey explicitly, so a developer's .env.local (which
+// Vitest also loads) can't change what they test.
 const ENDPOINT = 'https://relay.test/suggest';
 const DRAFT_KEY = 'recipes:suggestion-draft';
 
@@ -37,7 +39,7 @@ describe('SuggestRecipe', () => {
   });
 
   it('labels every field, marks the required ones, and offers the real categories', () => {
-    render(<SuggestRecipe endpoint={ENDPOINT} />);
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     expect(screen.getByRole('textbox', { name: 'Recipe name' })).toBeRequired();
     expect(screen.getByRole('textbox', { name: 'Ingredients' })).toBeRequired();
     expect(screen.getByRole('textbox', { name: 'Ingredients' })).toHaveAccessibleDescription(
@@ -62,7 +64,7 @@ describe('SuggestRecipe', () => {
   it('shows no errors until Send, then a focused summary that links to each field', async () => {
     const fetch = mockFetch();
     const user = userEvent.setup();
-    render(<SuggestRecipe endpoint={ENDPOINT} />);
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     const name = screen.getByRole('textbox', { name: 'Recipe name' });
     expect(name).not.toHaveAttribute('aria-invalid');
 
@@ -88,7 +90,7 @@ describe('SuggestRecipe', () => {
   it('sends the suggestion, thanks the visitor, and clears the draft', async () => {
     const fetch = mockFetch();
     const user = userEvent.setup();
-    render(<SuggestRecipe endpoint={ENDPOINT} />);
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     await fillRequired(user);
     await user.selectOptions(screen.getByRole('combobox', { name: /^Course/ }), 'Soup');
     await user.type(screen.getByRole('textbox', { name: /^Your name/ }), '  Sam  ');
@@ -128,7 +130,7 @@ describe('SuggestRecipe', () => {
   it('keeps everything and offers a copy when sending fails', async () => {
     mockFetch(() => new Response('nope', { status: 502 }));
     const user = userEvent.setup(); // also installs a fake clipboard
-    render(<SuggestRecipe endpoint={ENDPOINT} />);
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     await fillRequired(user);
     await user.click(screen.getByRole('button', { name: 'Send suggestion' }));
 
@@ -146,7 +148,7 @@ describe('SuggestRecipe', () => {
   it('treats a network error like a failed send', async () => {
     mockFetch(() => Promise.reject(new TypeError('Failed to fetch')));
     const user = userEvent.setup();
-    render(<SuggestRecipe endpoint={ENDPOINT} />);
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     await fillRequired(user);
     await user.click(screen.getByRole('button', { name: 'Send suggestion' }));
     expect(await screen.findByRole('alert')).toHaveTextContent("Your recipe wasn't sent.");
@@ -154,19 +156,19 @@ describe('SuggestRecipe', () => {
 
   it('brings back an unsent draft, and ignores a corrupt one', () => {
     localStorage.setItem(DRAFT_KEY, JSON.stringify({ name: 'Half-typed Pie', extra: 'x' }));
-    const { unmount } = render(<SuggestRecipe endpoint={ENDPOINT} />);
+    const { unmount } = render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     expect(screen.getByRole('textbox', { name: 'Recipe name' })).toHaveValue('Half-typed Pie');
     unmount();
 
     localStorage.setItem(DRAFT_KEY, '{not json');
-    render(<SuggestRecipe endpoint={ENDPOINT} />);
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     expect(screen.getByRole('textbox', { name: 'Recipe name' })).toHaveValue('');
   });
 
   it('rejects text over the limit with a clear message', async () => {
     mockFetch();
     const user = userEvent.setup();
-    render(<SuggestRecipe endpoint={ENDPOINT} />);
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     await fillRequired(user);
     const name = screen.getByRole('textbox', { name: 'Recipe name' });
     await user.clear(name);

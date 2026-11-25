@@ -1,29 +1,20 @@
-.li_no_bullets {
-  list-style-type: none;
-}
-
-/* layout for label containing checkbox and text */
-.label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  cursor: pointer;
+/* Keeps lines a comfortable length on wide screens */
+.recipe {
+  max-width: 48rem;
 }
 
 .list_no_bullets {
-  padding-left: 1rem;
+  margin: 0;
+  padding-left: 0.25rem;
 }
 
 .resetButton {
-  padding: 0.25rem 0.75rem;
+  min-height: 44px;
+  padding: 0.25rem 1rem;
   border: 1px solid var(--muted);
   background: transparent;
   color: inherit;
   cursor: pointer;
-}
-
-.resetButton:hover {
-  border-color: var(--interactive-blue);
 }
 
 .resetButton:focus-visible {
@@ -31,8 +22,18 @@
   outline-offset: 2px;
 }
 
-/* Groups within a section (e.g. "For the sauce"). Later groups get space above them, and
-   untitled ones also get a dashed rule, so a new group is visible without a heading. */
+@media (hover: hover) {
+  .resetButton:hover {
+    border-color: var(--interactive-blue);
+  }
+}
+
+.section h2 {
+  margin: 1.5rem 0 0.25rem;
+}
+
+/* Groups within a section (e.g. "Sauté", "Pressure cook"). Later groups get space above
+   them, and untitled ones also get a rule, so a new group is visible without a heading. */
 .group + .group,
 .group + .untitledGroup,
 .untitledGroup + .group,
@@ -42,11 +43,11 @@
 
 .untitledGroup + .untitledGroup,
 .group + .untitledGroup {
-  padding-top: 0.25rem;
-  border-top: 1px dashed var(--muted);
+  padding-top: 0.5rem;
+  border-top: 1px dashed var(--line);
 }
 
 .groupTitle {
-  margin: 0.5rem 0 0.25rem 1rem;
+  margin: 0.5rem 0 0.125rem 0.25rem;
   font-size: 1.05rem;
 }

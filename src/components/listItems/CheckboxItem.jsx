@@ -5,7 +5,7 @@ export default function CheckboxItem({ item, checked, onToggle }) {
     <li className={`${styles.li_no_bullets} ${checked ? styles.checked : ''}`}>
       <label className={styles.label}>
         <input type="checkbox" checked={checked} onChange={onToggle} className={styles.checkbox} />
-        <span>{item}</span>
+        <span className={styles.itemText}>{item}</span>
       </label>
     </li>
   );

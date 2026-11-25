@@ -6,7 +6,7 @@ export default function Recipe({ recipe: { id, name, ingredients, instructions, 
   const [checked, toggle, reset] = useCheckedItems(id);
 
   return (
-    <>
+    <div className={styles.recipe}>
       <h1 tabIndex={-1}>{name}</h1>
       <button type="button" onClick={reset} className={styles.resetButton}>
         Reset checklist
@@ -30,6 +30,6 @@ export default function Recipe({ recipe: { id, name, ingredients, instructions, 
       {notes?.length > 0 ? (
         <RecipeSection header={'Notes'} groups={notes} ordered={false} clickable={false} />
       ) : null}
-    </>
+    </div>
   );
 }

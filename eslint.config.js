@@ -49,9 +49,9 @@ export default defineConfig([
     },
   },
 
-  // Tooling that runs in Node: config files and the Claude hook
+  // Tooling that runs in Node: config files, scripts/, and the Claude hook
   {
-    files: ['*.config.js', '.claude/**/*.mjs'],
+    files: ['*.config.js', 'scripts/**/*.mjs', '.claude/**/*.mjs'],
     languageOptions: { globals: globals.node },
   },
 

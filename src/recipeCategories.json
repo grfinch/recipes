@@ -1,0 +1,12 @@
+{
+  "courses": ["Breakfast", "Main", "Side", "Soup", "Salad", "Dessert", "Snack", "Drink"],
+  "cookingMethods": [
+    "Instant-pot",
+    "Oven",
+    "Stovetop",
+    "Slow cooker",
+    "Grill",
+    "Air fryer",
+    "No-cook"
+  ]
+}

@@ -11,6 +11,14 @@
   margin: 0;
 }
 
+/* The links side by side, wrapping on narrow screens */
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 1rem;
+}
+
 /* A standalone link, so it gets at least a 24px target (WCAG 2.2 target size). Body text size,
    in the link color, so it doesn't read as part of the muted copyright line. */
 .link {

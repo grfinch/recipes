@@ -5,7 +5,7 @@
   "cookingMethod": "Instant-pot",
   "ingredients": [
     {
-      "title": "Chicken",
+      "title": "Instant pot",
       "items": [
         "8-12 chicken thighs",
         "1 bottle teriyaki sauce, enough to cover the chicken",
@@ -13,13 +13,13 @@
       ]
     },
     {
-      "title": "Rice",
+      "title": "Rice cooker",
       "items": ["1-3 cups rice, Jasmine rice preferred"]
     }
   ],
   "instructions": [
     {
-      "title": "Chicken",
+      "title": "Instant pot",
       "items": [
         "Add chicken thighs to the instant pot",
         "Add teriyaki sauce to cover the chicken",
@@ -29,7 +29,7 @@
       ]
     },
     {
-      "title": "Rice",
+      "title": "Rice cooker",
       "items": [
         "After the chicken has begun cooking in the instant pot, make rice in a rice cooker"
       ]

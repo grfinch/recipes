@@ -56,7 +56,7 @@ npm run dev   # opens http://localhost:5173/recipes/ in your browser; Ctrl+C to 
 npm test      # Vitest + jsdom
 ```
 
-From Git Bash, `cd /C/...` first. See Gotchas.
+Use `npm test`, not `npx vitest`, which fails every test on Windows when the folder path starts with a lowercase `c:`.
 
 ## Gotchas
 
@@ -70,6 +70,6 @@ From Git Bash, `cd /C/...` first. See Gotchas.
 ## Troubleshooting
 
 - **`TypeError: path.lastIndexOf is not a function` from `page.screenshot`**: the path was a `URL` object. Use `shot('name.png')`, which returns a string.
-- **Vitest: `failed to find the current suite`**: the shell's working directory has a lowercase drive letter (`c:\`, the Git Bash default here). Run from `/C/...`, and delete `node_modules/.vite` and `node_modules/.vitest-cache` if it keeps failing.
+- **Vitest: `failed to find the current suite`**: Vitest was run directly (`npx vitest`) from a lowercase `c:\` path. Use `npm test` instead.
 - **PowerShell: `npm.ps1 cannot be loaded because running scripts is disabled`**: Windows execution policy. Use `npm.cmd`, or run `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` once. That's the user's decision.
 - **`npm warn install-scripts ... esbuild`** on `npm ci`: npm on Node 26 skips install scripts until they're approved. The build and dev server work without it.

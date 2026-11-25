@@ -1,6 +1,6 @@
 # Suggestion relay
 
-A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/suggest` page and opens a GitHub issue labeled `recipe-suggestion`. The site is static, so this is its only server-side piece. It runs on Cloudflare's free tier.
+A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/suggest` page and opens a GitHub issue labeled `recipe-suggestion`. It also receives suggested changes to an existing recipe (a fix, an improvement, or a tip) from a recipe's "Suggest a change" link, and opens an issue labeled `recipe-change`. The site is static, so this is its only server-side piece. It runs on Cloudflare's free tier.
 
 ```text
 #/suggest form ──POST──▶ this Worker ──▶ GitHub issue (recipe-suggestion)
@@ -8,12 +8,16 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
                                             ▼
                          .github/workflows/recipe-suggestion.yml
                          Claude + add-recipe skill (unattended) ──▶ draft PR, or questions
+
+#/suggest-change form ──POST──▶ this Worker ──▶ GitHub issue (recipe-change)
+                                                  you edit the recipe by hand
 ```
 
 ## What it checks
 
 - **Origin:** the request must come from a page listed in `ALLOWED_ORIGINS` (`wrangler.toml`).
-- **Size and fields:** JSON only, 40 KB at most. Fields and limits come from `src/utils/suggestion.js`, the same file the page uses.
+- **Size and fields:** JSON only, 40 KB at most. Fields and limits come from `src/utils/suggestion.js` (new recipes) and `src/utils/recipeChange.js` (changes, sent with `type: "change"`), the same files the pages use. Any other `type` is refused.
+- **Recipe id:** a change names its recipe by id only, and the id must look like a recipe file's name (lowercase letters, digits and dashes). That is the only visitor text outside a code fence: it goes in the issue title and a link to `src/recipes/<id>.json`.
 - **Bots:**
   - A filled honeypot field gets a fake success and opens no issue.
   - Turnstile must pass. With no secret set, every request fails.
@@ -57,6 +61,7 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
    gh label create make-recipe-pr   --color 1D76DB --description "Have Claude draft a PR for this suggestion"
    gh label create needs-info       --color FBCA04 --description "Claude needs answers before drafting"
    gh label create pr-opened        --color 5319E7 --description "A draft PR exists for this suggestion"
+   gh label create recipe-change    --color C5DEF5 --description "A change to a recipe, suggested from the website"
    ```
 
 `CLAUDE_CODE_OAUTH_TOKEN`, which the workflow uses, is already set for `claude.yml`.
@@ -70,6 +75,12 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
    - **Needs info:** Claude comments its questions and labels the issue `needs-info`. Answer in a comment; only your comments are passed back to Claude. Then add `make-recipe-pr` again.
    - **Rejected** (not a recipe, spam): Claude comments why and closes the issue.
    - **Failed:** the issue gets a link to the run, and the label is removed so you can retry.
+
+## Handling a suggested change
+
+A `recipe-change` issue links to the recipe's file and says what kind of change it is. No workflow runs on it. If it's a good change, edit the recipe (or ask Claude to, in a session of your own) and put `Closes #<issue>` in the PR. If it's spam, close it.
+
+The site sends changes only after this Worker knows about them. **Deploy the Worker (`npx wrangler deploy`) before the site change that added the form**, or every change suggestion fails with "wasn't sent".
 
 ## Local development
 

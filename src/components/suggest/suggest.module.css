@@ -188,3 +188,16 @@ select.control option {
 .honeypot {
   display: none;
 }
+
+/* "Back to <recipe>" above the change form, like the one on All recipes. 44px tap target. */
+.back {
+  margin: 0;
+}
+
+.back a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  margin-top: 0.5rem;
+  font-weight: 600;
+}

@@ -3,14 +3,21 @@ import './App.css';
 import allRecipes from './recipes/index.js';
 import BrowseRecipes from './components/browse/BrowseRecipes';
 import SiteFooter from './components/footer/SiteFooter';
+import PickRecipe from './components/pick/PickRecipe';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
+import SuggestChange from './components/suggest/SuggestChange';
 import SuggestRecipe from './components/suggest/SuggestRecipe';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
 import { BROWSE_HASH, SUGGEST_HASH, hashFor, hashForView, viewFromHash } from './utils/recipeHash';
+import { NO_CHOICES } from './utils/recipePick';
 
 const SITE_TITLE = "Twig's Cook Book";
-const PAGE_TITLES = { browse: 'All recipes', suggest: 'Suggest a recipe' };
+const PAGE_TITLES = {
+  browse: 'All recipes',
+  suggest: 'Suggest a recipe',
+  pick: 'Pick a recipe for me',
+};
 
 function randomRecipeView() {
   const recipe = allRecipes[Math.floor(Math.random() * allRecipes.length)];
@@ -28,7 +35,8 @@ function sameView(a, b) {
 }
 
 function App() {
-  // view: { page: 'browse', course?, method? }, { page: 'suggest' }, or { page: 'recipe', recipe };
+  // view: { page: 'browse', course?, method? }, { page: 'suggest' }, { page: 'pick' },
+  // { page: 'change', recipe }, or { page: 'recipe', recipe };
   // null only when there are no recipes.
   // The page in the URL hash, else a random recipe. The function form runs only on first render.
   const [view, setView] = useState(() => viewFromHash(allRecipes) ?? randomRecipeView());
@@ -40,6 +48,10 @@ function App() {
   const [lastRecipe, setLastRecipe] = useState(view?.page === 'recipe' ? view.recipe : null);
   if (view?.page === 'recipe' && view.recipe !== lastRecipe) setLastRecipe(view.recipe);
   const returnTo = view?.page === 'browse' ? lastRecipe : null;
+
+  // The Pick for me page's choices and pick. Kept here rather than in the page, so opening the
+  // picked recipe and coming Back shows the same choices and pick.
+  const [pickChoices, setPickChoices] = useState(NO_CHOICES);
 
   // Back/forward, header and browse links, and edited links change the hash: show that page.
   useEffect(() => {
@@ -58,7 +70,12 @@ function App() {
     if (!view) return;
     const hash = hashForView(view);
     if (window.location.hash !== hash) window.history.replaceState(null, '', hash);
-    const pageTitle = view.page === 'recipe' ? view.recipe.name : PAGE_TITLES[view.page];
+    const pageTitle =
+      view.page === 'recipe'
+        ? view.recipe.name
+        : view.page === 'change'
+          ? `Suggest a change to ${view.recipe.name}`
+          : PAGE_TITLES[view.page];
     document.title = `${pageTitle} | ${SITE_TITLE}`;
   }, [view]);
 
@@ -127,6 +144,11 @@ function App() {
           />
         ) : view?.page === 'suggest' ? (
           <SuggestRecipe />
+        ) : view?.page === 'pick' ? (
+          <PickRecipe recipes={allRecipes} choices={pickChoices} onChoicesChange={setPickChoices} />
+        ) : view?.page === 'change' ? (
+          // key: another recipe's change page starts from that recipe's own draft
+          <SuggestChange key={view.recipe.id} recipe={view.recipe} />
         ) : view ? (
           // key: a new recipe remounts, so its own saved checklist loads
           <Recipe key={view.recipe.id} recipe={view.recipe} />

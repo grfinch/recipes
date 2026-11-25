@@ -261,7 +261,7 @@ describe('Suggest a recipe', () => {
     window.history.replaceState(null, '', '#/browse');
     render(<App />);
     const footerLink = within(screen.getByRole('contentinfo')).getByRole('link', {
-      name: 'Suggest a recipe',
+      name: 'Submit a new recipe',
     });
     expect(footerLink).toHaveAttribute('href', '#/suggest');
     expect(footerLink).not.toHaveAttribute('aria-current');
@@ -277,12 +277,12 @@ describe('Suggest a recipe', () => {
     const user = userEvent.setup();
     render(<App />);
     const footer = () => within(screen.getByRole('contentinfo'));
-    await user.click(footer().getByRole('link', { name: 'Suggest a recipe' }));
+    await user.click(footer().getByRole('link', { name: 'Submit a new recipe' }));
     const heading = await screen.findByRole('heading', { level: 1, name: 'Suggest a recipe' });
     expect(window.location.hash).toBe('#/suggest');
     expect(document.title).toBe("Suggest a recipe | Twig's Cook Book");
     expect(heading).toHaveFocus();
-    expect(footer().getByRole('link', { name: 'Suggest a recipe' })).toHaveAttribute(
+    expect(footer().getByRole('link', { name: 'Submit a new recipe' })).toHaveAttribute(
       'aria-current',
       'page',
     );
@@ -341,5 +341,35 @@ describe('Getting back from All recipes', () => {
     render(<App />);
     expect(screen.queryByRole('link', { name: /^Back to/ })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'All recipes' })).toHaveAttribute('href', '#/browse');
+  });
+});
+
+describe('Suggest a change', () => {
+  it('links from each recipe to its own change page, with a title, focus, and a way back', async () => {
+    window.history.replaceState(null, '', '#/apple-crisp');
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(
+      within(screen.getByRole('main')).getByRole('link', { name: 'Suggest a change' }),
+    );
+
+    const heading = await screen.findByRole('heading', {
+      level: 1,
+      name: 'Suggest a change to Apple Crisp',
+    });
+    expect(heading).toHaveFocus();
+    expect(window.location.hash).toBe('#/suggest-change?recipe=apple-crisp');
+    expect(document.title).toBe("Suggest a change to Apple Crisp | Twig's Cook Book");
+
+    await user.click(screen.getByRole('link', { name: 'Back to Apple Crisp' }));
+    expect(await screen.findByRole('heading', { level: 1, name: 'Apple Crisp' })).toHaveFocus();
+  });
+
+  it('shows a recipe instead of a change page for a recipe that does not exist', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    window.history.replaceState(null, '', '#/suggest-change?recipe=nope');
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1, name: 'Lentil Stew' })).toBeVisible();
+    expect(window.location.hash).toBe('#/lentil-stew');
   });
 });

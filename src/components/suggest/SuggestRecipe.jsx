@@ -3,19 +3,21 @@ import { flushSync } from 'react-dom';
 import categories from '../../recipeCategories.json';
 import useTurnstile from '../../hooks/useTurnstile';
 import { BROWSE_HASH } from '../../utils/recipeHash';
+import sendToRelay from '../../utils/sendToRelay';
 import {
   EMPTY_SUGGESTION,
+  ISSUES_URL,
   FIELDS,
   cleanSuggestion,
   suggestionAsText,
   validateSuggestion,
 } from '../../utils/suggestion';
+import ErrorSummary from './ErrorSummary';
+import Field from './Field';
 import styles from './suggest.module.css';
 
 // What a visitor has typed but not sent, so leaving the page (or a reload) doesn't lose it
 const DRAFT_KEY = 'recipes:suggestion-draft';
-const ISSUES_URL = 'https://github.com/grfinch/recipes/issues/new';
-const SEND_TIMEOUT_MS = 20000;
 
 function loadDraft() {
   try {
@@ -167,17 +169,11 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent }) {
     setStatus('sending');
     setCopied(false);
     try {
-      const response = await fetch(endpoint, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          ...cleanSuggestion(values),
-          website: honeypotRef.current?.value ?? '', // honeypot: people never see it
-          turnstileToken: checkToken,
-        }),
-        signal: AbortSignal.timeout?.(SEND_TIMEOUT_MS),
+      await sendToRelay(endpoint, {
+        ...cleanSuggestion(values),
+        website: honeypotRef.current?.value ?? '', // honeypot: people never see it
+        turnstileToken: checkToken,
       });
-      if (!response.ok) throw new Error(`Relay answered ${response.status}`);
       saveDraft(EMPTY_SUGGESTION);
       onSent();
     } catch {
@@ -210,32 +206,7 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent }) {
         Have a recipe we should try? Send it over. Rough notes are fine; we&apos;ll tidy it up.
       </p>
 
-      {problems.length > 0 ? (
-        // Focused on a failed Send, so screen readers read the list
-        <div ref={summaryRef} tabIndex={-1} className={styles.summary}>
-          <h2 className={styles.summaryTitle}>
-            {problems.length === 1
-              ? 'There is 1 problem with your suggestion'
-              : `There are ${problems.length} problems with your suggestion`}
-          </h2>
-          <ul className={styles.summaryList}>
-            {problems.map(({ id, message }) => (
-              <li key={id}>
-                {/* Focus the field without changing the URL hash, which App uses for pages */}
-                <a
-                  href={`#${id}`}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    document.getElementById(id)?.focus();
-                  }}
-                >
-                  {message}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ) : null}
+      <ErrorSummary problems={problems} summaryRef={summaryRef} noun="suggestion" />
 
       <form className={styles.form} onSubmit={handleSubmit} noValidate>
         <Field id={idFor('name')} label="Recipe name" error={fieldErrors.name}>
@@ -374,44 +345,6 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent }) {
           </span>
         </div>
       </form>
-    </div>
-  );
-}
-
-// A label, optional hint, and inline error above one control. children gets the props that tie
-// the control to them: id, aria-describedby, aria-invalid, and the shared class.
-function Field({ id, label, optional = false, hint, error, children }) {
-  const hintId = hint ? `${id}-hint` : null;
-  const errorId = error ? `${id}-error` : null;
-  const describedBy = [errorId, hintId].filter(Boolean).join(' ');
-  return (
-    <div className={styles.field}>
-      <label htmlFor={id} className={styles.label}>
-        {label}
-        {optional ? (
-          <>
-            {' '}
-            <span className={styles.optional}>(optional)</span>
-          </>
-        ) : null}
-      </label>
-      {hint ? (
-        <p id={hintId} className={styles.hint}>
-          {hint}
-        </p>
-      ) : null}
-      {error ? (
-        <p id={errorId} className={styles.error}>
-          <span aria-hidden="true">⚠ </span>
-          {error}
-        </p>
-      ) : null}
-      {children({
-        id,
-        className: styles.control,
-        'aria-describedby': describedBy || undefined,
-        'aria-invalid': error ? true : undefined,
-      })}
     </div>
   );
 }

@@ -1,0 +1,51 @@
+{
+  "id": "salisbury-steak",
+  "name": "Salisbury Steak",
+  "course": "Dinner",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Patties",
+      "items": [
+        "1 lb lean ground beef",
+        "1 egg, lightly beaten",
+        "1/3 cup chopped onion",
+        "1/4 cup crushed saltines",
+        "2 Tbsp milk",
+        "1 Tbsp prepared horseradish",
+        "1/4 tsp salt, optional",
+        "1/8 tsp pepper"
+      ]
+    },
+    {
+      "title": "Gravy",
+      "items": [
+        "1/2 pkg onion soup mix",
+        "1 can cream of mushroom soup",
+        "1-1/4 to 1-1/2 cups sliced fresh mushrooms",
+        "1 cup milk"
+      ]
+    },
+    {
+      "items": ["Hot cooked noodles, optional"]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Patties",
+      "items": [
+        "In a large bowl, combine the beef, egg white, onion, crumbs, milk, horseradish, salt if desired, and pepper.",
+        "Shape into four oval patties.",
+        "In a large skillet cook patties over medium heat for 5-6 minutes on each side or until a meat thermometer reads 160°F and meat is no longer pink.",
+        "Remove patties and keep warm."
+      ]
+    },
+    {
+      "title": "Gravy",
+      "items": [
+        "Add soup mix, soup, mushrooms and milk to skillet; heat for 3-5 minutes.",
+        "Serve over patties and noodles if desired."
+      ]
+    }
+  ]
+}

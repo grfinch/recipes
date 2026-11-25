@@ -218,7 +218,7 @@ function ChangeForm({ recipe, endpoint, turnstileSiteKey, headingRef, backLink, 
         Suggest a change to {recipe.name}
       </h1>
       <p className={styles.intro}>
-        Spotted a mistake, or found a way to make it better? Tell us what to change.
+        Spotted a mistake, or found a way to make it better? Suggest a change.
       </p>
 
       <ErrorSummary problems={problems} summaryRef={summaryRef} noun="suggestion" />

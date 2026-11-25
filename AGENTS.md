@@ -26,12 +26,14 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 **Data flow:** `App.jsx` imports `recipes.json`, picks a random recipe as the initial selection, and holds the `selected` state. `SearchBox` receives every recipe and calls `onSelect`. `Recipe` renders the selected one.
 
 **Recipe schema** (`src/recipes.json` → `{ recipes: [...] }`):
+
 - `name`, `course`, `cookingMethod`: strings. `course` and `cookingMethod` are not used in the UI yet.
 - `ingredients`: an **array of arrays** of strings. Each inner array is a group, and groups are separated by a divider when rendered.
 - `instructions`: a flat array of strings.
 - `notes`: an optional flat array of strings.
 
 **Rendering lists:** `RecipeSection` normalizes `listItems` into groups. It accepts either nested arrays or a flat array, where any string starting with `-` acts as a group separator. It picks the item component from the `ordered` and `clickable` props:
+
 - `CheckboxItem`: unordered and clickable (ingredients)
 - `NumberedClickableItem`: ordered and clickable (instructions)
 - `BulletItem`: not clickable (notes)
@@ -50,6 +52,7 @@ The "checked" state on each item is local component state and is not persisted.
 ## Accessibility
 
 Always follow accessibility best practices (WCAG 2.2 AA) in every change:
+
 - Prefer semantic HTML (`<button>`, `<label>`, `<input type="checkbox">`, lists, headings) over `div`s with ARIA roles.
 - Accessible names should come from visible text. `aria-label` replaces an element's content for screen readers, so use it only when there is no visible text.
 - Everything clickable must work from the keyboard, with a visible focus style. When UI closes (overlays, dialogs), move focus somewhere sensible.

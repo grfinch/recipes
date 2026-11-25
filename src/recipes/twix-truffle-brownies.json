@@ -1,0 +1,75 @@
+{
+  "id": "twix-truffle-brownies",
+  "name": "Twix Truffle Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Brownies",
+      "items": [
+        "1 cup butter, softened",
+        "2 cups sugar",
+        "1 tsp vanilla",
+        "4 eggs",
+        "1/2 tsp salt",
+        "1/2 cup unsweetened cocoa powder",
+        "1 1/3 cups flour"
+      ]
+    },
+    {
+      "title": "Shortbread truffle layer",
+      "items": [
+        "1 box (10 oz) Lorna Doone's shortbread cookies",
+        "6 oz cream cheese, softened",
+        "1/2 cup sugar"
+      ]
+    },
+    {
+      "title": "Caramel layer",
+      "items": ["1 bag (14 oz) caramel cubes, unwrapped", "2 Tbsp milk"]
+    },
+    {
+      "title": "Chocolate layer",
+      "items": [
+        "1 1/2 cups milk chocolate chips",
+        "1/2 cup semi-sweet milk chocolate chips",
+        "1 Tbsp shortening"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Brownies",
+      "items": [
+        "Preheat oven to 350°F.",
+        "Cream butter and sugar together in a large mixing bowl. Add vanilla and eggs and mix well.",
+        "Add salt, cocoa powder and flour and stir to well combine. Do not over mix.",
+        "Pour into a greased 9x13-inch pan. Bake at 350°F for 22-25 minutes."
+      ]
+    },
+    {
+      "title": "Shortbread truffle layer",
+      "items": [
+        "Place cookies in a food processor until fine powder.",
+        "Mash in cream cheese and sugar until mixture is well combined.",
+        "Gently press shortbread truffle evenly over cooled brownies."
+      ]
+    },
+    {
+      "title": "Caramel layer",
+      "items": [
+        "Place caramel cubes and milk in a medium microwave-safe bowl.",
+        "Microwave in 30-second increments until melted, stirring in between each increment until melted and smooth.",
+        "Evenly pour over shortbread truffle layer. Place in fridge to let it cool."
+      ]
+    },
+    {
+      "title": "Chocolate layer",
+      "items": [
+        "Combine chocolate chips and shortening together in a medium microwave-safe bowl.",
+        "Microwave in 30-second increments, stirring in between each increment until melted and smooth.",
+        "Evenly spread over the top of cooled caramel layer. Let set up in fridge before cutting into."
+      ]
+    }
+  ]
+}

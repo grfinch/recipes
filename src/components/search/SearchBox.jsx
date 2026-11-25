@@ -16,10 +16,10 @@ export default function SearchBox({ recipes = [], onSelect }) {
     const debq = String(debouncedQuery || '').trim().toLowerCase();
     const q = String(query || '').trim();
 
-    let filtered;
-    if (!debq && !q) filtered = recipes;
-    else if (!debq && q) filtered = [];
-    else {
+    // Results come from the settled (debounced) query only. While the user is still
+    // typing, this keeps the previous results instead of flashing an empty list.
+    let filtered = [];
+    if (debq) {
         filtered = recipes.filter(r => {
             if (!r) return false;
             const name = String(r.name || '').toLowerCase();
@@ -34,7 +34,10 @@ export default function SearchBox({ recipes = [], onSelect }) {
         });
     }
 
-    const isOpen = Boolean(q) && filtered.length > 0 && !dismissed;
+    // Only show a count when there's text in the box and a settled search to count.
+    // An empty box (on load, or after Escape clears it natively) shows nothing.
+    const hasResults = Boolean(q) && Boolean(debq);
+    const isOpen = hasResults && filtered.length > 0 && !dismissed;
 
     function handleSelect(r) {
         reset(''); // clears the input and any pending debounce, which closes the overlay
@@ -121,7 +124,11 @@ export default function SearchBox({ recipes = [], onSelect }) {
                 placeholder="Search by name, ingredient, or instruction..."
                 className={styles.input}
             />
-            <div className={styles.resultCount}>{filtered.length} result{filtered.length !== 1 ? 's' : ''}</div>
+            {hasResults && (
+                <div role="status" className={styles.resultCount}>
+                    {filtered.length} result{filtered.length !== 1 ? 's' : ''}
+                </div>
+            )}
 
             {/* render overlaid results so the page layout doesn't shift */}
             {isOpen && overlayStyle && (

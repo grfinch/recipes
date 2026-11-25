@@ -148,7 +148,7 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   await page.screenshot({ path: shot('regression-5-focus.png') });
 
   const snapshot = await main.ariaSnapshot();
-  check('dividers are hidden from screen readers', !snapshot.includes('---'));
+  check('no "---" separator text between groups', !snapshot.includes('---'));
 
   // Contrast of muted UI in both color schemes (WCAG: text 4.5:1, UI borders 3:1)
   for (const scheme of ['light', 'dark']) {

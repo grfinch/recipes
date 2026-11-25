@@ -7,9 +7,10 @@ import SearchBox from './components/search/SearchBox';
 function App() {
   const allRecipes = Array.isArray(recipesData?.recipes) ? recipesData.recipes : [];
 
-  // random initial selection
-  const initialIndex = Math.floor(Math.random() * allRecipes.length);
-  const [selected, setSelected] = useState(allRecipes[initialIndex] || null);
+  // Random initial selection. The function form runs only on the first render.
+  const [selected, setSelected] = useState(
+    () => allRecipes[Math.floor(Math.random() * allRecipes.length)] ?? null
+  );
 
   return (
     <>

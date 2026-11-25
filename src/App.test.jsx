@@ -24,6 +24,14 @@ vi.mock('./recipes.json', () => ({
 afterEach(() => vi.restoreAllMocks())
 
 describe('App', () => {
+  it('picks the random first recipe only once, not on every render', () => {
+    const random = vi.spyOn(Math, 'random').mockReturnValue(0)
+    const { rerender } = render(<App />)
+    rerender(<App />)
+    rerender(<App />)
+    expect(random).toHaveBeenCalledTimes(1)
+  })
+
   it('resets checked items when switching to another recipe', async () => {
     vi.spyOn(Math, 'random').mockReturnValue(0) // start on Lentil Stew
     const user = userEvent.setup()

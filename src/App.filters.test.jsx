@@ -224,11 +224,11 @@ describe('All recipes filters', () => {
     expect(recipeHeading).toHaveFocus();
 
     await waitForHashChange(() => window.history.back());
-    const browseHeading = screen.getByRole('heading', { level: 1, name: 'All recipes' });
     expect(window.location.hash).toBe('#/browse?course=Dinner');
     expect(chip('Course', 'Dinner')).toBeChecked();
     expect(shownNames()).toEqual(['Lentil Stew', 'Pulled Pork']);
-    expect(browseHeading).toHaveFocus();
+    // Focus goes back to the recipe's own link, so a long list keeps the visitor's place
+    expect(within(main()).getByRole('link', { name: 'Pulled Pork' })).toHaveFocus();
     // The filtered list still offers the way back to the recipe just visited (from #23)
     expect(within(main()).getByRole('link', { name: /Back to Pulled Pork/ })).toHaveAttribute(
       'href',

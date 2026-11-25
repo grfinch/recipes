@@ -13,7 +13,7 @@ There is no test framework set up yet.
 
 ## Deployment
 
-Pushing to `main` deploys to GitHub Pages through `.github/workflows/deploy.yml` (Node 20, `npm ci` then `npm run build`). `vite.config.js` sets `base: '/recipes'`, so the app is served from a sub-path. Asset URLs and any future routing must respect that base: use `import.meta.env.BASE_URL` or imported assets rather than root-absolute paths.
+Pushing to `main` deploys to GitHub Pages through `.github/workflows/deploy.yml` (Node version from `.nvmrc`, `npm ci` then `npm run build`). `vite.config.js` sets `base: '/recipes'`, so the app is served from a sub-path. Asset URLs and any future routing must respect that base: use `import.meta.env.BASE_URL` or imported assets rather than root-absolute paths.
 
 ## Architecture
 

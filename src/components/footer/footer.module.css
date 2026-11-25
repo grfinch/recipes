@@ -1,0 +1,12 @@
+/* Site footer: small and muted. --muted (listItems.module.css) is 4.5:1+ in both schemes. */
+.footer {
+  margin-top: 3rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.footer p {
+  margin: 0;
+}

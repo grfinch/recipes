@@ -1,6 +1,6 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 
 // Two recipes that share an ingredient and a step, like the real data does.
@@ -125,6 +125,29 @@ describe('App', () => {
       'aria-pressed',
       'false',
     );
+  });
+});
+
+describe('Site footer', () => {
+  // Fake only Date, so timers used by userEvent and hashchange keep running normally.
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2031-06-15T12:00:00'));
+  });
+  afterEach(() => vi.useRealTimers());
+
+  it('shows the copyright with the current year on a recipe page', () => {
+    window.history.replaceState(null, '', '#/lentil-stew');
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Lentil Stew');
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('© 2031 Gaven Finch');
+  });
+
+  it('shows the copyright with the current year on All recipes', () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('All recipes');
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('© 2031 Gaven Finch');
   });
 });
 

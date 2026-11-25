@@ -20,6 +20,31 @@ describe('RecipeSection', () => {
     expect(screen.getByRole('button', { name: /Simmer/ })).toBeInTheDocument();
   });
 
+  it('toggles instruction steps from the keyboard', async () => {
+    const user = userEvent.setup();
+    render(<RecipeSection header="Instructions" listItems={['Heat the oil']} ordered clickable />);
+    const step = screen.getByRole('button', { name: /Heat the oil/ });
+    expect(step).toHaveAttribute('aria-pressed', 'false');
+
+    step.focus();
+    await user.keyboard('{Enter}');
+    expect(step).toHaveAttribute('aria-pressed', 'true');
+    await user.keyboard(' ');
+    expect(step).toHaveAttribute('aria-pressed', 'false');
+  });
+
+  it('names ingredient checkboxes by their visible text', () => {
+    render(
+      <RecipeSection
+        header="Ingredients"
+        listItems={[['1 cup flour']]}
+        ordered={false}
+        clickable
+      />,
+    );
+    expect(screen.getByRole('checkbox', { name: '1 cup flour' })).toBeInTheDocument();
+  });
+
   it('hides group dividers from screen readers', () => {
     render(
       <RecipeSection

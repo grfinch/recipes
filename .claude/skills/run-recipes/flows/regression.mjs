@@ -5,7 +5,11 @@
 export default async function regression({ page, shot, check, consoleMsgs }) {
   const input = page.getByLabel('Search recipes');
   const status = page.getByRole('status');
-  const resultsList = page.getByRole('list').filter({ has: page.locator('button') });
+  // Scoped to the header: instruction steps in <main> are buttons in a list too.
+  const resultsList = page
+    .getByRole('banner')
+    .getByRole('list')
+    .filter({ has: page.locator('button') });
   const main = page.getByRole('main');
   const STEW = 'Instant-pot Lentil Stew';
   const PASTA = 'Instant-pot Creamy Sausage Pasta';
@@ -157,7 +161,7 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
         return Math.round(((hi + 0.05) / (lo + 0.05)) * 100) / 100;
       };
       const bg = getComputedStyle(document.documentElement).backgroundColor;
-      const stepNumber = [...document.querySelectorAll('main [role="button"] span')].at(-2);
+      const stepNumber = [...document.querySelectorAll('main li button span')].at(-2);
       const box = [...document.querySelectorAll('main input[type="checkbox"]')].at(-1);
       return {
         stepNumber: ratio(getComputedStyle(stepNumber).color, bg),

@@ -142,6 +142,15 @@
   transition: outline 120ms ease;
 }
 
+/* Instruction steps are real buttons: strip the native button look so they read as text rows */
+.stepButton {
+  padding: 0;
+  border: none;
+  background: none;
+  color: inherit;
+  text-align: left;
+}
+
 /* | END number/check-mark Styles | */
 
 /* show a focus ring around the number only, not the row of text */

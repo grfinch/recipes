@@ -15,7 +15,6 @@ export default function CheckboxItem({ item }) {
           type="checkbox"
           checked={checked}
           onChange={() => toggle()}
-          aria-label={`Mark ${item} as used`}
           className={styles.checkbox}
         />
         <span>{item}</span>

@@ -1,7 +1,7 @@
 // Browser checks for behavior jsdom can't reproduce, plus the bug fixes from Nov 2026:
 // native Escape clearing, the result counter, focus handling, accessible step names,
 // checked state across recipes, and React key warnings. Expects the default
-// (non --random) start on the first recipe by name, Instant-pot Creamy Sausage Pasta.
+// (non --random) start on the first recipe by name, Creamy Sausage Pasta.
 export default async function regression({ page, shot, check, consoleMsgs }) {
   const input = page.getByLabel('Search recipes');
   const status = page.getByRole('status');
@@ -14,8 +14,8 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   // Step buttons sit in list items; "Reset checklist" is a button outside the lists.
   const stepOne = main.getByRole('listitem').getByRole('button').first();
   // FIRST opens on load (recipes are sorted by name); the flow then switches to OTHER
-  const FIRST = 'Instant-pot Creamy Sausage Pasta';
-  const OTHER = 'Instant-pot Lentil Stew';
+  const FIRST = 'Creamy Sausage Pasta';
+  const OTHER = 'Lentil Stew';
 
   // Record every text the counter shows, so a brief "0 results" flash can't hide.
   await page.evaluate(() => {
@@ -35,11 +35,12 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   // Result counter
   check('counter hidden on load', (await status.count()) === 0);
   await input.pressSequentially('instant', { delay: 60 });
-  await status.filter({ hasText: '2 results' }).waitFor();
+  // "instant" matches every recipe (cooking method Instant-pot, and "instant pot" in the steps)
+  await status.filter({ hasText: '3 results' }).waitFor();
   await input.pressSequentially(' pot', { delay: 60 });
   await page.waitForTimeout(400);
   const counts = await page.evaluate(() => window.__counts);
-  check('counter shows "2 results"', (await status.textContent()).trim() === '2 results');
+  check('counter shows "3 results"', (await status.textContent()).trim() === '3 results');
   check(
     'no "0 results" flash while typing',
     !counts.includes('0 results'),

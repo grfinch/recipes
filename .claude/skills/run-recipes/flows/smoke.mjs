@@ -11,13 +11,13 @@ export default async function smoke({ page, shot, check }) {
 
   const input = page.getByLabel('Search recipes');
   await input.pressSequentially('lentil', { delay: 30 });
-  const result = page.getByRole('button', { name: 'Instant-pot Lentil Stew' });
+  const result = page.getByRole('button', { name: 'Lentil Stew' });
   await result.waitFor();
   check('search shows a matching result', true);
   await page.screenshot({ path: shot('smoke-2-search.png') });
 
   await result.click();
-  await page.getByRole('heading', { level: 1, name: 'Instant-pot Lentil Stew' }).waitFor();
+  await page.getByRole('heading', { level: 1, name: 'Lentil Stew' }).waitFor();
   check('selecting a result shows that recipe', true);
 
   const oil = page.getByRole('checkbox', { name: /olive oil/ });

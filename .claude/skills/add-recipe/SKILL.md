@@ -35,8 +35,8 @@ If the working tree has unrelated changes, stop and ask. Adding several recipes 
 ```json
 {
   "id": "instant-pot-lentil-stew",
-  "name": "Instant-pot Lentil Stew",
-  "course": "Main",
+  "name": "Lentil Stew",
+  "course": "Dinner",
   "cookingMethod": "Instant-pot",
   "ingredients": [
     { "title": "Sauté", "items": ["1 Tbsp olive oil", "1 onion, chopped or diced"] },

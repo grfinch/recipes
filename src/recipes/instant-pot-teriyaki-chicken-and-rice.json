@@ -8,13 +8,15 @@
       "title": "Chicken",
       "items": [
         "8-12 chicken thighs",
-        "Teriyaki sauce, your choice, enough to cover the chicken",
+        "1 bottle teriyaki sauce, your choice, enough to cover the chicken",
         "About 1 Tbsp water"
       ]
     },
     {
       "title": "Rice",
-      "items": ["Rice"]
+      "items": [
+        "1-3 cups rice, Jasmine rice preferred"
+      ]
     }
   ],
   "instructions": [
@@ -22,15 +24,17 @@
       "title": "Chicken",
       "items": [
         "Add chicken thighs to the instant pot",
-        "Add your choice of teriyaki sauce to cover the chicken",
+        "Add teriyaki sauce to cover the chicken",
         "Use about a tablespoon of water and swish around the bottle to get all the remaining sauce out",
         "Pressure cook on high for 9-12 minutes",
-        "Slow release recommended for more tender chicken"
+        "Slow release recommended for more tender chicken, at least 5 minutes"
       ]
     },
     {
       "title": "Rice",
-      "items": ["When that's set and going, make rice in a rice cooker"]
+      "items": [
+        "After the chicken has begun cooking in the instant pot, make rice in a rice cooker"
+      ]
     }
   ]
 }

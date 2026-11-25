@@ -6,7 +6,8 @@
 export const BROWSE_HASH = '#/browse';
 export const SUGGEST_HASH = '#/suggest';
 export const PICK_HASH = '#/pick';
-export const RESERVED_SLUGS = ['browse', 'suggest', 'pick'];
+export const CHANGE_SLUG = 'suggest-change';
+export const RESERVED_SLUGS = ['browse', 'suggest', 'pick', CHANGE_SLUG];
 
 // Turns a name into an id: lowercase, accents dropped, anything else becomes "-". Used once,
 // when a recipe is created. After that the id never changes, so a rename can't break links.
@@ -21,6 +22,11 @@ export function slugify(name) {
 
 export function hashFor(recipe) {
   return `#/${recipe.id}`;
+}
+
+// The "Suggest a change" page for a recipe: #/suggest-change?recipe=<id>
+export function changeHashFor(recipe) {
+  return `#/${CHANGE_SLUG}?${new URLSearchParams({ recipe: recipe.id })}`;
 }
 
 // The part of the hash before any "?query". Recipe ids never contain "?", so this is safe for
@@ -68,11 +74,17 @@ export function recipeFromHash(recipes, hash = window.location.hash) {
 }
 
 // What the hash asks to show: { page: 'browse', course?, method? }, { page: 'suggest' },
-// { page: 'pick' }, { page: 'recipe', recipe }, or null. Plain #/browse is { page: 'browse' }; filter keys appear
-// only when set.
+// { page: 'pick' }, { page: 'change', recipe }, { page: 'recipe', recipe }, or null. Plain
+// #/browse is { page: 'browse' }; filter keys appear only when set. A change page for a recipe
+// that doesn't exist is null, like any unknown link.
 export function viewFromHash(recipes, hash = window.location.hash) {
   if (slugFromHash(hash) === 'suggest') return { page: 'suggest' };
   if (slugFromHash(hash) === 'pick') return { page: 'pick' };
+  if (slugFromHash(hash) === CHANGE_SLUG) {
+    const id = new URLSearchParams(splitHash(hash)[1]).get('recipe');
+    const recipe = recipes.find((r) => r.id === id);
+    return recipe ? { page: 'change', recipe } : null;
+  }
   if (slugFromHash(hash) === 'browse') {
     return { page: 'browse', ...browseFiltersFromQuery(recipes, splitHash(hash)[1]) };
   }
@@ -85,6 +97,7 @@ export function viewFromHash(recipes, hash = window.location.hash) {
 export function hashForView(view) {
   if (view.page === 'suggest') return SUGGEST_HASH;
   if (view.page === 'pick') return PICK_HASH;
+  if (view.page === 'change') return changeHashFor(view.recipe);
   if (view.page !== 'browse') return hashFor(view.recipe);
   const params = new URLSearchParams();
   for (const param of Object.keys(BROWSE_FILTERS)) {

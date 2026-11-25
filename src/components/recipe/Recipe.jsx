@@ -1,8 +1,10 @@
 import useCheckedItems from '../../hooks/useCheckedItems';
+import { changeHashFor } from '../../utils/recipeHash';
 import RecipeSection from './RecipeSection';
 import styles from './recipe.module.css';
 
-export default function Recipe({ recipe: { id, name, ingredients, instructions, notes } }) {
+export default function Recipe({ recipe }) {
+  const { id, name, ingredients, instructions, notes } = recipe;
   const [checked, toggle, reset] = useCheckedItems(id);
 
   return (
@@ -33,6 +35,9 @@ export default function Recipe({ recipe: { id, name, ingredients, instructions, 
       {notes?.length > 0 ? (
         <RecipeSection header={'Notes'} groups={notes} ordered={false} clickable={false} />
       ) : null}
+      <p className={styles.suggestChange}>
+        Spotted a mistake, or have a tip? <a href={changeHashFor(recipe)}>Suggest a change</a>
+      </p>
     </div>
   );
 }

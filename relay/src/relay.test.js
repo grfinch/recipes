@@ -1,5 +1,13 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { MAX_BODY_BYTES, fenced, handle, issueBody, issueTitle, neutralize } from './relay.js';
+import {
+  MAX_BODY_BYTES,
+  changeIssueBody,
+  fenced,
+  handle,
+  issueBody,
+  issueTitle,
+  neutralize,
+} from './relay.js';
 
 const ORIGIN = 'https://grfinch.github.io';
 const env = {
@@ -156,5 +164,69 @@ describe('issue text', () => {
   it('drops control characters but keeps tabs and newlines, and flattens the title', () => {
     expect(neutralize('a\u0000b\u0007c\td\ne\u007f')).toBe('abc\td\ne');
     expect(issueTitle({ name: 'Two\nLines' })).toBe('Recipe suggestion: Two Lines');
+  });
+});
+
+describe('suggested changes to a recipe', () => {
+  const change = {
+    type: 'change',
+    recipeId: 'weeknight-chili',
+    kind: 'fix',
+    details: 'Step 2 says 20 min, but the beans need 40. @claude fix it',
+    submitter: '',
+    website: '',
+    turnstileToken: 'tok',
+  };
+
+  it('opens an issue labeled recipe-change that links to the recipe file', async () => {
+    const fetch = mockUpstream();
+    const res = await handle(post(change), env);
+    expect(res.status).toBe(200);
+    const issue = JSON.parse(githubCalls(fetch)[0][1].body);
+    expect(issue.title).toBe('Recipe change: weeknight-chili');
+    expect(issue.labels).toEqual(['recipe-change']);
+    expect(issue.body).toContain(
+      '[`src/recipes/weeknight-chili.json`](https://github.com/grfinch/recipes/blob/main/src/recipes/weeknight-chili.json)',
+    );
+    expect(issue.body).toContain('### What kind of change\n\nSomething is wrong');
+    expect(issue.body).toContain('### Your suggestion\n\n```text\nStep 2 says');
+    expect(issue.body).toContain('### Your name\n\n_Not given_');
+    expect(issue.body).not.toContain('@claude');
+  });
+
+  it('rejects an unsafe recipe id, an unknown kind, or an empty suggestion', async () => {
+    const fetch = mockUpstream();
+    for (const bad of [
+      { recipeId: '../secrets' },
+      { recipeId: 'chili) [click](https://evil.example' },
+      { recipeId: '' },
+      { kind: 'Something is wrong' },
+      { details: '  ' },
+      { details: 'x'.repeat(5001) },
+    ]) {
+      const res = await handle(post({ ...change, ...bad }), env);
+      expect(res.status, JSON.stringify(bad)).toBe(400);
+    }
+    expect(githubCalls(fetch)).toHaveLength(0);
+  });
+
+  it('rejects an unknown type, but still treats no type as a new recipe', async () => {
+    const fetch = mockUpstream();
+    expect((await handle(post({ ...valid, type: 'recipe' }), env)).status).toBe(400);
+    expect(githubCalls(fetch)).toHaveLength(0);
+    expect((await handle(post(valid), env)).status).toBe(200);
+    expect(JSON.parse(githubCalls(fetch)[0][1].body).labels).toEqual(['recipe-suggestion']);
+  });
+
+  it('gets the same honeypot and spam check as new recipes', async () => {
+    const fetch = mockUpstream({ turnstile: false });
+    expect((await handle(post({ ...change, website: 'x' }), env)).status).toBe(200);
+    expect((await handle(post(change), env)).status).toBe(403);
+    expect(githubCalls(fetch)).toHaveLength(0);
+  });
+
+  it('fences the name and breaks up mentions in it', () => {
+    const body = changeIssueBody({ ...change, submitter: '@someone' }, 'grfinch/recipes');
+    expect(body).toContain('### Your name\n\n```text\n@​someone\n```');
   });
 });

@@ -6,6 +6,7 @@ import SiteFooter from './components/footer/SiteFooter';
 import PickRecipe from './components/pick/PickRecipe';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
+import SuggestChange from './components/suggest/SuggestChange';
 import SuggestRecipe from './components/suggest/SuggestRecipe';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
 import { BROWSE_HASH, SUGGEST_HASH, hashFor, hashForView, viewFromHash } from './utils/recipeHash';
@@ -34,8 +35,8 @@ function sameView(a, b) {
 }
 
 function App() {
-  // view: { page: 'browse', course?, method? }, { page: 'suggest' }, { page: 'pick' }, or
-  // { page: 'recipe', recipe };
+  // view: { page: 'browse', course?, method? }, { page: 'suggest' }, { page: 'pick' },
+  // { page: 'change', recipe }, or { page: 'recipe', recipe };
   // null only when there are no recipes.
   // The page in the URL hash, else a random recipe. The function form runs only on first render.
   const [view, setView] = useState(() => viewFromHash(allRecipes) ?? randomRecipeView());
@@ -69,7 +70,12 @@ function App() {
     if (!view) return;
     const hash = hashForView(view);
     if (window.location.hash !== hash) window.history.replaceState(null, '', hash);
-    const pageTitle = view.page === 'recipe' ? view.recipe.name : PAGE_TITLES[view.page];
+    const pageTitle =
+      view.page === 'recipe'
+        ? view.recipe.name
+        : view.page === 'change'
+          ? `Suggest a change to ${view.recipe.name}`
+          : PAGE_TITLES[view.page];
     document.title = `${pageTitle} | ${SITE_TITLE}`;
   }, [view]);
 
@@ -140,6 +146,9 @@ function App() {
           <SuggestRecipe />
         ) : view?.page === 'pick' ? (
           <PickRecipe recipes={allRecipes} choices={pickChoices} onChoicesChange={setPickChoices} />
+        ) : view?.page === 'change' ? (
+          // key: another recipe's change page starts from that recipe's own draft
+          <SuggestChange key={view.recipe.id} recipe={view.recipe} />
         ) : view ? (
           // key: a new recipe remounts, so its own saved checklist loads
           <Recipe key={view.recipe.id} recipe={view.recipe} />

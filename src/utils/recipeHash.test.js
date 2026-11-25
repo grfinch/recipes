@@ -5,6 +5,7 @@ import {
   PICK_HASH,
   RESERVED_SLUGS,
   SUGGEST_HASH,
+  changeHashFor,
   hashFor,
   hashForView,
   recipeFromHash,
@@ -49,6 +50,17 @@ describe('recipeHash', () => {
     expect(recipeFromHash(withSuggest, '#/suggest')).toBeNull();
     expect(hashForView({ page: 'suggest' })).toBe(SUGGEST_HASH);
     expect(RESERVED_SLUGS).toContain('suggest');
+  });
+
+  it('reads the suggest-a-change page for a recipe, and nothing for an unknown recipe', () => {
+    const [stew] = recipes;
+    const hash = '#/suggest-change?recipe=instant-pot-lentil-stew';
+    expect(changeHashFor(stew)).toBe(hash);
+    expect(viewFromHash(recipes, hash)).toEqual({ page: 'change', recipe: stew });
+    expect(hashForView({ page: 'change', recipe: stew })).toBe(hash);
+    expect(viewFromHash(recipes, '#/suggest-change?recipe=nope')).toBeNull();
+    expect(viewFromHash(recipes, '#/suggest-change')).toBeNull();
+    expect(RESERVED_SLUGS).toContain('suggest-change');
   });
 
   it('reads the pick page from the hash, even if a recipe is named Pick', () => {

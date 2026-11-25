@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { filterOptions, matchesFilters } from './recipeFilters';
+import { filterOptions, groupByLetter, letterFor, matchesFilters } from './recipeFilters';
 
 const recipes = [
   { id: 'a', name: 'A', course: 'Dessert', cookingMethod: 'Oven' },
@@ -45,5 +45,45 @@ describe('matchesFilters', () => {
     expect(ids({ method: 'Oven' })).toEqual(['a', 'c']);
     expect(ids({ course: 'Dinner', method: 'Instant-pot' })).toEqual(['d']);
     expect(ids({ course: 'Dessert', method: 'Instant-pot' })).toEqual([]);
+  });
+});
+
+describe('letterFor', () => {
+  it('files a name under its first letter, upper-cased and without accents', () => {
+    expect(letterFor('apple crisp')).toBe('A');
+    expect(letterFor('Éclairs')).toBe('E');
+    expect(letterFor('  Zucchini bread')).toBe('Z');
+  });
+
+  it('files digits, symbols and other scripts under "#"', () => {
+    expect(letterFor('7-layer dip')).toBe('#');
+    expect(letterFor('"Best" brownies')).toBe('#');
+    expect(letterFor('Ψωμί')).toBe('#');
+    expect(letterFor('')).toBe('#');
+  });
+});
+
+describe('groupByLetter', () => {
+  it('puts "#" first, then A-Z, keeping the given order within each letter', () => {
+    const named = ['10-minute soup', 'Apple crisp', 'Apricot jam', 'Banana bread', 'Éclairs'].map(
+      (name) => ({ name }),
+    );
+    expect(groupByLetter(named)).toEqual([
+      { letter: '#', recipes: [{ name: '10-minute soup' }] },
+      { letter: 'A', recipes: [{ name: 'Apple crisp' }, { name: 'Apricot jam' }] },
+      { letter: 'B', recipes: [{ name: 'Banana bread' }] },
+      { letter: 'E', recipes: [{ name: 'Éclairs' }] },
+    ]);
+  });
+
+  it('sorts letters even when the recipes arrive out of order', () => {
+    const letters = groupByLetter([{ name: 'Z' }, { name: '1' }, { name: 'M' }, { name: 'A' }]).map(
+      (s) => s.letter,
+    );
+    expect(letters).toEqual(['#', 'A', 'M', 'Z']);
+  });
+
+  it('has no sections when there are no recipes', () => {
+    expect(groupByLetter([])).toEqual([]);
   });
 });

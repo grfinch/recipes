@@ -232,7 +232,25 @@ describe('Browse all recipes', () => {
 
     await goToHash('#/browse');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('All recipes');
-    expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
+    // Back from a recipe opened on All recipes: focus returns to that recipe's link
+    expect(screen.getByRole('link', { name: 'Sausage Pasta' })).toHaveFocus();
+  });
+
+  it('returns focus to the recipe link after its Suggest a change page, not after another recipe', async () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+
+    await goToHash('#/apple-crisp');
+    await goToHash('#/suggest-change?recipe=apple-crisp');
+    await goToHash('#/apple-crisp');
+    await goToHash('#/browse');
+    expect(screen.getByRole('link', { name: 'Apple Crisp' })).toHaveFocus();
+
+    // A recipe reached some other way (here, from another recipe) starts at the top again
+    await goToHash('#/apple-crisp');
+    await goToHash('#/lentil-stew');
+    await goToHash('#/browse');
+    expect(screen.getByRole('heading', { level: 1, name: 'All recipes' })).toHaveFocus();
   });
 
   it('keeps a recipe checklist across a trip to browse and back', async () => {

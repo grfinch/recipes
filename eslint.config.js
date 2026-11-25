@@ -5,6 +5,7 @@ import react from 'eslint-plugin-react'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import { defineConfig, globalIgnores } from 'eslint/config'
+import eslintConfigPrettier from 'eslint-config-prettier/flat'
 
 export default defineConfig([
   globalIgnores(['dist', 'coverage']),
@@ -58,4 +59,7 @@ export default defineConfig([
     files: ['.claude/skills/**/*.mjs'],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
+
+  // Last: turn off stylistic rules that Prettier handles
+  eslintConfigPrettier,
 ])

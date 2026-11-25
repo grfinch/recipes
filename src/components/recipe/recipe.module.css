@@ -1,15 +1,15 @@
 .li_no_bullets {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 /* layout for label containing checkbox and text */
 .label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }
 
 .list_no_bullets {
-    padding-left: 1rem;
+  padding-left: 1rem;
 }

@@ -1,39 +1,66 @@
-import js from '@eslint/js'
-import globals from 'globals'
-import react from 'eslint-plugin-react'
-import reactHooks from 'eslint-plugin-react-hooks'
-import reactRefresh from 'eslint-plugin-react-refresh'
-import { defineConfig, globalIgnores } from 'eslint/config'
+import js from '@eslint/js';
+import globals from 'globals';
+import jsxA11y from 'eslint-plugin-jsx-a11y';
+import react from 'eslint-plugin-react';
+import reactHooks from 'eslint-plugin-react-hooks';
+import reactRefresh from 'eslint-plugin-react-refresh';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
-  globalIgnores(['dist']),
+  globalIgnores(['dist', 'coverage']),
+
+  // Every JavaScript file
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx,mjs}'],
+    extends: [js.configs.recommended],
+    languageOptions: {
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+    },
+    rules: {
+      // react/jsx-uses-vars marks JSX usage, so only `_`-prefixed names are exempt
+      'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
+    },
+  },
+
+  // The app: React, hooks, accessibility, browser globals
+  {
+    files: ['src/**/*.{js,jsx}'],
     extends: [
-      js.configs.recommended,
       react.configs.flat.recommended,
       // React 17+ JSX transform: no need to import React in every file
       react.configs.flat['jsx-runtime'],
-      reactHooks.configs['recommended-latest'],
+      // v7: flat configs live under configs.flat (configs['recommended-latest'] is eslintrc format)
+      reactHooks.configs.flat['recommended-latest'],
       reactRefresh.configs.vite,
+      jsxA11y.flatConfigs.recommended,
     ],
     languageOptions: {
-      ecmaVersion: 2020,
       globals: globals.browser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        ecmaFeatures: { jsx: true },
-        sourceType: 'module',
-      },
+      parserOptions: { ecmaFeatures: { jsx: true } },
     },
     settings: {
       react: { version: 'detect' },
     },
     rules: {
-      // react/jsx-uses-vars marks JSX usage, so only `_`-prefixed names are exempt
-      'no-unused-vars': ['error', { varsIgnorePattern: '^_' }],
       // React 19 ignores propTypes; use TypeScript/JSDoc for prop types instead
       'react/prop-types': 'off',
     },
   },
-])
+
+  // Tooling that runs in Node: config files and the Claude hook
+  {
+    files: ['*.config.js', '.claude/**/*.mjs'],
+    languageOptions: { globals: globals.node },
+  },
+
+  // Browser flows: Node scripts whose page.evaluate() callbacks run in the browser
+  {
+    files: ['.claude/skills/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+  },
+
+  // Last: turn off stylistic rules that Prettier handles
+  eslintConfigPrettier,
+]);

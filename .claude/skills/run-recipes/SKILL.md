@@ -3,7 +3,7 @@ name: run-recipes
 description: Run, start, and drive the recipes web app in a real browser. Use when asked to run the app, check a change in the browser, take a screenshot of the UI, smoke-test or regression-test search and the recipe checklist, or run the unit tests.
 ---
 
-A React + Vite static site. Agents drive it with `.claude/skills/run-recipes/driver.mjs`, which reuses or starts the Vite dev server and runs a *flow* (a short Playwright script) in headless Chrome. All paths are relative to the repo root.
+A React + Vite static site. Agents drive it with `.claude/skills/run-recipes/driver.mjs`, which reuses or starts the Vite dev server and runs a _flow_ (a short Playwright script) in headless Chrome. All paths are relative to the repo root.
 
 ## Setup
 
@@ -24,22 +24,22 @@ node .claude/skills/run-recipes/driver.mjs path/to/my-flow.mjs
 
 It prints `PASS`/`FAIL` per check and exits non-zero if any check fails. Screenshots go to `.claude/skills/run-recipes/shots/` (gitignored); open and look at them. Every run also checks that there are no console errors.
 
-| Option | Effect |
-|---|---|
-| `smoke` (default) | Loads the page, searches "pasta", opens it, checks an ingredient. |
-| `regression` | Counter, native Escape, focus return, accessible step names, checked state across recipes, checkmark and focus styles, hidden dividers, React key warnings. |
-| `--random` | Keep the app's random first recipe. By default `Math.random()` returns 0, so the page opens on the first recipe (Instant-pot Lentil Stew). |
-| `RECIPES_PORT=5174` | Use another port. Use this when 5173 is serving something else. |
-| `BROWSER_CHANNEL=msedge` | Use Edge instead of Chrome. |
+| Option                   | Effect                                                                                                                                                      |
+| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `smoke` (default)        | Loads the page, searches "pasta", opens it, checks an ingredient.                                                                                           |
+| `regression`             | Counter, native Escape, focus return, accessible step names, checked state across recipes, checkmark and focus styles, hidden dividers, React key warnings. |
+| `--random`               | Keep the app's random first recipe. By default `Math.random()` returns 0, so the page opens on the first recipe (Instant-pot Lentil Stew).                  |
+| `RECIPES_PORT=5174`      | Use another port. Use this when 5173 is serving something else.                                                                                             |
+| `BROWSER_CHANNEL=msedge` | Use Edge instead of Chrome.                                                                                                                                 |
 
 **To check a change in the browser, write a flow.** A flow is a `.mjs` file with a default export:
 
 ```js
 export default async function ({ page, shot, check, consoleMsgs }) {
-  await page.getByLabel('Search recipes').pressSequentially('pasta', { delay: 30 })
-  await page.getByRole('button', { name: 'Instant-pot Creamy Sausage Pasta' }).click()
-  check('recipe opened', await page.getByRole('heading', { level: 1 }).textContent())
-  await page.screenshot({ path: shot('my-check.png') })
+  await page.getByLabel('Search recipes').pressSequentially('pasta', { delay: 30 });
+  await page.getByRole('button', { name: 'Instant-pot Creamy Sausage Pasta' }).click();
+  check('recipe opened', await page.getByRole('heading', { level: 1 }).textContent());
+  await page.screenshot({ path: shot('my-check.png') });
 }
 ```
 

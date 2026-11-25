@@ -1,0 +1,5 @@
+dist
+coverage
+package-lock.json
+.claude/skills/run-recipes/shots
+.claude/skills/run-recipes/package-lock.json

@@ -1,96 +1,106 @@
 :root {
-    --interactive-blue: rgb(99, 102, 241);
-    --checked-green: rgb(47, 133, 90);
-    --muted: #666;
+  --interactive-blue: rgb(99, 102, 241);
+  --checked-green: rgb(47, 133, 90);
+  /* Muted text and borders: at least 4.5:1 against the page background in both schemes */
+  --muted: #9ca3af; /* on #242424 (dark) */
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --muted: #666; /* on #ffffff */
+  }
 }
 
 .divider {
-    color: #666
+  color: #666;
 }
 
 .li_no_bullets {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .withBullet {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
 
 .withBullet::before {
-    content: '';
-    width: 0.5rem;
-    height: 0.5rem;
-    background: var(--muted);
-    border-radius: 50%;
-    flex: 0 0 auto;
-    margin-left: 0.25rem;
+  content: '';
+  width: 0.5rem;
+  height: 0.5rem;
+  background: var(--muted);
+  border-radius: 50%;
+  flex: 0 0 auto;
+  margin-left: 0.25rem;
 }
 
 .label {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
 }
 
 /* | Checkbox Styles | */
 
 .checkbox {
-    /* custom checkbox so we can color the check independently */
-    width: 1rem;
-    height: 1rem;
-    display: inline-grid;
-    place-items: center;
-    cursor: pointer;
-    /* reset native appearance */
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    border: 2px solid var(--muted);
-    border-radius: 4px;
-    background: transparent;
-    transition: border-color 120ms ease, background-color 120ms ease, transform 120ms ease;
+  /* custom checkbox so we can color the check independently */
+  width: 1rem;
+  height: 1rem;
+  display: inline-grid;
+  place-items: center;
+  cursor: pointer;
+  /* reset native appearance */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  border: 2px solid var(--muted);
+  border-radius: 4px;
+  background: transparent;
+  transition:
+    border-color 120ms ease,
+    background-color 120ms ease,
+    transform 120ms ease;
 }
 
 /* Checked state is shown by shape (a white checkmark on a solid fill), not by color alone */
 .checkbox::before {
-    content: '';
-    width: 0.6rem;
-    height: 0.6rem;
-    background: #fff;
-    clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
-    transform: scale(0);
-    transition: transform 120ms ease;
+  content: '';
+  width: 0.6rem;
+  height: 0.6rem;
+  background: #fff;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transition: transform 120ms ease;
 }
 
 .checkbox:checked {
-    background-color: var(--interactive-blue);
-    border-color: var(--interactive-blue);
+  background-color: var(--interactive-blue);
+  border-color: var(--interactive-blue);
 }
 
 .checkbox:checked::before {
-    transform: scale(1);
+  transform: scale(1);
 }
 
 /* keyboard focus: a solid outline that is easy to see */
 .checkbox:focus-visible {
-    outline: 3px solid var(--interactive-blue);
-    outline-offset: 2px;
+  outline: 3px solid var(--interactive-blue);
+  outline-offset: 2px;
 }
 
 /* when hovering the row, tint the native checkbox to the interactive blue */
 .label:hover .checkbox,
 .label:focus-visible .checkbox {
-    /* tint the checkbox border to the interactive blue on hover/focus of the row */
-    border-color: var(--interactive-blue);
+  /* tint the checkbox border to the interactive blue on hover/focus of the row */
+  border-color: var(--interactive-blue);
 }
 
 .label:hover .checkbox:checked,
 .label:focus-visible .checkbox:checked {
-    /* keep checkmark green but show the box border as blue when hovered */
-    border-color: var(--interactive-blue);
+  /* keep checkmark green but show the box border as blue when hovered */
+  border-color: var(--interactive-blue);
 }
 
 /* | END Checkbox Styles | */
@@ -99,19 +109,21 @@
 
 /* item index number that becomes a check when active */
 .numberBtn {
-    min-width: 2rem;
-    display: inline-grid;
-    place-items: center;
-    background: transparent;
-    border: none;
-    color: var(--muted, #666);
-    cursor: pointer;
-    font-weight: 600;
-    transition: transform 120ms ease, color 120ms ease;
+  min-width: 2rem;
+  display: inline-grid;
+  place-items: center;
+  background: transparent;
+  border: none;
+  color: var(--muted, #666);
+  cursor: pointer;
+  font-weight: 600;
+  transition:
+    transform 120ms ease,
+    color 120ms ease;
 }
 
 .checkMark {
-    color: var(--checked-green);
+  color: var(--checked-green);
 }
 
 /* hover/focus glow to indicate interactivity */
@@ -119,29 +131,28 @@
 .numberBtn:focus-visible,
 .label:hover .numberBtn,
 .label:focus-visible .numberBtn {
-    transform: translateY(-2px);
-    color: var(--interactive-blue);
+  transform: translateY(-2px);
+  color: var(--interactive-blue);
 }
 
 /* keyboard-only focus ring around the number */
 .label:focus-visible .numberBtn {
-    outline: 3px solid var(--interactive-blue);
-    border-radius: 6px;
-    transition: outline 120ms ease;
+  outline: 3px solid var(--interactive-blue);
+  border-radius: 6px;
+  transition: outline 120ms ease;
 }
 
 /* | END number/check-mark Styles | */
 
-
 /* show a focus ring around the number only, not the row of text */
 .label:focus {
-    outline: none;
+  outline: none;
 }
 
 /* strike-through when checked, but not the check-mark*/
 .checked span:not(.numberBtn) {
-    text-decoration: line-through;
-    opacity: 0.7;
+  text-decoration: line-through;
+  opacity: 0.7;
 }
 
 /* TODO: don't let the checkmark turn green when hovered. */

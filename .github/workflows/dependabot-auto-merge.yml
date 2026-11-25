@@ -1,0 +1,35 @@
+name: Dependabot auto-merge
+
+# Turns on auto-merge for Dependabot patch and minor updates. GitHub merges the PR
+# once the required `check` job passes. Majors are left for a person to review.
+#
+# Requires (repo settings): "Allow auto-merge", and a branch ruleset on main that
+# requires the `check` status check.
+#
+# Note: merges made with GITHUB_TOKEN don't trigger other workflows, so auto-merged
+# updates don't deploy on their own. They go live with the next push to main.
+
+on: pull_request
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  auto-merge:
+    # Who opened the PR, not who triggered this run (re-runs change the actor).
+    if: github.event.pull_request.user.login == 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Read Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v3
+
+      - name: Enable auto-merge for patch and minor updates
+        if: >-
+          steps.metadata.outputs.update-type == 'version-update:semver-patch' ||
+          steps.metadata.outputs.update-type == 'version-update:semver-minor'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

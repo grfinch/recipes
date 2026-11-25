@@ -11,7 +11,7 @@ function SiteFooter({ page }) {
           className={styles.link}
           aria-current={page === 'suggest' ? 'page' : undefined}
         >
-          Suggest a recipe
+          Submit a new recipe
         </a>
       </nav>
       <p>© {new Date().getFullYear()} Gaven Finch</p>

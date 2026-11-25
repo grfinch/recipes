@@ -261,7 +261,7 @@ describe('Suggest a recipe', () => {
     window.history.replaceState(null, '', '#/browse');
     render(<App />);
     const footerLink = within(screen.getByRole('contentinfo')).getByRole('link', {
-      name: 'Suggest a recipe',
+      name: 'Submit a new recipe',
     });
     expect(footerLink).toHaveAttribute('href', '#/suggest');
     expect(footerLink).not.toHaveAttribute('aria-current');
@@ -277,12 +277,12 @@ describe('Suggest a recipe', () => {
     const user = userEvent.setup();
     render(<App />);
     const footer = () => within(screen.getByRole('contentinfo'));
-    await user.click(footer().getByRole('link', { name: 'Suggest a recipe' }));
+    await user.click(footer().getByRole('link', { name: 'Submit a new recipe' }));
     const heading = await screen.findByRole('heading', { level: 1, name: 'Suggest a recipe' });
     expect(window.location.hash).toBe('#/suggest');
     expect(document.title).toBe("Suggest a recipe | Twig's Cook Book");
     expect(heading).toHaveFocus();
-    expect(footer().getByRole('link', { name: 'Suggest a recipe' })).toHaveAttribute(
+    expect(footer().getByRole('link', { name: 'Submit a new recipe' })).toHaveAttribute(
       'aria-current',
       'page',
     );

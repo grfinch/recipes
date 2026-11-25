@@ -1,5 +1,14 @@
 import { describe, expect, it } from 'vitest';
-import { hashFor, recipeFromHash, slugify } from './recipeHash';
+import recipesData from '../recipes.json';
+import {
+  BROWSE_HASH,
+  RESERVED_SLUGS,
+  hashFor,
+  hashForView,
+  recipeFromHash,
+  slugify,
+  viewFromHash,
+} from './recipeHash';
 
 const recipes = [{ name: 'Instant-pot Lentil Stew' }, { name: 'Crème Brûlée' }];
 
@@ -20,5 +29,24 @@ describe('recipeHash', () => {
     expect(recipeFromHash(recipes, '#/')).toBeNull();
     expect(recipeFromHash(recipes, '#/pancakes')).toBeNull();
     expect(recipeFromHash(recipes, '#/%E0%A4%A')).toBeNull();
+  });
+
+  it('reads the browse page from the hash', () => {
+    expect(viewFromHash(recipes, '#/browse')).toEqual({ page: 'browse' });
+    expect(viewFromHash(recipes, '#/creme-brulee')).toEqual({ page: 'recipe', recipe: recipes[1] });
+    expect(viewFromHash(recipes, '#/pancakes')).toBeNull();
+    expect(hashForView({ page: 'browse' })).toBe(BROWSE_HASH);
+    expect(hashForView({ page: 'recipe', recipe: recipes[1] })).toBe('#/creme-brulee');
+  });
+
+  it('never lets a recipe take a reserved page hash', () => {
+    const withBrowse = [...recipes, { name: 'Browse' }];
+    expect(recipeFromHash(withBrowse, '#/browse')).toBeNull();
+    expect(viewFromHash(withBrowse, '#/browse')).toEqual({ page: 'browse' });
+  });
+
+  it('has no real recipe whose slug is reserved', () => {
+    const clashes = recipesData.recipes.filter((r) => RESERVED_SLUGS.includes(slugify(r.name)));
+    expect(clashes.map((r) => r.name)).toEqual([]);
   });
 });

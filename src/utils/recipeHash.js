@@ -1,4 +1,4 @@
-// Recipes are addressed by a hash like #/instant-pot-lentil-stew. A hash works under the
+// Recipes are addressed by their permanent id, in a hash like #/instant-pot-lentil-stew. A hash works under the
 // GitHub Pages sub-path without a router or server rewrites, and needs no base URL.
 
 // Hashes for app pages rather than recipes. They are checked before any recipe lookup, so a
@@ -6,6 +6,8 @@
 export const BROWSE_HASH = '#/browse';
 export const RESERVED_SLUGS = ['browse'];
 
+// Turns a name into an id: lowercase, accents dropped, anything else becomes "-". Used once,
+// when a recipe is created. After that the id never changes, so a rename can't break links.
 export function slugify(name) {
   return String(name)
     .normalize('NFD')
@@ -16,7 +18,7 @@ export function slugify(name) {
 }
 
 export function hashFor(recipe) {
-  return `#/${slugify(recipe.name)}`;
+  return `#/${recipe.id}`;
 }
 
 function slugFromHash(hash) {
@@ -31,7 +33,7 @@ function slugFromHash(hash) {
 export function recipeFromHash(recipes, hash = window.location.hash) {
   const slug = slugFromHash(hash);
   if (!slug || RESERVED_SLUGS.includes(slug)) return null;
-  return recipes.find((r) => slugify(r.name) === slug) ?? null;
+  return recipes.find((r) => r.id === slug) ?? null;
 }
 
 // What the hash asks to show: { page: 'browse' }, { page: 'recipe', recipe }, or null.

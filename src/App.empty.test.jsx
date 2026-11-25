@@ -2,8 +2,8 @@ import { render, screen } from '@testing-library/react';
 import { expect, it, vi } from 'vitest';
 import App from './App';
 
-// Separate file because vi.mock replaces recipes.json for the whole file.
-vi.mock('./recipes.json', () => ({ default: { recipes: [] } }));
+// Separate file because vi.mock replaces the recipe list for the whole file.
+vi.mock('./recipes/index.js', () => ({ default: [] }));
 
 it('renders a message instead of crashing when there are no recipes', () => {
   render(<App />);

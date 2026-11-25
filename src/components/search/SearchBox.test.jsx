@@ -5,11 +5,13 @@ import SearchBox from './SearchBox';
 
 const recipes = [
   {
+    id: 'lentil-stew',
     name: 'Lentil Stew',
     ingredients: [['1 cup lentils', '1 carrot']],
     instructions: ['Simmer everything'],
   },
   {
+    id: 'pancakes',
     name: 'Pancakes',
     ingredients: [['2 cups flour', '1 egg']],
     instructions: ['Whisk and fry'],

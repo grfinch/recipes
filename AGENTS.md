@@ -9,7 +9,7 @@ This file provides guidance to AI coding agents working with code in this reposi
 - `npm run preview`: serve the built `dist/`
 - `npm run lint`: ESLint (flat config, `eslint.config.js`)
 - `npm run format` / `npm run format:check`: Prettier (single quotes, semicolons, 100 columns). Run `format` before committing; CI fails on unformatted files.
-- `npm run validate:recipes`: check `src/recipes.json` against the schema and allowed categories
+- `npm run validate:recipes`: check every recipe file in `src/recipes/` against the schema and allowed categories
 - `npm test`: run Vitest once (jsdom + React Testing Library); `npm run test:watch` for watch mode
 - `npx vitest run src/components/search` or `npx vitest run -t "Escape"`: run one file or one test by name
 
@@ -27,22 +27,23 @@ Dependabot (`.github/dependabot.yml`) opens weekly update PRs. `.github/workflow
 
 ## Architecture
 
-This is a static, client-only React 19 app (plain JSX, no TypeScript, no router, no backend). All data is bundled from `src/recipes.json`.
+This is a static, client-only React 19 app (plain JSX, no TypeScript, no router, no backend). All data is bundled from the recipe files in `src/recipes/`: one file per recipe, `src/recipes/<id>.json`, loaded by `src/recipes/index.js` (`import.meta.glob`, sorted by name). One file each means two PRs that add recipes never conflict. Tests mock `./recipes/index.js`, not the JSON files.
 
-**Data flow:** `App.jsx` imports `recipes.json` and holds a `view` state: `{ page: 'recipe', recipe }` or `{ page: 'browse' }` (`null` only when there are no recipes). The first view comes from the URL hash, or is a random recipe if the hash names none. `SearchBox` receives every recipe and calls `onSelect`. `Recipe` renders a recipe view; `BrowseRecipes` renders the browse view.
+**Data flow:** `App.jsx` imports the recipe list from `./recipes/index.js` and holds a `view` state: `{ page: 'recipe', recipe }` or `{ page: 'browse' }` (`null` only when there are no recipes). The first view comes from the URL hash, or is a random recipe if the hash names none. `SearchBox` receives every recipe and calls `onSelect`. `Recipe` renders a recipe view; `BrowseRecipes` renders the browse view.
 
-**Recipe links:** the selected recipe lives in the URL hash as `#/<slug>` (`src/utils/recipeHash.js`; the slug is the lowercased name with accents and punctuation removed). Selecting a recipe sets the hash, which adds a history entry. A `hashchange` listener handles Back, Forward and edited links. The first recipe, or one replacing an unknown hash, uses `history.replaceState`, so it adds no history entry. The tab title follows the page. The hash needs no router and works under the `/recipes` base. Renaming a recipe changes its slug and breaks old links to it.
+**Recipe links:** the selected recipe lives in the URL hash as `#/<id>` (`src/utils/recipeHash.js`). The id is permanent, so renaming a recipe keeps its links working. Selecting a recipe sets the hash, which adds a history entry. A `hashchange` listener handles Back, Forward and edited links. The first recipe, or one replacing an unknown hash, uses `history.replaceState`, so it adds no history entry. The tab title follows the page. The hash needs no router and works under the `/recipes` base.
 
-**Browse view:** `#/browse` shows `BrowseRecipes`, every recipe as a link (`hashFor(recipe)`) sorted by name, with `course` and `cookingMethod` as muted text. The header's "All recipes" link is a plain `<a href="#/browse">` (with `aria-current="page"` while on it); links change the hash natively and the `hashchange` listener does the rest. `viewFromHash` checks reserved page slugs (`RESERVED_SLUGS` in `recipeHash.js`) before looking up recipes, so a recipe named "Browse" could never be opened by link. A test fails if a recipe in `recipes.json` slugifies to a reserved name; rename it, or add any new page's slug to `RESERVED_SLUGS`. After every view change except the first load, `App` focuses the new page's `h1` (it has `tabIndex={-1}`, and `index.css` hides its outline), so keyboard and screen-reader users start at the top of the new content. Any new page needs an `h1` with `tabIndex={-1}`.
+**Browse view:** `#/browse` shows `BrowseRecipes`, every recipe as a link (`hashFor(recipe)`) sorted by name, with `course` and `cookingMethod` as muted text. The header's "All recipes" link is a plain `<a href="#/browse">` (with `aria-current="page"` while on it); links change the hash natively and the `hashchange` listener does the rest. `viewFromHash` checks reserved page slugs (`RESERVED_SLUGS` in `recipeHash.js`) before looking up recipes, so a recipe named "Browse" could never be opened by link. The validator and a test fail if a recipe's id is a reserved name. Add any new page's slug to `RESERVED_SLUGS`. After every view change except the first load, `App` focuses the new page's `h1` (it has `tabIndex={-1}`, and `index.css` hides its outline), so keyboard and screen-reader users start at the top of the new content. Any new page needs an `h1` with `tabIndex={-1}`.
 
-**Recipe schema** (`src/recipes.json` → `{ recipes: [...] }`):
+**Recipe schema** (`src/recipes/<id>.json`, one recipe object per file):
 
+- `id`: required, permanent, and equal to the file name. Lowercase letters, digits and dashes, made once from the name with `slugify` and never changed afterwards, even if the recipe is renamed. It is the recipe's link (`#/<id>`) and its saved-checklist key, and it must not be a reserved slug.
 - `name`, `course`, `cookingMethod`: strings. `course` and `cookingMethod` come from the lists in `src/recipeCategories.json` and appear only in the browse list.
 - `ingredients`: an **array of arrays** of strings. Each inner array is a group, and groups are separated by a divider when rendered.
 - `instructions`: a flat array of strings.
 - `notes`: an optional flat array of strings.
 
-`course` and `cookingMethod` must be values listed in `src/recipeCategories.json`. `scripts/validate-recipes.mjs` (`npm run validate:recipes`, also run in CI) checks the whole file: required fields, unknown fields, duplicate names and links, reserved slugs, empty groups, and misplaced `---` separators. To add a recipe, use the `add-recipe` skill (`.claude/skills/add-recipe/`), which drafts, validates, and opens a PR.
+`course` and `cookingMethod` must be values listed in `src/recipeCategories.json`. `scripts/validate-recipes.mjs` (`npm run validate:recipes`, also run in CI) checks every recipe file: valid JSON, required fields, unknown fields, the id's format and that it matches the file name, duplicate ids and names, reserved ids, empty groups, and misplaced `---` separators. To add a recipe, use the `add-recipe` skill (`.claude/skills/add-recipe/`), which drafts, validates, and opens a PR.
 
 **Rendering lists:** `RecipeSection` normalizes `listItems` into groups. It accepts either nested arrays or a flat array, where any string starting with `-` acts as a group separator. It picks the item component from the `ordered` and `clickable` props:
 
@@ -50,7 +51,7 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 - `NumberedClickableItem`: ordered and clickable (instructions)
 - `BulletItem`: not clickable (notes)
 
-Items are controlled: `Recipe` owns the "checked" state through `src/hooks/useCheckedItems.js` and passes `checked` and `onToggle` down through `RecipeSection`. The hook saves each recipe's checked item ids (`<section header>:<group>-<item>`) to `localStorage` under `recipes:checked:<recipe name>`, so they survive a reload. "Reset checklist" clears them. Ids are positions, so reordering a recipe's items in `recipes.json` moves any saved checks with them.
+Items are controlled: `Recipe` owns the "checked" state through `src/hooks/useCheckedItems.js` and passes `checked` and `onToggle` down through `RecipeSection`. The hook saves each recipe's checked item ids (`<section header>:<group>-<item>`) to `localStorage` under `recipes:checked:<recipe id>`, so they survive a reload and a rename. "Reset checklist" clears them. Ids are positions, so reordering a recipe's items moves any saved checks with them.
 
 **Keep screen on:** `KeepScreenOn` (in the header) is an opt-in checkbox backed by `src/hooks/useWakeLock.js` and the Screen Wake Lock API. It renders nothing in browsers without `navigator.wakeLock`. Browsers release the lock when the tab is hidden, so the hook requests it again on `visibilitychange`. If a request is refused, the box unchecks and a polite `aria-live` message explains why. It is deliberately not `role="status"`, so it stays separate from the search result count. jsdom has no Wake Lock API, so tests install a fake `navigator.wakeLock`.
 

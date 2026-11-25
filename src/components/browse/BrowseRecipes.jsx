@@ -13,7 +13,7 @@ export default function BrowseRecipes({ recipes = [] }) {
           {sorted.map((recipe) => {
             const details = [recipe.course, recipe.cookingMethod].filter(Boolean).join(' · ');
             return (
-              <li key={recipe.name} className={styles.item}>
+              <li key={recipe.id} className={styles.item}>
                 <a href={hashFor(recipe)} className={styles.link}>
                   {recipe.name}
                 </a>

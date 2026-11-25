@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import recipesData from '../recipes.json';
+import allRecipes from '../recipes/index.js';
 import {
   BROWSE_HASH,
   RESERVED_SLUGS,
@@ -10,7 +10,10 @@ import {
   viewFromHash,
 } from './recipeHash';
 
-const recipes = [{ name: 'Instant-pot Lentil Stew' }, { name: 'Crème Brûlée' }];
+const recipes = [
+  { id: 'instant-pot-lentil-stew', name: 'Instant-pot Lentil Stew' },
+  { id: 'creme-brulee', name: 'Crème Brûlée' },
+];
 
 describe('recipeHash', () => {
   it('turns names into readable slugs', () => {
@@ -22,6 +25,13 @@ describe('recipeHash', () => {
   it('round-trips a recipe through its hash', () => {
     expect(hashFor(recipes[1])).toBe('#/creme-brulee');
     expect(recipeFromHash(recipes, '#/creme-brulee')).toBe(recipes[1]);
+  });
+
+  it('links by id, so renaming a recipe keeps its link', () => {
+    const renamed = { id: 'creme-brulee', name: 'Vanilla Crème Brûlée' };
+    expect(hashFor(renamed)).toBe('#/creme-brulee');
+    expect(recipeFromHash([renamed], '#/creme-brulee')).toBe(renamed);
+    expect(recipeFromHash([renamed], '#/vanilla-creme-brulee')).toBeNull();
   });
 
   it('returns null for empty, unknown, or malformed hashes', () => {
@@ -40,13 +50,13 @@ describe('recipeHash', () => {
   });
 
   it('never lets a recipe take a reserved page hash', () => {
-    const withBrowse = [...recipes, { name: 'Browse' }];
+    const withBrowse = [...recipes, { id: 'browse', name: 'Browse' }];
     expect(recipeFromHash(withBrowse, '#/browse')).toBeNull();
     expect(viewFromHash(withBrowse, '#/browse')).toEqual({ page: 'browse' });
   });
 
   it('has no real recipe whose slug is reserved', () => {
-    const clashes = recipesData.recipes.filter((r) => RESERVED_SLUGS.includes(slugify(r.name)));
-    expect(clashes.map((r) => r.name)).toEqual([]);
+    const clashes = allRecipes.filter((r) => RESERVED_SLUGS.includes(r.id));
+    expect(clashes.map((r) => r.id)).toEqual([]);
   });
 });

@@ -153,7 +153,7 @@ export default function SearchBox({ recipes = [], onSelect }) {
           </div>
           <ul className={styles.resultsList}>
             {filtered.map((r, i) => (
-              <li key={r.name + '-' + i} className={i === 0 ? '' : styles.resultItem}>
+              <li key={r.id} className={i === 0 ? '' : styles.resultItem}>
                 <button onClick={() => handleSelect(r)} className={styles.resultButton}>
                   <div className={styles.resultName}>{highlightMatch(r.name, debq)}</div>
                 </button>

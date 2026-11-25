@@ -4,7 +4,7 @@ A small, searchable recipe book. Each recipe has ingredients you can check off a
 
 **Live site:** <https://grfinch.github.io/recipes/>
 
-Built with React 19 and Vite. It's a static site with no backend: all recipes live in [`src/recipes.json`](src/recipes.json).
+Built with React 19 and Vite. It's a static site with no backend: each recipe is a JSON file in [`src/recipes/`](src/recipes/).
 
 ## Getting started
 
@@ -32,7 +32,7 @@ The app is served from `/recipes/`, not `/`, to match its GitHub Pages address.
 
 ## Adding a recipe
 
-Add an object to the `recipes` array in `src/recipes.json`. The fields are described under "Recipe schema" in [`AGENTS.md`](AGENTS.md#architecture). Note that `ingredients` is a list of groups (an array of arrays), and the app draws a divider between groups.
+Ask Claude Code to add it: the `add-recipe` skill drafts the recipe from pasted text or a few questions, shows it to you, then saves it as `src/recipes/<id>.json` and opens a pull request. To add one by hand, create `src/recipes/<id>.json` with the fields described under "Recipe schema" in [`AGENTS.md`](AGENTS.md#architecture), then run `npm run validate:recipes`.
 
 ## Continuous integration and deploys
 

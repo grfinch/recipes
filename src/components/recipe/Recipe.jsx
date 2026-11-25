@@ -2,8 +2,8 @@ import useCheckedItems from '../../hooks/useCheckedItems';
 import RecipeSection from './RecipeSection';
 import styles from './recipe.module.css';
 
-export default function Recipe({ recipe: { name, ingredients, instructions, notes } }) {
-  const [checked, toggle, reset] = useCheckedItems(name);
+export default function Recipe({ recipe: { id, name, ingredients, instructions, notes } }) {
+  const [checked, toggle, reset] = useCheckedItems(id);
 
   return (
     <>

@@ -172,7 +172,8 @@ describe('Browse all recipes', () => {
   it('lists every recipe by name as a link to it, sorted by name', () => {
     window.history.replaceState(null, '', '#/browse');
     render(<App />);
-    const links = within(screen.getByRole('main')).getAllByRole('link');
+    const list = within(screen.getByRole('main')).getByRole('list');
+    const links = within(list).getAllByRole('link');
     expect(links.map((a) => [a.textContent, a.getAttribute('href')])).toEqual([
       ['Apple Crisp', '#/apple-crisp'],
       ['Lentil Stew', '#/lentil-stew'],
@@ -252,6 +253,43 @@ describe('Browse all recipes', () => {
     await user.type(screen.getByLabelText('Search recipes'), 'pasta');
     await user.click(await screen.findByRole('button', { name: 'Sausage Pasta' }));
     expect(screen.getByRole('heading', { level: 1, name: 'Sausage Pasta' })).toHaveFocus();
+  });
+});
+
+describe('Suggest a recipe', () => {
+  it('links to the suggest page from the footer and the browse page', () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    const footerLink = within(screen.getByRole('contentinfo')).getByRole('link', {
+      name: 'Suggest a recipe',
+    });
+    expect(footerLink).toHaveAttribute('href', '#/suggest');
+    expect(footerLink).not.toHaveAttribute('aria-current');
+    const main = within(screen.getByRole('main'));
+    expect(main.getByRole('link', { name: 'Suggest a recipe' })).toHaveAttribute(
+      'href',
+      '#/suggest',
+    );
+  });
+
+  it('opens from the footer link with its own title, focus, and aria-current', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const user = userEvent.setup();
+    render(<App />);
+    const footer = () => within(screen.getByRole('contentinfo'));
+    await user.click(footer().getByRole('link', { name: 'Suggest a recipe' }));
+    const heading = await screen.findByRole('heading', { level: 1, name: 'Suggest a recipe' });
+    expect(window.location.hash).toBe('#/suggest');
+    expect(document.title).toBe("Suggest a recipe | Twig's Cook Book");
+    expect(heading).toHaveFocus();
+    expect(footer().getByRole('link', { name: 'Suggest a recipe' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+
+    // Back to a recipe
+    await goToHash('#/lentil-stew');
+    expect(await screen.findByRole('heading', { level: 1, name: 'Lentil Stew' })).toHaveFocus();
   });
 });
 

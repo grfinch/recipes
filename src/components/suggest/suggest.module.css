@@ -1,0 +1,191 @@
+/* The suggest page. Text contrast is 4.5:1 or more and control borders 3:1 or more, on both
+   page backgrounds (#242424 dark, #ffffff light). --muted and --interactive-blue come from
+   listItems.module.css. */
+.page {
+  --error: #ff8a80; /* 7:1 on #242424 */
+  --button-bg: #4f46e5; /* white text on it: 6.3:1 */
+  --button-bg-hover: #4338ca;
+  max-width: 40rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .page {
+    --error: #b42318; /* 6.9:1 on #ffffff */
+  }
+}
+
+.intro {
+  font-size: 1.1rem;
+  margin-top: 0;
+}
+
+.form {
+  display: grid;
+  gap: 1.25rem;
+  margin-top: 1.5rem;
+}
+
+/* Course and cooking method side by side when there's room, stacked on phones */
+.pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.label {
+  font-weight: 600;
+}
+
+.optional {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+.hint {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.error {
+  margin: 0;
+  color: var(--error);
+  font-weight: 600;
+}
+
+/* 1rem text or more, so phones don't zoom in on focus */
+.control {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem 0.75rem;
+  border: 1px solid var(--muted);
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 1rem;
+}
+
+textarea.control {
+  resize: vertical;
+  min-height: 5rem;
+}
+
+/* Native options use the page's color scheme, so they stay readable in dark mode */
+select.control option {
+  background-color: Canvas;
+  color: CanvasText;
+}
+
+.control:focus-visible {
+  outline: 3px solid var(--interactive-blue);
+  outline-offset: 2px;
+}
+
+/* A thicker border as well as the color, so an error doesn't rely on color alone */
+.control[aria-invalid='true'] {
+  border: 2px solid var(--error);
+}
+
+.summary {
+  margin: 1.5rem 0 0;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--error);
+  border-radius: 8px;
+}
+
+.summary:focus-visible {
+  outline: 3px solid var(--interactive-blue);
+  outline-offset: 2px;
+}
+
+.summaryTitle {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.summaryList {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.privacy {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+
+.alert {
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--error);
+  border-radius: 8px;
+}
+
+.alert p {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.25rem;
+}
+
+.primaryButton,
+.secondaryButton {
+  padding: 0.625rem 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.primaryButton {
+  border: none;
+  background: var(--button-bg);
+  color: #ffffff;
+}
+
+.primaryButton:hover {
+  background: var(--button-bg-hover);
+}
+
+.primaryButton[aria-disabled='true'] {
+  cursor: progress;
+}
+
+.secondaryButton {
+  border: 1px solid var(--muted);
+  background: transparent;
+  color: inherit;
+}
+
+.secondaryButton:hover {
+  border-color: var(--interactive-blue);
+}
+
+.primaryButton:focus-visible,
+.secondaryButton:focus-visible {
+  outline: 3px solid var(--interactive-blue);
+  outline-offset: 2px;
+}
+
+.copied {
+  color: var(--muted);
+}
+
+/* Where the Turnstile widget appears. Focusable (tabIndex -1) only so the error summary can
+   point at it; the widget inside has its own focus styles. */
+.check:focus {
+  outline: none;
+}
+
+/* The honeypot: removed from layout, the tab order, and the accessibility tree */
+.honeypot {
+  display: none;
+}

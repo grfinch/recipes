@@ -4,7 +4,8 @@
 // Hashes for app pages rather than recipes. They are checked before any recipe lookup, so a
 // recipe whose name slugifies to one of these (say, "Browse") can't take over the page.
 export const BROWSE_HASH = '#/browse';
-export const RESERVED_SLUGS = ['browse'];
+export const SUGGEST_HASH = '#/suggest';
+export const RESERVED_SLUGS = ['browse', 'suggest'];
 
 // Turns a name into an id: lowercase, accents dropped, anything else becomes "-". Used once,
 // when a recipe is created. After that the id never changes, so a rename can't break links.
@@ -65,9 +66,11 @@ export function recipeFromHash(recipes, hash = window.location.hash) {
   return recipes.find((r) => r.id === slug) ?? null;
 }
 
-// What the hash asks to show: { page: 'browse', course?, method? }, { page: 'recipe', recipe },
-// or null. Plain #/browse is { page: 'browse' }; filter keys appear only when set.
+// What the hash asks to show: { page: 'browse', course?, method? }, { page: 'suggest' },
+// { page: 'recipe', recipe }, or null. Plain #/browse is { page: 'browse' }; filter keys appear
+// only when set.
 export function viewFromHash(recipes, hash = window.location.hash) {
+  if (slugFromHash(hash) === 'suggest') return { page: 'suggest' };
   if (slugFromHash(hash) === 'browse') {
     return { page: 'browse', ...browseFiltersFromQuery(recipes, splitHash(hash)[1]) };
   }
@@ -78,6 +81,7 @@ export function viewFromHash(recipes, hash = window.location.hash) {
 // The hash for a view. Browse filters go in a query, course first:
 // #/browse?course=Dinner&method=Slow+cooker
 export function hashForView(view) {
+  if (view.page === 'suggest') return SUGGEST_HASH;
   if (view.page !== 'browse') return hashFor(view.recipe);
   const params = new URLSearchParams();
   for (const param of Object.keys(BROWSE_FILTERS)) {

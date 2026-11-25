@@ -40,6 +40,11 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          # The suggest page's relay and spam check. Repo variables; while they're unset the
+          # page shows a link to GitHub issues instead of the form.
+          VITE_SUGGEST_ENDPOINT: ${{ vars.SUGGEST_ENDPOINT }}
+          VITE_TURNSTILE_SITE_KEY: ${{ vars.TURNSTILE_SITE_KEY }}
 
       # CSS and native browser behavior that jsdom can't test (focus outlines, contrast,
       # the checkmark, Escape in the search box). Uses the runner's installed Chrome.

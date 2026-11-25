@@ -3,6 +3,7 @@ import allRecipes from '../recipes/index.js';
 import {
   BROWSE_HASH,
   RESERVED_SLUGS,
+  SUGGEST_HASH,
   hashFor,
   hashForView,
   recipeFromHash,
@@ -39,6 +40,14 @@ describe('recipeHash', () => {
     expect(recipeFromHash(recipes, '#/')).toBeNull();
     expect(recipeFromHash(recipes, '#/pancakes')).toBeNull();
     expect(recipeFromHash(recipes, '#/%E0%A4%A')).toBeNull();
+  });
+
+  it('reads the suggest page from the hash, even if a recipe is named Suggest', () => {
+    const withSuggest = [...recipes, { id: 'suggest', name: 'Suggest' }];
+    expect(viewFromHash(withSuggest, '#/suggest')).toEqual({ page: 'suggest' });
+    expect(recipeFromHash(withSuggest, '#/suggest')).toBeNull();
+    expect(hashForView({ page: 'suggest' })).toBe(SUGGEST_HASH);
+    expect(RESERVED_SLUGS).toContain('suggest');
   });
 
   it('reads the browse page from the hash', () => {

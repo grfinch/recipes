@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { hashFor } from '../../utils/recipeHash';
+import { SUGGEST_HASH, hashFor } from '../../utils/recipeHash';
 import { filterOptions, matchesFilters } from '../../utils/recipeFilters';
 import BrowseFilters from './BrowseFilters';
 import styles from './browse.module.css';
@@ -69,6 +69,9 @@ export default function BrowseRecipes({
       ) : (
         <p>No recipes yet.</p>
       )}
+      <p className={styles.suggest}>
+        Don&apos;t see a favorite? <a href={SUGGEST_HASH}>Suggest a recipe</a>
+      </p>
     </>
   );
 }

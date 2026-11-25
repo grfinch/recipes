@@ -9,7 +9,11 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   const input = page.getByLabel('Search recipes');
   const main = page.getByRole('main');
   const h1 = page.getByRole('heading', { level: 1 });
-  const resultsList = page.getByRole('banner').getByRole('list');
+  // The search results: the header's list of buttons (the site nav is a list of links)
+  const resultsList = page
+    .getByRole('banner')
+    .getByRole('list')
+    .filter({ has: page.getByRole('button') });
   const firstName = (await h1.textContent()).trim();
 
   // 1. Native Escape: Chrome clears an <input type="search"> on Escape, and the app must

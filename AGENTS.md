@@ -8,7 +8,7 @@ This file provides guidance to AI coding agents working with code in this reposi
 - `npm run build`: production build to `dist/`
 - `npm run preview`: serve the built `dist/`
 - `npm run lint`: ESLint (flat config, `eslint.config.js`)
-- `npm run format` / `npm run format:check`: Prettier (single quotes, semicolons, 100 columns). Run `format` before committing; CI fails on unformatted files.
+- `npm run format` / `npm run format:check`: Prettier (single quotes, semicolons, 100 columns). CI fails on unformatted files; the pre-commit hook formats staged files for you.
 - `npm run validate:recipes`: check every recipe file in `src/recipes/` against the schema and allowed categories
 - `npm test`: run Vitest once (jsdom + React Testing Library); `npm run test:watch` for watch mode
 - `npx vitest run src/components/search` or `npx vitest run -t "Escape"`: run one file or one test by name
@@ -18,6 +18,12 @@ Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/tes
 **Windows:** run Vitest from a working directory with an uppercase drive letter (`C:\...`; in Git Bash, `cd /C/...` rather than `/c/...`). A lowercase `c:\` makes Vitest load the setup file as a separate module copy and fail with "failed to find the current suite". If it starts failing after switching paths, delete `node_modules/.vite` and `node_modules/.vitest-cache`.
 
 **Parallel agents:** each agent that runs the app or the browser flows (`.claude/skills/run-recipes/`) needs its own port and its own git worktree. Set a different `RECIPES_PORT` for each (5174, 5175, …), and leave 5173 for the main checkout. The driver reuses any dev server already on its port, even one serving another checkout or stale files, so a shared port can test the wrong code. Check that the driver prints "Started dev server", not "Reusing".
+
+**Git hooks** (husky, installed by `npm ci`/`npm install` through the `prepare` script):
+
+- `pre-commit` runs lint-staged (`lint-staged.config.js`) on the staged files: `eslint --fix` and `prettier --write`, with the fixes added to the commit, plus `npm run validate:recipes` when a recipe or `src/recipeCategories.json` is staged. A commit whose only change Prettier undoes is stopped as empty.
+- `pre-push` runs CI's `check` steps: lint, format check, recipe validation, tests, and build. It first moves to `git rev-parse --show-toplevel`, so Vitest gets an uppercase drive letter on Windows.
+- Don't bypass them with `--no-verify` to get past a failure; fix the cause.
 
 ## Deployment
 

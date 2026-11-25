@@ -1,0 +1,4 @@
+# Format and lint the staged files (fixes are added to the commit), and validate recipes
+# when a recipe file changes. Config: lint-staged.config.js. Runs one task at a time so
+# the recipe validator never reads a file Prettier is still rewriting.
+npx lint-staged --concurrent false

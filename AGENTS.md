@@ -19,6 +19,15 @@ Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/tes
 
 **Parallel agents:** each agent that runs the app or the browser flows (`.claude/skills/run-recipes/`) needs its own port and its own git worktree. Set a different `RECIPES_PORT` for each (5174, 5175, …), and leave 5173 for the main checkout. The driver reuses any dev server already on its port, even one serving another checkout or stale files, so a shared port can test the wrong code. Check that the driver prints "Started dev server", not "Reusing".
 
+**Worktrees:** make one only when work runs in parallel (two agents at once, or an agent working while someone uses the main checkout). Work done one task at a time just needs a branch. Use one worktree per branch, and reuse it until that branch's PR merges.
+
+- Put every worktree in `../recipes.worktrees/<branch-name>`, named after its branch. Never put one inside the repo (for example under `.claude/worktrees/`), because ESLint and Vitest would scan it. Claude Code's built-in worktree isolation does exactly that, and on Windows it also runs into the drive-letter problem above, so run `git worktree add` yourself.
+- Create it from an up-to-date `main`: `git fetch`, then `git worktree add ../recipes.worktrees/<branch> -b <branch> origin/main`.
+- In the new worktree, run `npm ci`. Copy `.env.local` from the main checkout if the work needs it (it's gitignored, so a new worktree doesn't have one, and the suggest page acts differently without it). Use your own `RECIPES_PORT`.
+- A branch can be checked out in only one worktree at a time.
+- After the PR merges, run `git worktree remove ../recipes.worktrees/<branch>`, then `git branch -d <branch>`. Don't delete the folder by hand. If one was deleted, `git worktree prune` clears the stale entry.
+- To find leftovers: `git fetch --prune`, `git worktree list`, and `git branch -vv` (a branch marked `: gone]` usually had its PR merged). Check `git status` in a worktree before removing it.
+
 **Git hooks** (husky, installed by `npm ci`/`npm install` through the `prepare` script):
 
 - `pre-commit` runs lint-staged (`lint-staged.config.js`) on the staged files: `eslint --fix` and `prettier --write`, with the fixes added to the commit, plus `npm run validate:recipes` when a recipe or `src/recipeCategories.json` is staged. A commit whose only change Prettier undoes is stopped as empty.

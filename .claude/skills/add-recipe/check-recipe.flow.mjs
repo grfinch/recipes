@@ -31,8 +31,14 @@ export default async function checkRecipe({ page, shot, check }) {
   const steps = await main.getByRole('listitem').getByRole('button').count();
   check('every ingredient is a checkbox', boxes === ingredientCount, `${boxes}/${ingredientCount}`);
   check('every step is a button', steps === stepCount, `${steps}/${stepCount}`);
+  // Numbering restarts in each group, so the last step's number is its own group's length
+  const lastGroupSize = recipe.instructions.at(-1).items.length;
   const lastStep = await main.getByRole('listitem').getByRole('button').last().textContent();
-  check('steps are numbered 1 to N', lastStep.trim().startsWith(`${stepCount}.`), lastStep.trim());
+  check(
+    'step numbers restart in each group',
+    lastStep.trim().startsWith(`${lastGroupSize}.`),
+    lastStep.trim(),
+  );
   const headings = await main.getByRole('heading', { level: 3 }).allTextContents();
   check(
     'group titles are headings',

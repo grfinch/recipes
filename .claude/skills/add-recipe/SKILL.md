@@ -59,7 +59,7 @@ If the working tree has unrelated changes, stop and ask. Adding several recipes 
 - **ingredients, instructions, notes:** each is an array of groups, `{ "title"?: string, "items": [string] }`, and every group needs at least one item.
   - Group ingredients by stage, the things that go in together. Group steps by the same stages where they line up. A recipe with no stages has a single group.
   - Give a group a `title` when the source has sections ("For the sauce:") or the stages are clear ("Sauté", "Pressure cook", "To finish"). Keep titles short, and use the same title for matching ingredient and step groups. Titles show as headings; untitled groups are set apart by a rule. Don't invent titles for a recipe that has only one group.
-  - Step numbers run straight through all groups, so never number steps yourself.
+  - Step numbers restart at 1 in each group, so never number steps yourself.
   - Never use `"---"` items; start a new group instead.
 - **notes:** optional. Use it for tips, substitutions, storage, and serving ideas, usually as one untitled group. Leave the field out instead of writing `[]`.
 
@@ -86,7 +86,7 @@ Don't do these:
 Show the recipe the way the app would show it, not as raw JSON:
 
 - The name, its id and link (`#/<id>`), the course, and the cooking method
-- Ingredients by group (with titles), steps numbered straight through by group, and notes
+- Ingredients by group (with titles), steps by group (numbered from 1 in each), and notes
 - "Changes I made:" with each cleanup change (`"stew meet" → "stew meat"`, `"tbsp" → "Tbsp"`), or "none"
 - Any new category value being added
 

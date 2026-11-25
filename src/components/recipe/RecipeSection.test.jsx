@@ -28,7 +28,7 @@ describe('RecipeSection', () => {
   });
 
   // jsdom joins the number and text without a space ("1.Heat"); browsers add one.
-  it('numbers steps straight through every group', () => {
+  it('restarts step numbers at 1 in each group', () => {
     render(
       <RecipeSection
         header="Instructions"
@@ -38,8 +38,9 @@ describe('RecipeSection', () => {
       />,
     );
     expect(screen.getByRole('button', { name: /^1\.\s*Heat the oil$/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^3\.\s*Add broth$/ })).toBeInTheDocument();
-    expect(screen.getByRole('button', { name: /^4\.\s*Simmer$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^2\.\s*Add onion$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^1\.\s*Add broth$/ })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /^2\.\s*Simmer$/ })).toBeInTheDocument();
   });
 
   it('shows group titles as headings under the section heading', () => {

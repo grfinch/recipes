@@ -46,7 +46,7 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 
 `course` and `cookingMethod` must be values listed in `src/recipeCategories.json`. `scripts/validate-recipes.mjs` (`npm run validate:recipes`, also run in CI) checks every recipe file: valid JSON, required fields, unknown fields, the id's format and that it matches the file name, duplicate ids and names, reserved ids, and the group shape (no empty groups or titles, no unknown group fields, no leftover `"---"` items). To add a recipe, use the `add-recipe` skill (`.claude/skills/add-recipe/`), which drafts, validates, and opens a PR.
 
-**Rendering lists:** `RecipeSection` takes a section's `groups` and renders, under its `h2`, each group's optional `h3` title and its own list. Steps are numbered straight through the section, not restarted in each group. It picks the item component from the `ordered` and `clickable` props:
+**Rendering lists:** `RecipeSection` takes a section's `groups` and renders, under its `h2`, each group's optional `h3` title and its own list. Step numbers restart at 1 in each group, so each stage ("Sauté", "Pressure cook") counts its own steps. It picks the item component from the `ordered` and `clickable` props:
 
 - `CheckboxItem`: unordered and clickable (ingredients)
 - `NumberedClickableItem`: ordered and clickable (instructions)

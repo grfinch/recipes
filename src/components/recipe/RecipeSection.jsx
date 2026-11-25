@@ -13,11 +13,6 @@ export default function RecipeSection({
   checked = new Set(),
   onToggle = () => {},
 }) {
-  // Steps are numbered straight through the section, not restarted in each group.
-  const firstNumber = groups.map((_, g) =>
-    groups.slice(0, g).reduce((count, group) => count + group.items.length, 1),
-  );
-
   function renderListItem(item, iIdx, gIdx) {
     // Position-based key: item text can repeat (e.g. "1 tsp salt" twice). The list
     // never reorders, and App remounts Recipe per recipe, so position is stable.
@@ -27,7 +22,8 @@ export default function RecipeSection({
     const id = `${header}:${key}`;
     const props = { item, checked: checked.has(id), onToggle: () => onToggle(id) };
     return ordered ? (
-      <NumberedClickableItem key={key} index={firstNumber[gIdx] + iIdx} {...props} />
+      // Numbering restarts at 1 in each group (each stage, like "Sauté" or "Pressure cook")
+      <NumberedClickableItem key={key} index={iIdx + 1} {...props} />
     ) : (
       <CheckboxItem key={key} {...props} />
     );

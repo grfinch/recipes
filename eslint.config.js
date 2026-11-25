@@ -8,7 +8,8 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
-  globalIgnores(['dist', 'coverage']),
+  // relay/.wrangler: wrangler's generated bundles (gitignored, but ESLint doesn't read .gitignore)
+  globalIgnores(['dist', 'coverage', 'relay/.wrangler']),
 
   // Every JavaScript file
   {

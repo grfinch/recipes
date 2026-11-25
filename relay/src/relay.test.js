@@ -1,5 +1,5 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { MAX_BODY_BYTES, fenced, handle, issueBody, issueTitle, neutralize } from './index.js';
+import { MAX_BODY_BYTES, fenced, handle, issueBody, issueTitle, neutralize } from './relay.js';
 
 const ORIGIN = 'https://grfinch.github.io';
 const env = {

@@ -1,0 +1,27 @@
+{
+  "id": "mother-goose-popcorn",
+  "name": "Mother Goose Popcorn",
+  "course": "Snack",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "2 1/2 cups powdered sugar",
+        "1 cup sugar",
+        "1/2 cup plus 1 Tbsp milk",
+        "1 tsp vanilla",
+        "1 Tbsp butter",
+        "Food coloring",
+        "8 cups popped popcorn"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix all ingredients together and boil for 2 minutes.",
+        "Pour over 8 cups popped popcorn."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "id": "sugar-cookie-bars",
+  "name": "Sugar Cookie Bars",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Bars",
+      "items": [
+        "2 1/2 cups all-purpose flour",
+        "1 tsp baking powder",
+        "1/2 tsp salt",
+        "1/2 cup butter, softened",
+        "1 cup granulated sugar",
+        "1 egg",
+        "1 egg white",
+        "1 1/2 Tbsp sour cream",
+        "1 tsp vanilla extract"
+      ]
+    },
+    {
+      "title": "Vanilla frosting",
+      "items": [
+        "1/4 cup unsalted butter, softened",
+        "2 cups powdered sugar",
+        "2-3 Tbsp milk",
+        "1/2 tsp vanilla",
+        "1/8 tsp salt",
+        "Any color of food coloring (optional)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Bars",
+      "items": [
+        "Preheat oven to 375°F. Grease a 9x13-inch pan and set aside.",
+        "In a large mixing bowl combine flour, baking powder and salt and set aside.",
+        "In a stand mixer or with beaters, cream together butter and sugar until fluffy, about 3 minutes.",
+        "Combine egg, egg white, sour cream and vanilla. Mix together until fully incorporated.",
+        "Add the dry ingredients until all is fully combined.",
+        "Gently press the dough into the bottom of your 9x13-inch pan.",
+        "Bake for 17-20 minutes until the edges are lightly golden and toothpick entered in the center is clean.",
+        "Let completely cool and frost."
+      ]
+    },
+    {
+      "title": "Vanilla frosting",
+      "items": [
+        "Whip together butter, powdered sugar, and milk until fluffy.",
+        "Add vanilla. Add food coloring if using.",
+        "Spread on the top of the cooled bars."
+      ]
+    }
+  ]
+}

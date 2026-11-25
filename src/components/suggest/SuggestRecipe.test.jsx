@@ -180,6 +180,55 @@ describe('SuggestRecipe', () => {
     );
   });
 
+  it('clears the whole form and its draft, after asking first', async () => {
+    mockFetch();
+    const user = userEvent.setup();
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
+    expect(screen.queryByRole('button', { name: 'Clear form' })).not.toBeInTheDocument();
+
+    await fillRequired(user);
+    await user.selectOptions(screen.getByRole('combobox', { name: /^Course/ }), 'Soup');
+    await user.click(screen.getByRole('button', { name: 'Clear form' }));
+
+    // Asks in place, with focus on the confirm button inside a named group
+    const question = screen.getByRole('group', { name: /Clear everything you've typed?/ });
+    const yes = within(question).getByRole('button', { name: 'Yes, clear the form' });
+    expect(yes).toHaveFocus();
+
+    // "Keep it" changes nothing and returns focus to Clear form
+    await user.click(within(question).getByRole('button', { name: 'Keep it' }));
+    expect(screen.getByRole('button', { name: 'Clear form' })).toHaveFocus();
+    expect(screen.getByRole('textbox', { name: 'Recipe name' })).toHaveValue('Grandma Soup');
+
+    await user.click(screen.getByRole('button', { name: 'Clear form' }));
+    await user.click(screen.getByRole('button', { name: 'Yes, clear the form' }));
+    expect(screen.getByRole('heading', { level: 1, name: 'Suggest a recipe' })).toHaveFocus();
+    for (const name of ['Recipe name', 'Ingredients', 'Steps']) {
+      expect(screen.getByRole('textbox', { name })).toHaveValue('');
+    }
+    expect(screen.getByRole('combobox', { name: /^Course/ })).toHaveValue('');
+    expect(localStorage.getItem(DRAFT_KEY)).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Clear form' })).not.toBeInTheDocument();
+  });
+
+  it('clears the errors along with the text', async () => {
+    mockFetch();
+    const user = userEvent.setup();
+    render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
+    await user.type(screen.getByRole('textbox', { name: 'Recipe name' }), 'Soup');
+    await user.click(screen.getByRole('button', { name: 'Send suggestion' }));
+    expect(screen.getByRole('heading', { name: /problems with your suggestion/ })).toBeVisible();
+
+    await user.click(screen.getByRole('button', { name: 'Clear form' }));
+    await user.click(screen.getByRole('button', { name: 'Yes, clear the form' }));
+    expect(
+      screen.queryByRole('heading', { name: /problems with your suggestion/ }),
+    ).not.toBeInTheDocument();
+    expect(screen.getByRole('textbox', { name: 'Recipe name' })).not.toHaveAttribute(
+      'aria-invalid',
+    );
+  });
+
   describe('with the spam check', () => {
     function fakeTurnstile({ pass }) {
       const widget = { callback: null };

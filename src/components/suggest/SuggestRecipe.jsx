@@ -97,6 +97,12 @@ export default function SuggestRecipe({
       turnstileSiteKey={turnstileSiteKey}
       headingRef={headingRef}
       onSent={() => show(() => setSent(true))}
+      onClear={() =>
+        show(() => {
+          saveDraft(EMPTY_SUGGESTION);
+          setFormKey((k) => k + 1);
+        })
+      }
     />
   );
 }
@@ -116,12 +122,15 @@ function NotSetUp() {
   );
 }
 
-function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent }) {
+function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent, onClear }) {
   const [values, setValues] = useState(loadDraft);
   const [attempted, setAttempted] = useState(false); // errors show only after the first Send
   const [status, setStatus] = useState('editing'); // 'editing' | 'sending' | 'failed'
   const [copied, setCopied] = useState(false);
+  const [confirmingClear, setConfirmingClear] = useState(false);
   const summaryRef = useRef(null);
+  const clearRef = useRef(null);
+  const confirmClearRef = useRef(null);
   const honeypotRef = useRef(null);
   const {
     containerRef: checkRef,
@@ -151,6 +160,7 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent }) {
     ...(checkError ? [{ id: idFor('check'), message: checkError }] : []),
   ];
   const sending = status === 'sending';
+  const hasText = Object.values(values).some((v) => v.trim() !== '');
   const canCopy = typeof navigator !== 'undefined' && Boolean(navigator.clipboard?.writeText);
 
   function update(name, value) {
@@ -180,6 +190,19 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent }) {
       setStatus('failed');
       resetCheck(); // the token was used up
     }
+  }
+
+  // Clearing asks first, in place: the question takes the Clear button's spot and gets focus.
+  // "Keep it" puts focus back on Clear form. Clearing itself (onClear) starts a fresh form,
+  // draft and spam check, and focuses the h1.
+  function askToClear() {
+    flushSync(() => setConfirmingClear(true));
+    confirmClearRef.current?.focus();
+  }
+
+  function keepText() {
+    flushSync(() => setConfirmingClear(false));
+    clearRef.current?.focus();
   }
 
   async function copyRecipe() {
@@ -344,6 +367,44 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent }) {
             {copied ? 'Copied.' : ''}
           </span>
         </div>
+
+        {hasText && !sending ? (
+          confirmingClear ? (
+            <div
+              role="group"
+              aria-labelledby={idFor('clear-question')}
+              className={styles.clearConfirm}
+            >
+              <p id={idFor('clear-question')} className={styles.clearQuestion}>
+                Clear everything you&apos;ve typed? This can&apos;t be undone.
+              </p>
+              <div className={styles.actions}>
+                <button
+                  type="button"
+                  ref={confirmClearRef}
+                  className={styles.secondaryButton}
+                  onClick={onClear}
+                >
+                  Yes, clear the form
+                </button>
+                <button type="button" className={styles.secondaryButton} onClick={keepText}>
+                  Keep it
+                </button>
+              </div>
+            </div>
+          ) : (
+            <div>
+              <button
+                type="button"
+                ref={clearRef}
+                className={styles.secondaryButton}
+                onClick={askToClear}
+              >
+                Clear form
+              </button>
+            </div>
+          )
+        ) : null}
       </form>
     </div>
   );

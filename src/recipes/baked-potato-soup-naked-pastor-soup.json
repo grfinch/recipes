@@ -1,0 +1,39 @@
+{
+  "id": "baked-potato-soup-naked-pastor-soup",
+  "name": "Baked Potato Soup (Naked Pastor Soup)",
+  "course": "Soup",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "6-8 slices bacon",
+        "1 cup diced onion",
+        "2/3 cup flour",
+        "6 cups hot chicken stock",
+        "2 cups cream",
+        "4 cups baked cubed potatoes",
+        "1 1/2 tsp basil",
+        "1 1/2 tsp garlic powder",
+        "1 1/2 tsp parsley",
+        "1 1/2 tsp red pepper sauce",
+        "1 tsp salt",
+        "1 tsp pepper",
+        "1 cup shredded cheese",
+        "1/4 cup diced green onions"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Cook bacon crisp and reserve drippings.",
+        "In bacon drippings, cook onion until tender.",
+        "Add flour, stirring and cooking until mixture turns golden.",
+        "Gradually add hot chicken stock, stirring to prevent lumps, and cook and stir until bubbly and slightly thickened.",
+        "Add cream, potatoes, spices, and salt and pepper. Simmer (do not boil) for 10 minutes.",
+        "Turn off heat and add cheese and green onions.",
+        "Garnish with some additional bacon, cheese, and green onions, if desired."
+      ]
+    }
+  ]
+}

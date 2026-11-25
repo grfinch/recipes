@@ -1,0 +1,35 @@
+{
+  "id": "homemade-big-hunk",
+  "name": "Homemade Big Hunk",
+  "course": "Dessert",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "Non-stick spray",
+        "3 cups dry roasted peanuts (about 18 oz)",
+        "3 jars (7 oz each) marshmallow cream",
+        "2 1/4 cups light corn syrup",
+        "2 1/4 cups sugar",
+        "6 Tbsp butter",
+        "1 1/2 tsp vanilla",
+        "1/4 tsp salt"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Spray 11x17 baking sheet, with edges, with non-stick spray; sprinkle with peanuts, set aside.",
+        "Place marshmallow cream in large mixing bowl, set aside.",
+        "Combine corn syrup and sugar in saucepan; place over medium heat, stir constantly until mixture comes to a boil.",
+        "Remove spoon; using a candy thermometer cook syrup to 280°F or to a soft crack stage (syrup will make a soft crack sound when dropped into cold water and is hard but pliable when picked up with the fingers).",
+        "Remove syrup from heat and allow to cool 2 minutes.",
+        "Pour syrup over marshmallow cream (do not scrape pan), add butter, vanilla and salt; fold ingredients together using a wooden spoon.",
+        "Pour over peanuts and spread evenly on prepared pan.",
+        "Allow nougat to stand at room temperature for 3 hours or until firm.",
+        "Cut into bite-size pieces and wrap in wax paper or cellophane."
+      ]
+    }
+  ]
+}

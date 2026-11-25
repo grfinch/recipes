@@ -1,0 +1,40 @@
+{
+  "id": "sea-salt-caramel-chip-chocolate-cookies",
+  "name": "Sea Salt Caramel Chip Chocolate Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1/2 cup butter or margarine (1 stick), softened",
+        "3/4 cup light brown sugar, packed",
+        "1/2 cup granulated sugar",
+        "1 tsp vanilla extract",
+        "2 eggs",
+        "1-1/2 cups all-purpose flour",
+        "1/2 cup Hershey's cocoa",
+        "1/2 tsp baking soda",
+        "1/4 tsp salt",
+        "1-2/3 cups Hershey's sea salt caramel flavored baking chips (10-oz pkg)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Heat oven to 350°F. Line cookie sheet with parchment paper or lightly grease.",
+        "Beat butter, brown sugar, granulated sugar and vanilla in large bowl until well blended. Add eggs; beat well.",
+        "Stir together flour, cocoa, baking soda and salt; gradually blend into butter mixture, blending well.",
+        "Stir in caramel chips.",
+        "Drop by rounded teaspoons onto prepared cookie sheet.",
+        "Bake 7 to 9 minutes or until cookie is set. Do not over bake.",
+        "Cool slightly; remove from cookie sheet to wire rack. Cool completely."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes about 4 dozen cookies."]
+    }
+  ]
+}

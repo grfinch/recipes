@@ -1,34 +1,50 @@
 // Browser check for a newly added recipe: opens its link and checks what renders.
-// Run through the run-recipes driver with the recipe's slug and name:
-//   RECIPE_SLUG=my-recipe RECIPE_NAME="My Recipe" \
+// Run through the run-recipes driver from the repo root, with the recipe's id:
+//   RECIPE_ID=my-recipe \
 //     node .claude/skills/run-recipes/driver.mjs .claude/skills/add-recipe/check-recipe.flow.mjs
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import path from 'node:path';
 
 export default async function checkRecipe({ page, shot, check }) {
-  const slug = process.env.RECIPE_SLUG;
-  const name = process.env.RECIPE_NAME;
-  if (!slug || !name) throw new Error('Set RECIPE_SLUG and RECIPE_NAME');
+  const id = process.env.RECIPE_ID;
+  if (!id) throw new Error('Set RECIPE_ID to the recipe id (its file name without .json)');
 
-  const { recipes } = JSON.parse(
-    readFileSync(new URL('../../../src/recipes.json', import.meta.url), 'utf8'),
-  );
-  const recipe = recipes.find((r) => r.name === name);
-  check('recipe is in recipes.json', Boolean(recipe), name);
-  if (!recipe) return;
+  const file = path.resolve('src/recipes', `${id}.json`);
+  check('recipe file exists', existsSync(file), `src/recipes/${id}.json`);
+  if (!existsSync(file)) return;
+  const recipe = JSON.parse(readFileSync(file, 'utf8'));
 
-  await page.goto(`${page.url().split('#')[0]}#/${slug}`);
+  await page.goto(`${page.url().split('#')[0]}#/${id}`);
   await page.reload(); // load straight from the link, as a shared link would
   const h1 = page.getByRole('heading', { level: 1 });
   await h1.waitFor();
-  check('its link opens it', (await h1.textContent()).trim() === name, `#/${slug}`);
+  check('its link opens it', (await h1.textContent()).trim() === recipe.name, `#/${id}`);
 
   const main = page.getByRole('main');
-  const ingredientCount = recipe.ingredients.flat().length;
-  const stepCount = recipe.instructions.filter((s) => !s.trim().startsWith('-')).length;
+  const count = (groups) => groups.reduce((n, g) => n + g.items.length, 0);
+  const ingredientCount = count(recipe.ingredients);
+  const stepCount = count(recipe.instructions);
+  const titles = [...recipe.ingredients, ...recipe.instructions, ...(recipe.notes ?? [])]
+    .map((g) => g.title)
+    .filter(Boolean);
   const boxes = await main.getByRole('checkbox').count();
   const steps = await main.getByRole('listitem').getByRole('button').count();
   check('every ingredient is a checkbox', boxes === ingredientCount, `${boxes}/${ingredientCount}`);
   check('every step is a button', steps === stepCount, `${steps}/${stepCount}`);
+  // Numbering restarts in each group, so the last step's number is its own group's length
+  const lastGroupSize = recipe.instructions.at(-1).items.length;
+  const lastStep = await main.getByRole('listitem').getByRole('button').last().textContent();
+  check(
+    'step numbers restart in each group',
+    lastStep.trim().startsWith(`${lastGroupSize}.`),
+    lastStep.trim(),
+  );
+  const headings = await main.getByRole('heading', { level: 3 }).allTextContents();
+  check(
+    'group titles are headings',
+    titles.every((t) => headings.includes(t)),
+    headings.join(', '),
+  );
 
-  await page.screenshot({ path: shot(`add-recipe-${slug}.png`), fullPage: true });
+  await page.screenshot({ path: shot(`add-recipe-${id}.png`), fullPage: true });
 }

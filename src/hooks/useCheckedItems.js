@@ -20,11 +20,12 @@ function save(storageKey, ids) {
   }
 }
 
-// Checked item ids for one recipe, saved in localStorage so they survive a reload.
-// Returns [checkedIds, toggle(id), reset()]. The recipe name is read only on mount,
+// Checked item ids for one recipe, saved in localStorage so they survive a reload. Keyed by
+// the recipe's permanent id, so renaming a recipe keeps its saved checks.
+// Returns [checkedIds, toggle(id), reset()]. The recipe id is read only on mount,
 // so give the component a key per recipe (App does) to load another recipe's state.
-export default function useCheckedItems(recipeName) {
-  const storageKey = STORAGE_PREFIX + recipeName;
+export default function useCheckedItems(recipeId) {
+  const storageKey = STORAGE_PREFIX + recipeId;
   const [checked, setChecked] = useState(() => load(storageKey));
 
   function update(next) {

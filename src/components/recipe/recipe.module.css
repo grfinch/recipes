@@ -30,3 +30,23 @@
   outline: 3px solid var(--interactive-blue);
   outline-offset: 2px;
 }
+
+/* Groups within a section (e.g. "For the sauce"). Later groups get space above them, and
+   untitled ones also get a dashed rule, so a new group is visible without a heading. */
+.group + .group,
+.group + .untitledGroup,
+.untitledGroup + .group,
+.untitledGroup + .untitledGroup {
+  margin-top: 0.75rem;
+}
+
+.untitledGroup + .untitledGroup,
+.group + .untitledGroup {
+  padding-top: 0.25rem;
+  border-top: 1px dashed var(--muted);
+}
+
+.groupTitle {
+  margin: 0.5rem 0 0.25rem 1rem;
+  font-size: 1.05rem;
+}

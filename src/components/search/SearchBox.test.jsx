@@ -5,15 +5,17 @@ import SearchBox from './SearchBox';
 
 const recipes = [
   {
+    id: 'lentil-stew',
     name: 'Lentil Stew',
-    ingredients: [['1 cup lentils', '1 carrot']],
-    instructions: ['Simmer everything'],
+    ingredients: [{ items: ['1 cup lentils', '1 carrot'] }],
+    instructions: [{ items: ['Simmer everything'] }],
   },
   {
+    id: 'pancakes',
     name: 'Pancakes',
-    ingredients: [['2 cups flour', '1 egg']],
-    instructions: ['Whisk and fry'],
-    notes: ['Great with maple syrup'],
+    ingredients: [{ items: ['2 cups flour', '1 egg'] }],
+    instructions: [{ items: ['Whisk and fry'] }],
+    notes: [{ items: ['Great with maple syrup'] }],
   },
 ];
 

@@ -2,8 +2,8 @@ import useCheckedItems from '../../hooks/useCheckedItems';
 import RecipeSection from './RecipeSection';
 import styles from './recipe.module.css';
 
-export default function Recipe({ recipe: { name, ingredients, instructions, notes } }) {
-  const [checked, toggle, reset] = useCheckedItems(name);
+export default function Recipe({ recipe: { id, name, ingredients, instructions, notes } }) {
+  const [checked, toggle, reset] = useCheckedItems(id);
 
   return (
     <>
@@ -13,7 +13,7 @@ export default function Recipe({ recipe: { name, ingredients, instructions, note
       </button>
       <RecipeSection
         header={'Ingredients'}
-        listItems={ingredients}
+        groups={ingredients}
         ordered={false}
         clickable={true}
         checked={checked}
@@ -21,14 +21,14 @@ export default function Recipe({ recipe: { name, ingredients, instructions, note
       />
       <RecipeSection
         header={'Instructions'}
-        listItems={instructions}
+        groups={instructions}
         ordered={true}
         clickable={true}
         checked={checked}
         onToggle={toggle}
       />
       {notes?.length > 0 ? (
-        <RecipeSection header={'Notes'} listItems={notes} ordered={false} clickable={false} />
+        <RecipeSection header={'Notes'} groups={notes} ordered={false} clickable={false} />
       ) : null}
     </>
   );

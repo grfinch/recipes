@@ -1,13 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
-import recipesData from './recipes.json';
+import allRecipes from './recipes/index.js';
 import BrowseRecipes from './components/browse/BrowseRecipes';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
 import { BROWSE_HASH, hashForView, viewFromHash } from './utils/recipeHash';
 
-const allRecipes = Array.isArray(recipesData?.recipes) ? recipesData.recipes : [];
 const SITE_TITLE = "Twig's Cook Book";
 
 function randomRecipeView() {
@@ -78,7 +77,7 @@ function App() {
           <BrowseRecipes recipes={allRecipes} />
         ) : view ? (
           // key: a new recipe remounts, so its own saved checklist loads
-          <Recipe key={view.recipe.name} recipe={view.recipe} />
+          <Recipe key={view.recipe.id} recipe={view.recipe} />
         ) : (
           <p>No recipes yet.</p>
         )}

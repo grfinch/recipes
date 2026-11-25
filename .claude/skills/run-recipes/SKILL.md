@@ -24,13 +24,13 @@ node .claude/skills/run-recipes/driver.mjs path/to/my-flow.mjs
 
 It prints `PASS`/`FAIL` per check and exits non-zero if any check fails. Screenshots go to `.claude/skills/run-recipes/shots/` (gitignored); open and look at them. Every run also checks that there are no console errors.
 
-| Option                   | Effect                                                                                                                                                      |
-| ------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `smoke` (default)        | Loads the page, searches "pasta", opens it, checks an ingredient.                                                                                           |
-| `regression`             | Counter, native Escape, focus return, accessible step names, checked state across recipes, checkmark and focus styles, hidden dividers, React key warnings. |
-| `--random`               | Keep the app's random first recipe. By default `Math.random()` returns 0, so the page opens on the first recipe (Instant-pot Lentil Stew).                  |
-| `RECIPES_PORT=5174`      | Use another port. Use this when 5173 is serving something else.                                                                                             |
-| `BROWSER_CHANNEL=msedge` | Use Edge instead of Chrome.                                                                                                                                 |
+| Option                   | Effect                                                                                                                                                              |
+| ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `smoke` (default)        | Loads the page, searches "lentil", opens it, checks an ingredient.                                                                                                  |
+| `regression`             | Counter, native Escape, focus return, accessible step names, checked state across recipes, checkmark and focus styles, no `---` separator text, React key warnings. |
+| `--random`               | Keep the app's random first recipe. By default `Math.random()` returns 0, so the page opens on the first recipe by name (Instant-pot Creamy Sausage Pasta).         |
+| `RECIPES_PORT=5174`      | Use another port. Use this when 5173 is serving something else.                                                                                                     |
+| `BROWSER_CHANNEL=msedge` | Use Edge instead of Chrome.                                                                                                                                         |
 
 **To check a change in the browser, write a flow.** A flow is a `.mjs` file with a default export:
 

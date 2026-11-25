@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import useDebounce from '../../hooks/useDebounce';
+import { matchesQuery } from '../../utils/recipeSearch';
 import styles from './search.module.css';
 
 export default function SearchBox({ recipes = [], onSelect }) {
@@ -20,21 +21,7 @@ export default function SearchBox({ recipes = [], onSelect }) {
 
   // Results come from the settled (debounced) query only. While the user is still
   // typing, this keeps the previous results instead of flashing an empty list.
-  let filtered = [];
-  if (debq) {
-    filtered = recipes.filter((r) => {
-      if (!r) return false;
-      const name = String(r.name || '').toLowerCase();
-      if (name.includes(debq)) return true;
-      const ingredients = Array.isArray(r.ingredients) ? r.ingredients.join(' ') : '';
-      if (String(ingredients).toLowerCase().includes(debq)) return true;
-      const instructions = Array.isArray(r.instructions) ? r.instructions.join(' ') : '';
-      if (String(instructions).toLowerCase().includes(debq)) return true;
-      const notes = Array.isArray(r.notes) ? r.notes.join(' ') : '';
-      if (String(notes).toLowerCase().includes(debq)) return true;
-      return false;
-    });
-  }
+  const filtered = debq ? recipes.filter((r) => matchesQuery(r, debq)) : [];
 
   // Only show a count when there's text in the box and a settled search to count.
   // An empty box (on load, or after Escape clears it natively) shows nothing.
@@ -153,7 +140,7 @@ export default function SearchBox({ recipes = [], onSelect }) {
           </div>
           <ul className={styles.resultsList}>
             {filtered.map((r, i) => (
-              <li key={r.name + '-' + i} className={i === 0 ? '' : styles.resultItem}>
+              <li key={r.id} className={i === 0 ? '' : styles.resultItem}>
                 <button onClick={() => handleSelect(r)} className={styles.resultButton}>
                   <div className={styles.resultName}>{highlightMatch(r.name, debq)}</div>
                 </button>

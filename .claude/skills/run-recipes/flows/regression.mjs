@@ -1,7 +1,7 @@
 // Browser checks for behavior jsdom can't reproduce, plus the bug fixes from Nov 2026:
 // native Escape clearing, the result counter, focus handling, accessible step names,
 // checked state across recipes, and React key warnings. Expects the default
-// (non --random) start on the first recipe, Instant-pot Lentil Stew.
+// (non --random) start on the first recipe by name, Instant-pot Creamy Sausage Pasta.
 export default async function regression({ page, shot, check, consoleMsgs }) {
   const input = page.getByLabel('Search recipes');
   const status = page.getByRole('status');
@@ -13,8 +13,9 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   const main = page.getByRole('main');
   // Step buttons sit in list items; "Reset checklist" is a button outside the lists.
   const stepOne = main.getByRole('listitem').getByRole('button').first();
-  const STEW = 'Instant-pot Lentil Stew';
-  const PASTA = 'Instant-pot Creamy Sausage Pasta';
+  // FIRST opens on load (recipes are sorted by name); the flow then switches to OTHER
+  const FIRST = 'Instant-pot Creamy Sausage Pasta';
+  const OTHER = 'Instant-pot Lentil Stew';
 
   // Record every text the counter shows, so a brief "0 results" flash can't hide.
   await page.evaluate(() => {
@@ -28,7 +29,7 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
 
   check(
     'starts on the first recipe',
-    (await page.getByRole('heading', { level: 1 }).textContent()).trim() === STEW,
+    (await page.getByRole('heading', { level: 1 }).textContent()).trim() === FIRST,
   );
 
   // Result counter
@@ -54,20 +55,20 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   check('results closed after Escape in the input', (await resultsList.count()) === 0);
 
   // Escape from a focused result: SearchBox's own handler
-  await input.pressSequentially('pasta', { delay: 30 });
-  await page.getByRole('button', { name: PASTA }).waitFor();
+  await input.pressSequentially('lentil', { delay: 30 });
+  await page.getByRole('button', { name: OTHER }).waitFor();
   await page.keyboard.press('Tab');
   const focused = await page.evaluate(() => document.activeElement?.textContent?.trim());
   check(
     'Tab moves focus into the results',
-    focused === PASTA,
+    focused === OTHER,
     `focused: ${JSON.stringify(focused)}`,
   );
   await page.keyboard.press('Escape');
   await page.waitForTimeout(400);
   check('Escape from a result closes the overlay', (await resultsList.count()) === 0);
   check('focus returns to the input', await input.evaluate((el) => el === document.activeElement));
-  check('search text kept', (await input.inputValue()) === 'pasta');
+  check('search text kept', (await input.inputValue()) === 'lentil');
   await input.fill('');
 
   // Accessible names from Chrome's accessibility tree
@@ -92,9 +93,9 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   const h1Left = () =>
     page.getByRole('heading', { level: 1 }).evaluate((el) => el.getBoundingClientRect().left);
   const leftBefore = await h1Left();
-  await input.pressSequentially('sausage', { delay: 30 });
-  await page.getByRole('button', { name: PASTA }).click();
-  await page.getByRole('heading', { level: 1, name: PASTA }).waitFor();
+  await input.pressSequentially('stew', { delay: 30 });
+  await page.getByRole('button', { name: OTHER }).click();
+  await page.getByRole('heading', { level: 1, name: OTHER }).waitFor();
   const leftAfter = await h1Left();
   check(
     'content left edge stays put when switching recipe',
@@ -147,7 +148,7 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   await page.screenshot({ path: shot('regression-5-focus.png') });
 
   const snapshot = await main.ariaSnapshot();
-  check('dividers are hidden from screen readers', !snapshot.includes('---'));
+  check('no "---" separator text between groups', !snapshot.includes('---'));
 
   // Contrast of muted UI in both color schemes (WCAG: text 4.5:1, UI borders 3:1)
   for (const scheme of ['light', 'dark']) {

@@ -4,28 +4,29 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 
 // Two recipes that share an ingredient and a step, like the real data does.
-vi.mock('./recipes.json', () => ({
-  default: {
-    recipes: [
-      {
-        name: 'Lentil Stew',
-        ingredients: [['1 Tbsp olive oil', '1 cup lentils']],
-        instructions: ['Heat the oil', 'Simmer'],
-      },
-      {
-        name: 'Sausage Pasta',
-        ingredients: [['1 Tbsp olive oil', '1 lb sausage']],
-        instructions: ['Heat the oil', 'Boil pasta'],
-      },
-      {
-        name: 'Apple Crisp',
-        course: 'Dessert',
-        cookingMethod: 'Oven',
-        ingredients: [['4 apples', '1 cup oats']],
-        instructions: ['Bake'],
-      },
-    ],
-  },
+vi.mock('./recipes/index.js', () => ({
+  default: [
+    {
+      id: 'lentil-stew',
+      name: 'Lentil Stew',
+      ingredients: [{ items: ['1 Tbsp olive oil', '1 cup lentils'] }],
+      instructions: [{ items: ['Heat the oil', 'Simmer'] }],
+    },
+    {
+      id: 'sausage-pasta',
+      name: 'Sausage Pasta',
+      ingredients: [{ items: ['1 Tbsp olive oil', '1 lb sausage'] }],
+      instructions: [{ items: ['Heat the oil', 'Boil pasta'] }],
+    },
+    {
+      id: 'apple-crisp',
+      name: 'Apple Crisp',
+      course: 'Dessert',
+      cookingMethod: 'Oven',
+      ingredients: [{ items: ['4 apples', '1 cup oats'] }],
+      instructions: [{ items: ['Bake'] }],
+    },
+  ],
 }));
 
 afterEach(() => vi.restoreAllMocks());
@@ -100,7 +101,7 @@ describe('App', () => {
 
   it('starts fresh when saved checklist data is corrupt', () => {
     vi.spyOn(Math, 'random').mockReturnValue(0);
-    localStorage.setItem('recipes:checked:Lentil Stew', '{not json');
+    localStorage.setItem('recipes:checked:lentil-stew', '{not json');
     render(<App />);
     expect(screen.getByRole('checkbox', { name: /lentils/ })).not.toBeChecked();
   });

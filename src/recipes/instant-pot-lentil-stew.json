@@ -1,0 +1,56 @@
+{
+  "id": "instant-pot-lentil-stew",
+  "name": "Instant-pot Lentil Stew",
+  "course": "Main",
+  "cookingMethod": "Instant-pot",
+  "ingredients": [
+    {
+      "title": "Sauté",
+      "items": [
+        "1 Tbsp olive oil",
+        "1 carrot, peeled and chopped",
+        "1 onion, chopped or diced",
+        "1 lb beef chunks or stew meat",
+        "1-3 cloves garlic, minced"
+      ]
+    },
+    {
+      "title": "Pressure cook",
+      "items": [
+        "1 box beef broth (about 4 cups)",
+        "1 russet potato, peeled and chopped",
+        "1.5 cups brown lentils",
+        "1 can (14.5 oz) fire-roasted diced tomatoes",
+        "1 tsp salt (or less)",
+        "1 tsp oregano",
+        "1/2 tsp paprika",
+        "1/4 tsp cumin"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Sauté",
+      "items": [
+        "Set instant pot to sauté and add olive oil",
+        "Add carrots, then onion. Sauté for 2-3 minutes (can sauté at the same time as browning the beef)",
+        "Add beef chunks and brown on all sides",
+        "Add garlic and sauté for 30 seconds"
+      ]
+    },
+    {
+      "title": "Pressure cook",
+      "items": [
+        "Add beef broth and scrape the bottom of the pot to deglaze",
+        "Add remaining ingredients and stir",
+        "Pressure cook on high for 10-11 minutes",
+        "Quick release pressure after time is up"
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Cook longer for more tender meat, but also more mushy vegetables."]
+    }
+  ]
+}

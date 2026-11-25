@@ -5,7 +5,7 @@
 // flow:     a name in ./flows (default "smoke") or a path to a .mjs file whose default
 //           export is `async ({ page, shot, check, consoleMsgs }) => {}`.
 // --random: keep the app's random first recipe. By default Math.random() returns 0,
-//           so the page opens on the first recipe in src/recipes.json.
+//           so the page opens on the first recipe by name (src/recipes/index.js sorts them).
 //
 // Env: RECIPES_PORT (default 5173), BROWSER_CHANNEL (default "chrome", e.g. "msedge").
 // Reuses a dev server already listening on the port; otherwise starts one and stops it after.

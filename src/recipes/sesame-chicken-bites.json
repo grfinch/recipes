@@ -1,0 +1,40 @@
+{
+  "id": "sesame-chicken-bites",
+  "name": "Sesame Chicken Bites",
+  "course": "Appetizer",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Coating",
+      "items": ["1/2 cup dry bread crumbs", "1/4 cup sesame seeds", "2 tsp minced fresh parsley"]
+    },
+    {
+      "title": "Mayonnaise mixture",
+      "items": [
+        "1/2 cup mayonnaise",
+        "1 tsp onion powder",
+        "1 tsp ground mustard",
+        "1/4 tsp pepper"
+      ]
+    },
+    {
+      "title": "Chicken",
+      "items": [
+        "1 lb boneless skinless chicken breasts, cut into 1-inch cubes",
+        "2 to 4 Tbsp canola oil"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a small bowl, mix sauce ingredients. Refrigerate until serving.",
+        "In a shallow bowl, mix bread crumbs, sesame seeds and parsley.",
+        "In a separate shallow bowl, mix mayonnaise and seasonings.",
+        "Dip chicken in mayonnaise mixture, then in crumb mixture, patting to help coating adhere to all sides.",
+        "In a large skillet, heat 2 Tbsp oil over medium-high heat.",
+        "Add chicken in batches; cook until chicken is no longer pink, turning occasionally and adding additional oil as needed."
+      ]
+    }
+  ]
+}

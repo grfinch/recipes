@@ -17,6 +17,8 @@ npm run dev   # start the dev server and open http://localhost:5173/recipes/
 
 The app is served from `/recipes/`, not `/`, to match its GitHub Pages address.
 
+`npm ci` also installs git hooks. Before each commit, they format and lint the files you're committing (and validate recipes if you changed one). Before each push, they run the same checks as CI, so a push can't fail CI on formatting or tests.
+
 ## Commands
 
 | Command                | What it does                                |

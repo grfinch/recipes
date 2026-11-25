@@ -1,0 +1,33 @@
+{
+  "id": "reese-s-brownies",
+  "name": "Reese's Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "Cooking spray",
+        "1 cup butter",
+        "2 cups sugar",
+        "4 eggs",
+        "1 1/2 tsp vanilla",
+        "1 1/2 cups flour",
+        "1/2 cup cocoa",
+        "1/2 tsp salt",
+        "24 miniature Reese's peanut butter cups, unwrapped"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat oven to 350°F. Spray a 9x13-inch pan with cooking spray and set aside.",
+        "In a large mixing bowl, cream butter and sugar together until light and fluffy.",
+        "Add eggs and vanilla and beat until mixed in.",
+        "Add flour, cocoa, and salt, and mix until well combined.",
+        "Pour batter into prepared pan and spread evenly. Arrange peanut butter cups over the top.",
+        "Bake at 350°F for 20-25 minutes or until toothpick comes out clean. Let cool completely."
+      ]
+    }
+  ]
+}

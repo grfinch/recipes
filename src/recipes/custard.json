@@ -1,0 +1,19 @@
+{
+  "id": "custard",
+  "name": "Custard",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": ["4 eggs", "4 cups milk", "2/3 cup sugar", "1/2 tsp salt", "1 tsp vanilla", "Nutmeg"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Scald milk and add to eggs.",
+        "Bake at 350°F in a water bath for about an hour or until knife comes out clean."
+      ]
+    }
+  ]
+}

@@ -31,7 +31,8 @@ export default defineConfig([
       react.configs.flat.recommended,
       // React 17+ JSX transform: no need to import React in every file
       react.configs.flat['jsx-runtime'],
-      reactHooks.configs['recommended-latest'],
+      // v7: flat configs live under configs.flat (configs['recommended-latest'] is eslintrc format)
+      reactHooks.configs.flat['recommended-latest'],
       reactRefresh.configs.vite,
       jsxA11y.flatConfigs.recommended,
     ],

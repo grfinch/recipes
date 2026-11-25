@@ -1,0 +1,37 @@
+{
+  "id": "granola",
+  "name": "Granola",
+  "course": "Breakfast",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Dry",
+      "items": [
+        "6 cups old fashioned oats",
+        "1 cup quick oats",
+        "1/2 cup sunflower seed",
+        "1/2 cup ground flaxseed (optional)",
+        "1 cup raisins or dried fruit",
+        "3/4 cup wheat germ",
+        "1/2 cup brown sugar",
+        "1/2 cup coconut",
+        "1/2 cup dry milk powder",
+        "1 cup nuts",
+        "1 tsp cinnamon"
+      ]
+    },
+    {
+      "title": "Warm",
+      "items": ["2/3 cup honey", "2/3 cup oil", "1 1/2 tsp vanilla", "1/2 tsp salt"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Warm the honey, oil, vanilla and salt.",
+        "Mix dry ingredients and pour honey mixture over the top and mix together well.",
+        "Place on a cookie sheet and bake at 300°F for 45 minutes. Stir twice while baking."
+      ]
+    }
+  ]
+}

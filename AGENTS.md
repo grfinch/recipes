@@ -43,7 +43,7 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 - `NumberedClickableItem`: ordered and clickable (instructions)
 - `BulletItem`: not clickable (notes)
 
-The "checked" state on each item is local component state and is not persisted.
+Items are controlled: `Recipe` owns the "checked" state through `src/hooks/useCheckedItems.js` and passes `checked` and `onToggle` down through `RecipeSection`. The hook saves each recipe's checked item ids (`<section header>:<group>-<item>`) to `localStorage` under `recipes:checked:<recipe name>`, so they survive a reload. "Reset checklist" clears them. Ids are positions, so reordering a recipe's items in `recipes.json` moves any saved checks with them.
 
 **Search:** `SearchBox` uses `src/hooks/useDebounce.js`, which returns `[value, setValue, debouncedValue, { cancel, flush, reset }]`. It filters by name, ingredients, instructions, and notes with a case-insensitive substring match. Results appear in a `position: fixed` overlay positioned from the input's bounding rect. Clicking outside or pressing Escape closes the overlay.
 

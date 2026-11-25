@@ -32,6 +32,42 @@ describe('App', () => {
     expect(random).toHaveBeenCalledTimes(1);
   });
 
+  it('keeps checked items after a reload', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const user = userEvent.setup();
+    const { unmount } = render(<App />);
+    await user.click(screen.getByRole('checkbox', { name: /lentils/ }));
+    await user.click(screen.getByRole('button', { name: /Simmer/ }));
+    unmount();
+
+    render(<App />);
+    expect(screen.getByRole('checkbox', { name: /lentils/ })).toBeChecked();
+    expect(screen.getByRole('checkbox', { name: /olive oil/ })).not.toBeChecked();
+    expect(screen.getByRole('button', { name: /Simmer/ })).toHaveAttribute('aria-pressed', 'true');
+  });
+
+  it('clears every checked item with Reset checklist', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const user = userEvent.setup();
+    const { unmount } = render(<App />);
+    await user.click(screen.getByRole('checkbox', { name: /lentils/ }));
+    await user.click(screen.getByRole('button', { name: /Simmer/ }));
+    await user.click(screen.getByRole('button', { name: 'Reset checklist' }));
+
+    expect(screen.getByRole('checkbox', { name: /lentils/ })).not.toBeChecked();
+    expect(screen.getByRole('button', { name: /Simmer/ })).toHaveAttribute('aria-pressed', 'false');
+    unmount();
+    render(<App />);
+    expect(screen.getByRole('checkbox', { name: /lentils/ })).not.toBeChecked();
+  });
+
+  it('starts fresh when saved checklist data is corrupt', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    localStorage.setItem('recipes:checked:Lentil Stew', '{not json');
+    render(<App />);
+    expect(screen.getByRole('checkbox', { name: /lentils/ })).not.toBeChecked();
+  });
+
   it('resets checked items when switching to another recipe', async () => {
     vi.spyOn(Math, 'random').mockReturnValue(0); // start on Lentil Stew
     const user = userEvent.setup();

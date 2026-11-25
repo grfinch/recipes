@@ -5,3 +5,6 @@ import { afterEach } from 'vitest';
 
 // Unmount rendered components between tests
 afterEach(() => cleanup());
+
+// Saved checklist state must not leak from one test into the next
+afterEach(() => localStorage.clear());

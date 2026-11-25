@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import styles from './listItems.module.css';
 
-export default function NumberedClickableItem({ item, index }) {
-  const [checked, setChecked] = useState(false);
-
+export default function NumberedClickableItem({ item, index, checked, onToggle }) {
   return (
     <li className={`${styles.li_no_bullets} ${checked ? styles.checked : ''}`}>
       {/* A toggle button: Enter and Space work natively, and aria-pressed says whether
@@ -11,7 +8,7 @@ export default function NumberedClickableItem({ item, index }) {
       <button
         type="button"
         aria-pressed={checked}
-        onClick={() => setChecked((prev) => !prev)}
+        onClick={onToggle}
         className={`${styles.label} ${styles.stepButton}`}
       >
         {/* The ✓ is decorative; aria-pressed already says whether it's done */}

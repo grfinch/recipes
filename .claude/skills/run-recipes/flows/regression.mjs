@@ -11,6 +11,8 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
     .getByRole('list')
     .filter({ has: page.locator('button') });
   const main = page.getByRole('main');
+  // Step buttons sit in list items; "Reset checklist" is a button outside the lists.
+  const stepOne = main.getByRole('listitem').getByRole('button').first();
   const STEW = 'Instant-pot Lentil Stew';
   const PASTA = 'Instant-pot Creamy Sausage Pasta';
 
@@ -69,7 +71,9 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   await input.fill('');
 
   // Accessible names from Chrome's accessibility tree
-  const stepButtons = (await main.ariaSnapshot()).split('\n').filter((l) => l.includes('button'));
+  const stepButtons = (await main.ariaSnapshot())
+    .split('\n')
+    .filter((l) => l.includes('button') && !l.includes('"Reset checklist"'));
   check(
     'instruction steps are named by their text',
     stepButtons.length > 0 && stepButtons.every((l) => /button "\d+\. .{5,}"/.test(l)),
@@ -79,11 +83,10 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   // Checked state doesn't carry over (both recipes share "1 Tbsp olive oil" and step 1)
   const oil = page.getByRole('checkbox', { name: /olive oil/ });
   await oil.check();
-  await main.getByRole('button').first().click();
+  await stepOne.click();
   check(
     'olive oil and step 1 checked',
-    (await oil.isChecked()) &&
-      (await main.getByRole('button').first().getAttribute('aria-pressed')) === 'true',
+    (await oil.isChecked()) && (await stepOne.getAttribute('aria-pressed')) === 'true',
   );
   await page.screenshot({ path: shot('regression-2-checked.png') });
   const h1Left = () =>
@@ -101,7 +104,7 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   check('olive oil unchecked after switching recipe', !(await oil.isChecked()));
   check(
     'step 1 unpressed after switching recipe',
-    (await main.getByRole('button').first().getAttribute('aria-pressed')) === 'false',
+    (await stepOne.getAttribute('aria-pressed')) === 'false',
   );
   await page.screenshot({ path: shot('regression-3-switched.png') });
 
@@ -124,6 +127,7 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   await page.screenshot({ path: shot('regression-4-checkmark.png') });
 
   await input.focus();
+  await page.keyboard.press('Tab'); // to Reset checklist
   await page.keyboard.press('Tab'); // into the first ingredient checkbox
   const boxOutline = await page.evaluate(() => {
     const s = getComputedStyle(document.activeElement);

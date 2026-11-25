@@ -1,9 +1,16 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import useCheckedItems from '../../hooks/useCheckedItems';
 import RecipeSection from './RecipeSection';
 
 afterEach(() => vi.restoreAllMocks());
+
+// RecipeSection's items are controlled; this supplies the state Recipe normally owns.
+function StatefulSection(props) {
+  const [checked, toggle] = useCheckedItems('Test recipe');
+  return <RecipeSection {...props} checked={checked} onToggle={toggle} />;
+}
 
 describe('RecipeSection', () => {
   it('gives instruction steps an accessible name that includes the step text', () => {
@@ -22,7 +29,9 @@ describe('RecipeSection', () => {
 
   it('toggles instruction steps from the keyboard', async () => {
     const user = userEvent.setup();
-    render(<RecipeSection header="Instructions" listItems={['Heat the oil']} ordered clickable />);
+    render(
+      <StatefulSection header="Instructions" listItems={['Heat the oil']} ordered clickable />,
+    );
     const step = screen.getByRole('button', { name: /Heat the oil/ });
     expect(step).toHaveAttribute('aria-pressed', 'false');
 
@@ -62,7 +71,7 @@ describe('RecipeSection', () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     const user = userEvent.setup();
     render(
-      <RecipeSection
+      <StatefulSection
         header="Ingredients"
         listItems={[['1 tsp salt', '1 cup rice', '1 tsp salt']]}
         ordered={false}

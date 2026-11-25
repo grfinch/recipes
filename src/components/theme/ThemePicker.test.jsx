@@ -4,6 +4,8 @@ import { afterEach, describe, expect, it } from 'vitest';
 import ThemePicker from './ThemePicker';
 
 const html = document.documentElement;
+const button = () => screen.getByRole('button', { name: 'Theme' });
+const choice = (name) => screen.getByRole('radio', { name });
 
 // jsdom has no matchMedia. A fake one for (prefers-color-scheme: dark) that tests can flip.
 function fakeSystemTheme(dark) {
@@ -30,12 +32,21 @@ afterEach(() => {
 });
 
 describe('ThemePicker', () => {
-  it('offers System, Light and Dark in a Theme group, with System chosen at first', () => {
+  it('is a closed Theme button that opens a Theme group of System, Light and Dark', async () => {
+    const user = userEvent.setup();
     render(<ThemePicker />);
-    expect(screen.getByRole('group', { name: 'Theme' })).toBeInTheDocument();
-    expect(screen.getByRole('radio', { name: 'System' })).toBeChecked();
-    expect(screen.getByRole('radio', { name: 'Light' })).not.toBeChecked();
-    expect(screen.getByRole('radio', { name: 'Dark' })).not.toBeChecked();
+    expect(button()).toHaveAttribute('aria-expanded', 'false');
+    expect(screen.queryByRole('group', { name: 'Theme' })).not.toBeInTheDocument();
+
+    await user.click(button());
+    expect(button()).toHaveAttribute('aria-expanded', 'true');
+    expect(screen.getByRole('group', { name: 'Theme' })).toBeVisible();
+    expect(screen.getAllByRole('radio').map((r) => r.labels[0].textContent)).toEqual([
+      'System',
+      'Light',
+      'Dark',
+    ]);
+    expect(choice('System')).toBeChecked();
   });
 
   it('follows the system theme, including when it changes', () => {
@@ -50,9 +61,9 @@ describe('ThemePicker', () => {
     const system = fakeSystemTheme(false);
     const user = userEvent.setup();
     render(<ThemePicker />);
-
-    await user.click(screen.getByRole('radio', { name: 'Dark' }));
-    expect(screen.getByRole('radio', { name: 'Dark' })).toBeChecked();
+    await user.click(button());
+    await user.click(choice('Dark'));
+    expect(choice('Dark')).toBeChecked();
     expect(html.dataset.theme).toBe('dark');
     expect(localStorage.getItem('recipes:theme')).toBe('dark');
     expect(system.listeners.size).toBe(0); // no longer following the system
@@ -63,19 +74,22 @@ describe('ThemePicker', () => {
     fakeSystemTheme(true);
     const user = userEvent.setup();
     render(<ThemePicker />);
-    expect(screen.getByRole('radio', { name: 'Light' })).toBeChecked();
     expect(html.dataset.theme).toBe('light');
+    await user.click(button());
+    expect(choice('Light')).toBeChecked();
 
-    await user.click(screen.getByRole('radio', { name: 'System' }));
+    await user.click(choice('System'));
     expect(html.dataset.theme).toBe('dark');
     expect(localStorage.getItem('recipes:theme')).toBeNull();
   });
 
-  it('ignores an unknown saved value', () => {
+  it('ignores an unknown saved value', async () => {
     localStorage.setItem('recipes:theme', 'purple');
+    const user = userEvent.setup();
     render(<ThemePicker />);
-    expect(screen.getByRole('radio', { name: 'System' })).toBeChecked();
     expect(html.dataset.theme).toBe('light'); // no matchMedia: light
+    await user.click(button());
+    expect(choice('System')).toBeChecked();
   });
 
   it('picks up a choice made in another tab', () => {
@@ -84,17 +98,42 @@ describe('ThemePicker', () => {
       localStorage.setItem('recipes:theme', 'dark');
       window.dispatchEvent(new StorageEvent('storage', { key: 'recipes:theme' }));
     });
-    expect(screen.getByRole('radio', { name: 'Dark' })).toBeChecked();
+    expect(screen.getByRole('radio', { name: 'Dark', hidden: true })).toBeChecked(); // panel closed
     expect(html.dataset.theme).toBe('dark');
   });
 
-  it('changes with the arrow keys, like any radio group', async () => {
+  it('works from the keyboard: Tab into the panel, arrows choose, Escape closes', async () => {
     const user = userEvent.setup();
     render(<ThemePicker />);
     await user.tab();
-    expect(screen.getByRole('radio', { name: 'System' })).toHaveFocus();
-    await user.keyboard('{ArrowRight}');
-    expect(screen.getByRole('radio', { name: 'Light' })).toBeChecked();
+    expect(button()).toHaveFocus();
+    await user.keyboard('{Enter}');
+    await user.tab();
+    expect(choice('System')).toHaveFocus();
+    await user.keyboard('{ArrowDown}');
+    expect(choice('Light')).toBeChecked();
     expect(html.dataset.theme).toBe('light');
+
+    await user.keyboard('{Escape}');
+    expect(button()).toHaveAttribute('aria-expanded', 'false');
+    expect(button()).toHaveFocus();
+  });
+
+  it('closes on a tap outside, or when focus moves elsewhere', async () => {
+    const user = userEvent.setup();
+    render(
+      <>
+        <ThemePicker />
+        <button type="button">Elsewhere</button>
+      </>,
+    );
+    await user.click(button());
+    await user.click(document.body);
+    expect(button()).toHaveAttribute('aria-expanded', 'false');
+
+    await user.click(button());
+    screen.getByRole('button', { name: 'Elsewhere' }).focus();
+    await act(async () => {});
+    expect(button()).toHaveAttribute('aria-expanded', 'false');
   });
 });

@@ -122,13 +122,16 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
     await page.screenshot({ path: shot(`regression-${scheme}.png`), fullPage: true });
   }
 
-  // 5b. The footer's theme setting overrides the system's, and still applies after a reload
+  // 5b. The header's theme setting overrides the system's, and still applies after a reload
   //     (index.html sets it before the first paint). Ends back on System.
   const pageBg = () =>
     page.evaluate(() => getComputedStyle(document.documentElement).backgroundColor);
-  // The radios are visually hidden; tap the visible chip (the radio's label), as a person would
-  const theme = page.getByRole('group', { name: 'Theme' });
-  const pickTheme = (name) => theme.locator('label', { hasText: name }).click();
+  // Opens the header's Theme panel, chooses, and closes it again with Escape
+  const pickTheme = async (name) => {
+    await page.getByRole('banner').getByRole('button', { name: 'Theme' }).click();
+    await page.getByRole('banner').getByRole('radio', { name }).check();
+    await page.keyboard.press('Escape');
+  };
   await page.emulateMedia({ colorScheme: 'dark' });
   await pickTheme('Light');
   await page.waitForTimeout(300);

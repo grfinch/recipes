@@ -1,0 +1,35 @@
+{
+  "id": "homemade-oreo-cookies",
+  "name": "Homemade Oreo Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Cookies",
+      "items": [
+        "2 pkg devil's food cake mix",
+        "1 1/2 cups Crisco",
+        "4 eggs, beaten",
+        "1 tsp vanilla"
+      ]
+    },
+    {
+      "title": "Icing",
+      "items": ["8 oz cream cheese", "1 cube butter", "2 to 3 cups powdered sugar", "1 tsp vanilla"]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Cookies",
+      "items": [
+        "Mix together and roll dough into small balls.",
+        "Place on ungreased cookie sheet. Bake at 350°F for 9 minutes.",
+        "When cool, put a spoonful of icing between two cookies."
+      ]
+    },
+    {
+      "title": "Icing",
+      "items": ["Mix together until creamy."]
+    }
+  ]
+}

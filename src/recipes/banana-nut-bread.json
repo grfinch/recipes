@@ -1,0 +1,40 @@
+{
+  "id": "banana-nut-bread",
+  "name": "Banana Nut Bread",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1/4 cup butter, softened",
+        "3/4 cup sugar",
+        "2 eggs",
+        "3/4 cup mashed ripe bananas (about 2 medium)",
+        "1/2 cup sour cream",
+        "2 1/4 cups all-purpose flour",
+        "1 tsp ground cinnamon",
+        "3/4 tsp baking soda",
+        "1/2 tsp salt",
+        "1/2 cup chopped nuts"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a large mixing bowl, cream the butter and sugar until light and fluffy.",
+        "Add eggs, one at a time, beating well after each addition.",
+        "Stir in bananas and sour cream.",
+        "Combine the flour, cinnamon, baking soda, and salt. Stir into banana mixture just until moistened.",
+        "Fold in nuts.",
+        "Transfer to a greased 8x4x2-inch loaf pan. Bake at 350°F for 1 hour or until a toothpick inserted near the center comes out clean.",
+        "Cool for 10 minutes before removing from pan to a wire rack to cool completely."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes 1 loaf (12 slices)."]
+    }
+  ]
+}

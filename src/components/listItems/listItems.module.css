@@ -1,7 +1,14 @@
 :root {
     --interactive-blue: rgb(99, 102, 241);
     --checked-green: rgb(47, 133, 90);
-    --muted: #666;
+    /* Muted text and borders: at least 4.5:1 against the page background in both schemes */
+    --muted: #9ca3af; /* on #242424 (dark) */
+}
+
+@media (prefers-color-scheme: light) {
+    :root {
+        --muted: #666; /* on #ffffff */
+    }
 }
 
 .divider {

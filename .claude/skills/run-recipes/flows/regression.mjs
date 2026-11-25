@@ -67,9 +67,13 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   await main.getByRole('button').first().click()
   check('olive oil and step 1 checked', (await oil.isChecked()) && (await main.getByRole('button').first().getAttribute('aria-pressed')) === 'true')
   await page.screenshot({ path: shot('regression-2-checked.png') })
+  const h1Left = () => page.getByRole('heading', { level: 1 }).evaluate((el) => el.getBoundingClientRect().left)
+  const leftBefore = await h1Left()
   await input.pressSequentially('sausage', { delay: 30 })
   await page.getByRole('button', { name: PASTA }).click()
   await page.getByRole('heading', { level: 1, name: PASTA }).waitFor()
+  const leftAfter = await h1Left()
+  check('content left edge stays put when switching recipe', leftBefore === leftAfter, `${leftBefore}px -> ${leftAfter}px`)
   check('olive oil unchecked after switching recipe', !(await oil.isChecked()))
   check('step 1 unpressed after switching recipe', (await main.getByRole('button').first().getAttribute('aria-pressed')) === 'false')
   await page.screenshot({ path: shot('regression-3-switched.png') })
@@ -95,6 +99,37 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
 
   const snapshot = await main.ariaSnapshot()
   check('dividers are hidden from screen readers', !snapshot.includes('---'))
+
+  // Contrast of muted UI in both color schemes (WCAG: text 4.5:1, UI borders 3:1)
+  for (const scheme of ['light', 'dark']) {
+    await page.emulateMedia({ colorScheme: scheme })
+    await page.waitForTimeout(300) // colors have 120ms CSS transitions; measure after they finish
+    const ratios = await page.evaluate(() => {
+      const rgb = (c) => c.match(/[\d.]+/g).slice(0, 3).map(Number)
+      const lum = (c) => {
+        const [r, g, b] = rgb(c).map((v) => {
+          v /= 255
+          return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4
+        })
+        return 0.2126 * r + 0.7152 * g + 0.0722 * b
+      }
+      const ratio = (a, b) => {
+        const [hi, lo] = [lum(a), lum(b)].sort((x, y) => y - x)
+        return Math.round(((hi + 0.05) / (lo + 0.05)) * 100) / 100
+      }
+      const bg = getComputedStyle(document.documentElement).backgroundColor
+      const stepNumber = [...document.querySelectorAll('main [role="button"] span')].at(-2)
+      const box = [...document.querySelectorAll('main input[type="checkbox"]')].at(-1)
+      return {
+        stepNumber: ratio(getComputedStyle(stepNumber).color, bg),
+        checkboxBorder: ratio(getComputedStyle(box).borderTopColor, bg),
+      }
+    })
+    check(`${scheme}: step numbers reach 4.5:1`, ratios.stepNumber >= 4.5, `${ratios.stepNumber}:1`)
+    check(`${scheme}: checkbox borders reach 3:1`, ratios.checkboxBorder >= 3, `${ratios.checkboxBorder}:1`)
+    await page.screenshot({ path: shot(`regression-6-${scheme}.png`) })
+  }
+  await page.emulateMedia({ colorScheme: null })
 
   const keyWarnings = consoleMsgs.filter((m) => /same key|unique "key"/i.test(m))
   check('no React key warnings', keyWarnings.length === 0, keyWarnings.join(' | '))

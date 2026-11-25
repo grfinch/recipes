@@ -1,0 +1,27 @@
+{
+  "id": "mint-truffles",
+  "name": "Mint Truffles",
+  "course": "Dessert",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "3/4 cup semisweet chocolate chips",
+        "6 Andes mint candies",
+        "3/4 cup whipped topping",
+        "Chocolate or cocoa, for coating"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt chocolate chips and candies in the microwave.",
+        "Cool to lukewarm (about 7 minutes).",
+        "Beat in whipped topping.",
+        "Place in freezer until firm enough to roll into balls.",
+        "Shape mixture into 1-inch balls and dip in chocolate or roll in cocoa."
+      ]
+    }
+  ]
+}

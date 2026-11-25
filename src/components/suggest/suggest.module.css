@@ -2,16 +2,15 @@
    page backgrounds (#242424 dark, #ffffff light). --muted and --interactive-blue come from
    listItems.module.css. */
 .page {
-  --error: #ff8a80; /* 7:1 on #242424 */
+  --error: #b42318; /* 6.9:1 on #ffffff */
   --button-bg: #4f46e5; /* white text on it: 6.3:1 */
   --button-bg-hover: #4338ca;
   max-width: 40rem;
 }
 
-@media (prefers-color-scheme: light) {
-  .page {
-    --error: #b42318; /* 6.9:1 on #ffffff */
-  }
+/* The dark theme (data-theme on <html>, see index.css) */
+:root[data-theme='dark'] .page {
+  --error: #ff8a80; /* 7:1 on #242424 */
 }
 
 .intro {

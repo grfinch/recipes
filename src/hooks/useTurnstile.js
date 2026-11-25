@@ -43,7 +43,8 @@ export default function useTurnstile(siteKey) {
         if (cancelled || !containerRef.current) return;
         widgetId.current = turnstile.render(containerRef.current, {
           sitekey: siteKey,
-          theme: 'auto',
+          // The site's theme (useTheme.js), which may differ from the device's
+          theme: document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light',
           callback: (t) => setToken(t),
           'expired-callback': () => setToken(''),
           'error-callback': () => setToken(''),

@@ -3,6 +3,15 @@
    chip borders 3:1 or more, text 4.5:1 or more, selected text on its fill 4.5:1 or more. */
 .filters,
 .clear {
+  --chip-border: #666; /* 5.7:1 on #fff */
+  --chip-selected-bg: #4f46e5;
+  --chip-selected-text: #ffffff; /* 6.3:1 on #4f46e5 */
+  --chip-focus: #4f46e5; /* 6.3:1 on #fff */
+}
+
+/* The dark theme (data-theme on <html>, see index.css) */
+:root[data-theme='dark'] .filters,
+:root[data-theme='dark'] .clear {
   --chip-border: #9ca3af; /* 6.4:1 on #242424 */
   --chip-selected-bg: #8b93ff;
   --chip-selected-text: #242424; /* 5.6:1 on #8b93ff */
@@ -14,16 +23,6 @@
   flex-wrap: wrap;
   gap: 0.75rem 2rem;
   margin-bottom: 1rem;
-}
-
-@media (prefers-color-scheme: light) {
-  .filters,
-  .clear {
-    --chip-border: #666; /* 5.7:1 on #fff */
-    --chip-selected-bg: #4f46e5;
-    --chip-selected-text: #ffffff; /* 6.3:1 on #4f46e5 */
-    --chip-focus: #4f46e5; /* 6.3:1 on #fff */
-  }
 }
 
 .group {

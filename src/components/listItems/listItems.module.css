@@ -1,40 +1,38 @@
-:root {
-  --interactive-blue: rgb(99, 102, 241);
-  --checked-green: rgb(47, 133, 90);
-  /* Muted text and borders: at least 4.5:1 against the page background in both schemes */
-  --muted: #9ca3af; /* on #242424 (dark) */
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    --muted: #666; /* on #ffffff */
-  }
-}
+/* Colors come from the tokens in src/index.css (--muted, --interactive-blue, --done, ...) */
 
 .li_no_bullets {
   list-style-type: none;
 }
 
+/* Notes: a small round bullet in the muted color, lined up with the first line of text */
 .withBullet {
+  list-style-type: none;
   display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding-block: 0.25rem;
 }
 
 .withBullet::before {
   content: '';
   width: 0.5rem;
   height: 0.5rem;
+  margin: 0.5rem 0 0 0.5rem; /* centers the dot on a 1.5em line */
   background: var(--muted);
   border-radius: 50%;
   flex: 0 0 auto;
-  margin-left: 0.25rem;
 }
 
+/* A whole row is the tap target (44px or taller, for use while cooking). The box or number
+   sits on the first line of text, so wrapped items stay readable. */
 .label {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding-block: 0.625rem;
   cursor: pointer;
 }
 
@@ -42,8 +40,10 @@
 
 .checkbox {
   /* custom checkbox so we can color the check independently */
-  width: 1rem;
-  height: 1rem;
+  flex: 0 0 auto;
+  width: 1.5rem;
+  height: 1.5rem;
+  margin: 0;
   display: inline-grid;
   place-items: center;
   cursor: pointer;
@@ -52,19 +52,18 @@
   -moz-appearance: none;
   appearance: none;
   border: 2px solid var(--muted);
-  border-radius: 4px;
+  border-radius: 5px;
   background: transparent;
   transition:
     border-color 120ms ease,
-    background-color 120ms ease,
-    transform 120ms ease;
+    background-color 120ms ease;
 }
 
 /* Checked state is shown by shape (a white checkmark on a solid fill), not by color alone */
 .checkbox::before {
   content: '';
-  width: 0.6rem;
-  height: 0.6rem;
+  width: 0.9rem;
+  height: 0.9rem;
   background: #fff;
   clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
   transform: scale(0);
@@ -86,78 +85,68 @@
   outline-offset: 2px;
 }
 
-/* when hovering the row, tint the native checkbox to the interactive blue */
-.label:hover .checkbox,
-.label:focus-visible .checkbox {
-  /* tint the checkbox border to the interactive blue on hover/focus of the row */
-  border-color: var(--interactive-blue);
-}
-
-.label:hover .checkbox:checked,
-.label:focus-visible .checkbox:checked {
-  /* keep checkmark green but show the box border as blue when hovered */
-  border-color: var(--interactive-blue);
-}
-
 /* | END Checkbox Styles | */
 
-/* | number/check-mark Styles | */
+/* | Step number / check-mark Styles | */
 
-/* item index number that becomes a check when active */
-.numberBtn {
-  min-width: 2rem;
-  display: inline-grid;
-  place-items: center;
-  background: transparent;
-  border: none;
-  color: var(--muted, #666);
-  cursor: pointer;
-  font-weight: 600;
-  transition:
-    transform 120ms ease,
-    color 120ms ease;
-}
-
-.checkMark {
-  color: var(--checked-green);
-}
-
-/* hover/focus glow to indicate interactivity */
-.numberBtn:hover,
-.numberBtn:focus-visible,
-.label:hover .numberBtn,
-.label:focus-visible .numberBtn {
-  transform: translateY(-2px);
-  color: var(--interactive-blue);
-}
-
-/* keyboard-only focus ring around the number */
-.label:focus-visible .numberBtn {
-  outline: 3px solid var(--interactive-blue);
-  border-radius: 6px;
-  transition: outline 120ms ease;
-}
-
-/* Instruction steps are real buttons: strip the native button look so they read as text rows */
+/* Instruction steps are real buttons: strip the native button look so they read as rows */
 .stepButton {
-  padding: 0;
+  margin: 0;
   border: none;
+  border-radius: 6px;
   background: none;
   color: inherit;
   text-align: left;
 }
 
-/* | END number/check-mark Styles | */
-
-/* show a focus ring around the number only, not the row of text */
-.label:focus {
-  outline: none;
+/* Keyboard focus: outline the whole step row */
+.stepButton:focus-visible {
+  outline: 3px solid var(--interactive-blue);
+  outline-offset: 2px;
 }
 
-/* strike-through when checked, but not the check-mark*/
-.checked span:not(.numberBtn) {
+/* The step number, which turns into a check when the step is done */
+.numberBtn {
+  flex: 0 0 auto;
+  min-width: 1.5rem;
+  text-align: right;
+  color: var(--muted);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  transition: color 120ms ease;
+}
+
+.checkMark {
+  color: var(--done);
+  font-weight: 700;
+}
+
+/* Hover tint only on devices that can hover (no sticky tint after a tap) */
+@media (hover: hover) {
+  .label:hover .checkbox {
+    border-color: var(--interactive-blue);
+  }
+
+  .label:hover .numberBtn:not(.checkMark) {
+    color: var(--link);
+  }
+}
+
+/* | END Step number / check-mark Styles | */
+
+/* Done items: struck through and muted (still 4.5:1). Only the text, not the box or check. */
+.checked .itemText {
   text-decoration: line-through;
-  opacity: 0.7;
+  color: var(--muted);
 }
 
-/* TODO: don't let the checkmark turn green when hovered. */
+/* Touch screens have no hover: tint a row while it's pressed, so a tap visibly lands */
+@media (hover: none) {
+  .label:active {
+    background: var(--link-tint);
+  }
+}
+
+.label {
+  border-radius: 6px;
+}

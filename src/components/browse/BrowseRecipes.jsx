@@ -6,7 +6,13 @@ import styles from './browse.module.css';
 import filterStyles from './browseFilters.module.css';
 
 // filters: { course?, method? } from the URL; onFiltersChange gets the new filters object.
-export default function BrowseRecipes({ recipes = [], filters = {}, onFiltersChange = () => {} }) {
+// returnTo: the recipe the visitor came from, if any, for a "Back to" link above the list.
+export default function BrowseRecipes({
+  recipes = [],
+  filters = {},
+  onFiltersChange = () => {},
+  returnTo = null,
+}) {
   const courseAllRef = useRef(null);
   const sorted = [...recipes].sort((a, b) => a.name.localeCompare(b.name));
   const shown = sorted.filter((recipe) => matchesFilters(recipe, filters));
@@ -19,6 +25,11 @@ export default function BrowseRecipes({ recipes = [], filters = {}, onFiltersCha
 
   return (
     <>
+      {returnTo ? (
+        <a href={hashFor(returnTo)} className={styles.backLink}>
+          <span aria-hidden="true">←&nbsp;</span>Back to {returnTo.name}
+        </a>
+      ) : null}
       {/* tabIndex -1: App moves focus here after navigating */}
       <h1 tabIndex={-1}>All recipes</h1>
       {sorted.length > 0 ? (

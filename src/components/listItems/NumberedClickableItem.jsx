@@ -15,7 +15,7 @@ export default function NumberedClickableItem({ item, index, checked, onToggle }
         <span className={`${styles.numberBtn} ${checked ? styles.checkMark : ''}`}>
           {checked ? <span aria-hidden="true">✓</span> : `${index}.`}
         </span>
-        <span>{item}</span>
+        <span className={styles.itemText}>{item}</span>
       </button>
     </li>
   );

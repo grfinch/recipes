@@ -1,6 +1,6 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { afterEach, describe, expect, it, vi } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
 
 // Two recipes that share an ingredient and a step, like the real data does.
@@ -128,6 +128,29 @@ describe('App', () => {
   });
 });
 
+describe('Site footer', () => {
+  // Fake only Date, so timers used by userEvent and hashchange keep running normally.
+  beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2031-06-15T12:00:00'));
+  });
+  afterEach(() => vi.useRealTimers());
+
+  it('shows the copyright with the current year on a recipe page', () => {
+    window.history.replaceState(null, '', '#/lentil-stew');
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Lentil Stew');
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('© 2031 Gaven Finch');
+  });
+
+  it('shows the copyright with the current year on All recipes', () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('All recipes');
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('© 2031 Gaven Finch');
+  });
+});
+
 // What Back, Forward, or clicking an in-page link does: the hash changes and hashchange fires.
 // jsdom fires hashchange asynchronously, so wait for it inside act().
 async function goToHash(hash) {
@@ -229,5 +252,56 @@ describe('Browse all recipes', () => {
     await user.type(screen.getByLabelText('Search recipes'), 'pasta');
     await user.click(await screen.findByRole('button', { name: 'Sausage Pasta' }));
     expect(screen.getByRole('heading', { level: 1, name: 'Sausage Pasta' })).toHaveFocus();
+  });
+});
+
+describe('Getting back from All recipes', () => {
+  async function openBrowseFromRecipe(user) {
+    window.history.replaceState(null, '', '#/sausage-pasta');
+    render(<App />);
+    await user.click(screen.getByRole('checkbox', { name: /sausage/ }));
+    await user.click(screen.getByRole('link', { name: 'All recipes' }));
+    await screen.findByRole('heading', { level: 1, name: 'All recipes' });
+  }
+
+  it('offers a link back to the recipe you came from', async () => {
+    const user = userEvent.setup();
+    await openBrowseFromRecipe(user);
+
+    const back = screen.getByRole('link', { name: 'Back to Sausage Pasta' });
+    expect(back).toHaveAttribute('href', '#/sausage-pasta');
+    await user.click(back);
+
+    const heading = await screen.findByRole('heading', { level: 1, name: 'Sausage Pasta' });
+    expect(heading).toHaveFocus();
+    expect(window.location.hash).toBe('#/sausage-pasta');
+    expect(document.title).toBe("Sausage Pasta | Twig's Cook Book");
+    expect(screen.getByRole('checkbox', { name: /sausage/ })).toBeChecked();
+  });
+
+  it('goes back to the recipe when the highlighted pill is tapped again', async () => {
+    const user = userEvent.setup();
+    await openBrowseFromRecipe(user);
+
+    const pill = within(screen.getByRole('banner')).getByRole('link', { name: 'All recipes' });
+    expect(pill).toHaveAccessibleDescription('Back to Sausage Pasta');
+    expect(pill).toHaveAttribute('aria-current', 'page');
+    expect(pill).toHaveAttribute('href', '#/sausage-pasta');
+    await user.click(pill);
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Sausage Pasta' })).toHaveFocus();
+    const pillOnRecipe = within(screen.getByRole('banner')).getByRole('link', {
+      name: 'All recipes',
+    });
+    expect(pillOnRecipe).toHaveAttribute('href', '#/browse');
+    expect(pillOnRecipe).not.toHaveAttribute('aria-current');
+    expect(pillOnRecipe).not.toHaveAttribute('aria-describedby');
+  });
+
+  it('offers no way back on a deep link to #/browse', () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    expect(screen.queryByRole('link', { name: /^Back to/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'All recipes' })).toHaveAttribute('href', '#/browse');
   });
 });

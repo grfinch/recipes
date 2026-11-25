@@ -2,10 +2,11 @@ import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import allRecipes from './recipes/index.js';
 import BrowseRecipes from './components/browse/BrowseRecipes';
+import SiteFooter from './components/footer/SiteFooter';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
-import { BROWSE_HASH, hashForView, viewFromHash } from './utils/recipeHash';
+import { BROWSE_HASH, hashFor, hashForView, viewFromHash } from './utils/recipeHash';
 
 const SITE_TITLE = "Twig's Cook Book";
 
@@ -31,6 +32,12 @@ function App() {
   const [view, setView] = useState(() => viewFromHash(allRecipes) ?? randomRecipeView());
   const mainRef = useRef(null);
   const shownView = useRef(view);
+
+  // The last recipe shown, so All recipes can offer a way back to it after an accidental tap.
+  // Updated during render (React's "adjust state when a prop changes" pattern), not in an effect.
+  const [lastRecipe, setLastRecipe] = useState(view?.page === 'recipe' ? view.recipe : null);
+  if (view?.page === 'recipe' && view.recipe !== lastRecipe) setLastRecipe(view.recipe);
+  const returnTo = view?.page === 'browse' ? lastRecipe : null;
 
   // Back/forward, header and browse links, and edited links change the hash: show that page.
   useEffect(() => {
@@ -79,14 +86,33 @@ function App() {
 
   return (
     <>
-      <header>
-        <SearchBox recipes={allRecipes} onSelect={handleSelect} />
-        <KeepScreenOn />
-        <nav className="siteNav">
-          <a href={BROWSE_HASH} aria-current={view?.page === 'browse' ? 'page' : undefined}>
+      <header className="siteHeader">
+        {/* Site name, not a heading: each page has its own h1 */}
+        <p className="siteTitle">{SITE_TITLE}</p>
+        <nav className="siteNav" aria-label="Site">
+          {/* On All recipes, tapping the highlighted pill again goes back to the last recipe.
+              The name stays the visible "All recipes"; screen readers hear where it goes as its
+              description. */}
+          <a
+            href={returnTo ? hashFor(returnTo) : BROWSE_HASH}
+            className="navLink"
+            aria-current={view?.page === 'browse' ? 'page' : undefined}
+            aria-describedby={returnTo ? 'nav-return-to' : undefined}
+          >
             All recipes
           </a>
+          {returnTo ? (
+            <span id="nav-return-to" className="visuallyHidden">
+              Back to {returnTo.name}
+            </span>
+          ) : null}
         </nav>
+        <div className="headerSearch">
+          <SearchBox recipes={allRecipes} onSelect={handleSelect} />
+        </div>
+        <div className="headerWake">
+          <KeepScreenOn />
+        </div>
       </header>
 
       <main ref={mainRef}>
@@ -95,6 +121,7 @@ function App() {
             recipes={allRecipes}
             filters={browseFilters}
             onFiltersChange={handleFiltersChange}
+            returnTo={returnTo}
           />
         ) : view ? (
           // key: a new recipe remounts, so its own saved checklist loads
@@ -103,6 +130,7 @@ function App() {
           <p>No recipes yet.</p>
         )}
       </main>
+      <SiteFooter />
     </>
   );
 }

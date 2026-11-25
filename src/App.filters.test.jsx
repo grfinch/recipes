@@ -45,10 +45,15 @@ vi.mock('./recipes/index.js', () => ({
 const main = () => screen.getByRole('main');
 const group = (name) => within(main()).getByRole('group', { name });
 const chip = (groupName, name) => within(group(groupName)).getByRole('radio', { name });
-const shownNames = () =>
-  within(main())
-    .queryAllByRole('link')
-    .map((a) => a.textContent);
+// Recipe links in the list only, not the "Back to <recipe>" link above the heading
+const shownNames = () => {
+  const list = within(main()).queryByRole('list');
+  return list
+    ? within(list)
+        .getAllByRole('link')
+        .map((a) => a.textContent)
+    : [];
+};
 // The browse page's own count, not the search box's role="status" in the header
 const count = () => within(main()).getByRole('status');
 
@@ -224,6 +229,11 @@ describe('All recipes filters', () => {
     expect(chip('Course', 'Dinner')).toBeChecked();
     expect(shownNames()).toEqual(['Lentil Stew', 'Pulled Pork']);
     expect(browseHeading).toHaveFocus();
+    // The filtered list still offers the way back to the recipe just visited (from #23)
+    expect(within(main()).getByRole('link', { name: /Back to Pulled Pork/ })).toHaveAttribute(
+      'href',
+      '#/pulled-pork',
+    );
   });
 
   it('keeps the header link on plain #/browse, and it clears the filters', async () => {

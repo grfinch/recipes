@@ -1,50 +1,51 @@
 .container {
-  margin-bottom: 12px;
+  margin: 0;
 }
 
 .label {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 4px;
 }
 
 .input {
-  padding: 8px 10px;
-  width: 100%;
-  max-width: 520px;
   box-sizing: border-box;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 12px;
+  border: 1px solid var(--control-border);
+  border-radius: 8px;
+  background: var(--bg);
+  color: inherit;
 }
 
-.resultCount {
-  margin-top: 8px;
-  color: #9ca3af;
-  /* muted */
-  font-size: 13px;
+.input:focus-visible {
+  outline: 3px solid var(--interactive-blue);
+  outline-offset: 1px;
 }
 
+/* Results panel: same tokens as the page, so it follows the light or dark scheme */
 .overlay {
   max-height: 320px;
   overflow: auto;
-  background: linear-gradient(180deg, rgba(36, 36, 36, 0.98), rgba(28, 28, 28, 0.98));
-  border: 1px solid rgba(255, 255, 255, 0.02);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
   border-radius: 12px;
-  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   z-index: 9999;
   padding: 6px;
-  backdrop-filter: saturate(120%) blur(4px);
+  margin-top: 4px;
   box-sizing: border-box;
 }
 
 .overlayHeader {
-  padding: 8px 12px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--line);
 }
 
 .overlayCount {
-  font-size: 13px;
-  color: rgba(255, 255, 255, 0.92);
+  font-size: 0.875rem;
+  color: var(--muted);
   font-weight: 600;
 }
 
@@ -54,34 +55,47 @@
   list-style: none;
 }
 
-.resultItem:not(:first-child) {
-  border-top: 1px solid rgba(255, 255, 255, 0.03);
+.resultItem {
+  border-top: 1px solid var(--line);
 }
 
 .resultButton {
   display: block;
+  box-sizing: border-box;
   width: 100%;
+  min-height: 44px;
   text-align: left;
-  padding: 12px;
+  padding: 10px 12px;
   border: none;
   background: transparent;
+  color: inherit;
   cursor: pointer;
-  transition:
-    background 120ms ease,
-    transform 120ms ease;
 }
 
-.resultButton:hover {
-  background: rgba(100, 108, 255, 0.06);
+@media (hover: hover) {
+  .resultButton:hover {
+    background: var(--link-tint);
+  }
+}
+
+/* Touch screens have no hover: tint the row while it's pressed instead */
+.resultButton:active {
+  background: var(--link-tint);
+}
+
+.resultButton:focus-visible {
+  outline: 3px solid var(--interactive-blue);
+  outline-offset: -3px;
 }
 
 .resultName {
-  font-size: 15px;
-  color: rgba(255, 255, 255, 0.95);
   font-weight: 600;
 }
 
+/* The matched text: link color plus an underline, so color isn't the only cue */
 .highlight {
-  color: #646cff;
-  font-weight: 600;
+  color: var(--link);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
 }

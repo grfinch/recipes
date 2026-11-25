@@ -22,7 +22,7 @@ Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/tes
 **Git hooks** (husky, installed by `npm ci`/`npm install` through the `prepare` script):
 
 - `pre-commit` runs lint-staged (`lint-staged.config.js`) on the staged files: `eslint --fix` and `prettier --write`, with the fixes added to the commit, plus `npm run validate:recipes` when a recipe or `src/recipeCategories.json` is staged. A commit whose only change Prettier undoes is stopped as empty.
-- `pre-push` runs CI's `check` steps: lint, format check, recipe validation, tests, build, and the browser checks (on port 5199 with `--fresh`). It first moves to `git rev-parse --show-toplevel`, so Vitest gets an uppercase drive letter on Windows.
+- `pre-push` runs CI's `check` steps: lint, format check, recipe validation, tests, build, and the browser checks (on port 5199 with `--fresh`; parallel agents set `PREPUSH_PORT` to their own port). It first moves to `git rev-parse --show-toplevel`, so Vitest gets an uppercase drive letter on Windows.
 - Don't bypass them with `--no-verify` to get past a failure; fix the cause.
 
 ## Deployment

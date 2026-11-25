@@ -1,0 +1,35 @@
+{
+  "id": "peanut-clusters",
+  "name": "Peanut Clusters",
+  "course": "Dessert",
+  "cookingMethod": "Slow cooker",
+  "ingredients": [
+    {
+      "items": [
+        "16 oz unsalted peanuts (or dry roasted peanuts)",
+        "16 oz salted cocktail peanuts",
+        "1 bag (12 oz) semisweet chocolate chips",
+        "1 bag (12 oz) milk chocolate chips",
+        "2 bags (10 oz) peanut butter chips",
+        "2 packages (16 oz) white almond bark or vanilla candy melts"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Layer all of the ingredients in order in a 6-quart slow cooker. Cover and cook on low for 2 hours.",
+        "Remove the lid and stir to combine. If not all of the chocolate is melted, cover and cook for an additional 30 minutes on low.",
+        "Using a spoon or cookie scoop, scoop mounds of the clusters onto parchment-lined baking sheets.",
+        "Allow to sit at room temperature until completely set, 1 to 2 hours."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "The clusters can be stored in an airtight container in the refrigerator for up to 1 month. They also freeze very well!"
+      ]
+    }
+  ]
+}

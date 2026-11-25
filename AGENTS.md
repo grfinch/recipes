@@ -46,3 +46,13 @@ The "checked" state on each item is local component state and is not persisted.
 - Component files are in PascalCase and match their default export (`RecipeSection.jsx` → `RecipeSection`). Hooks are camelCase (`useDebounce.js`). Folders and CSS modules are camelCase.
 - Import paths must match the file name's case exactly. Windows ignores case, but the Linux CI build doesn't, so a mismatch passes locally and breaks the deploy.
 - ESLint uses `eslint-plugin-react`, so components used only in JSX count as used. `no-unused-vars` exempts only `_`-prefixed names, and `react/prop-types` is off (React 19 ignores propTypes).
+
+## Accessibility
+
+Always follow accessibility best practices (WCAG 2.2 AA) in every change:
+- Prefer semantic HTML (`<button>`, `<label>`, `<input type="checkbox">`, lists, headings) over `div`s with ARIA roles.
+- Accessible names should come from visible text. `aria-label` replaces an element's content for screen readers, so use it only when there is no visible text.
+- Everything clickable must work from the keyboard, with a visible focus style. When UI closes (overlays, dialogs), move focus somewhere sensible.
+- Announce dynamic updates (like result counts) with `role="status"` or `aria-live`. Hide decorative symbols with `aria-hidden="true"`.
+- Keep text contrast at 4.5:1 or higher, and don't rely on color alone to show state.
+- In tests, query by role and accessible name (`getByRole('button', { name })`), so tests fail when accessibility breaks.

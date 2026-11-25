@@ -1,0 +1,33 @@
+{
+  "id": "applesauce-cookies",
+  "name": "Applesauce Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1/2 cup shortening",
+        "1 cup sugar",
+        "2 eggs, beaten",
+        "2 1/4 cups flour",
+        "1 tsp baking soda",
+        "1 tsp cinnamon",
+        "1/2 tsp nutmeg",
+        "1/2 tsp cloves",
+        "1/2 tsp salt",
+        "1 cup applesauce",
+        "1 cup chocolate chips"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Cream shortening, sugar, and eggs.",
+        "Add the remaining ingredients and mix well.",
+        "Drop onto a greased cookie sheet.",
+        "Bake at 375°F for 10 to 15 minutes."
+      ]
+    }
+  ]
+}

@@ -11,17 +11,15 @@ This file provides guidance to AI coding agents working with code in this reposi
 - `npm run format` / `npm run format:check`: Prettier (single quotes, semicolons, 100 columns). CI fails on unformatted files; the pre-commit hook formats staged files for you.
 - `npm run validate:recipes`: check every recipe file in `src/recipes/` against the schema and allowed categories
 - `npm test`: run Vitest once (jsdom + React Testing Library); `npm run test:watch` for watch mode
-- `npx vitest run src/components/search` or `npx vitest run -t "Escape"`: run one file or one test by name
+- `npm test -- src/components/search` or `npm test -- -t "Escape"`: run one file or one test by name
 
-Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/test/setup.js`. Requires Node 26 (see `.nvmrc`).
-
-**Windows:** run Vitest from a working directory with an uppercase drive letter (`C:\...`; in Git Bash, `cd /C/...` rather than `/c/...`). A lowercase `c:\` makes Vitest load the setup file as a separate module copy and fail with "failed to find the current suite". If it starts failing after switching paths, delete `node_modules/.vite` and `node_modules/.vitest-cache`.
+Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/test/setup.js`. Requires Node 26 (see `.nvmrc`). Run Vitest through `npm test` or `npm run test:watch`, not `npx vitest`: `scripts/vitest.mjs` works around a Windows path bug that otherwise fails every test.
 
 **Parallel agents:** each agent that runs the app or the browser flows (`.claude/skills/run-recipes/`) needs its own port and its own git worktree. Set a different `RECIPES_PORT` for each (5174, 5175, …), and leave 5173 for the main checkout. The driver reuses any dev server already on its port, even one serving another checkout or stale files, so a shared port can test the wrong code. Check that the driver prints "Started dev server", not "Reusing".
 
 **Worktrees:** make one only when work runs in parallel (two agents at once, or an agent working while someone uses the main checkout). Work done one task at a time just needs a branch. Use one worktree per branch, and reuse it until that branch's PR merges.
 
-- Put every worktree in `../recipes.worktrees/<branch-name>`, named after its branch. Never put one inside the repo (for example under `.claude/worktrees/`), because ESLint and Vitest would scan it. Claude Code's built-in worktree isolation does exactly that, and on Windows it also runs into the drive-letter problem above, so run `git worktree add` yourself.
+- Put every worktree in `../recipes.worktrees/<branch-name>`, named after its branch. Never put one inside the repo (for example under `.claude/worktrees/`), because ESLint and Vitest would scan it. Claude Code's built-in worktree isolation does exactly that, so run `git worktree add` yourself.
 - Create it from an up-to-date `main`: `git fetch`, then `git worktree add ../recipes.worktrees/<branch> -b <branch> origin/main`.
 - In the new worktree, run `npm ci`. Copy `.env.local` from the main checkout if the work needs it (it's gitignored, so a new worktree doesn't have one, and the suggest page acts differently without it). Use your own `RECIPES_PORT`.
 - A branch can be checked out in only one worktree at a time.
@@ -31,7 +29,7 @@ Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/tes
 **Git hooks** (husky, installed by `npm ci`/`npm install` through the `prepare` script):
 
 - `pre-commit` runs lint-staged (`lint-staged.config.js`) on the staged files: `eslint --fix` and `prettier --write`, with the fixes added to the commit, plus `npm run validate:recipes` when a recipe or `src/recipeCategories.json` is staged. A commit whose only change Prettier undoes is stopped as empty.
-- `pre-push` runs CI's `check` steps: lint, format check, recipe validation, tests, build, and the browser checks (on port 5199 with `--fresh`; parallel agents set `PREPUSH_PORT` to their own port). It first moves to `git rev-parse --show-toplevel`, so Vitest gets an uppercase drive letter on Windows.
+- `pre-push` runs CI's `check` steps: lint, format check, recipe validation, tests, build, and the browser checks (on port 5199 with `--fresh`; parallel agents set `PREPUSH_PORT` to their own port).
 - Don't bypass them with `--no-verify` to get past a failure; fix the cause.
 
 ## Deployment

@@ -1,0 +1,29 @@
+{
+  "id": "beef-roast",
+  "name": "Beef Roast",
+  "course": "Dinner",
+  "cookingMethod": "Slow cooker",
+  "ingredients": [
+    {
+      "items": [
+        "1 beef roast",
+        "Montreal steak seasoning",
+        "2 cups water",
+        "4 tsp beef bouillon",
+        "1 pkg onion soup mix",
+        "3 Tbsp Worcestershire sauce",
+        "1 tsp garlic powder"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Place the roast in a crock pot and sprinkle generously with Montreal steak seasoning.",
+        "Cook on high for 4 hours and then turn to low. Cook another 4-6 hours until beef falls apart.",
+        "Mix the rest of the ingredients in the water and pour into the roast.",
+        "Cook for another hour or so until desired tenderness and flavor."
+      ]
+    }
+  ]
+}

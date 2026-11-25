@@ -5,10 +5,12 @@ import styles from './search.module.css';
 export default function SearchBox({ recipes = [], onSelect }) {
     // value: immediate input; setValue: sets input and schedules debounce
     // debounced: debounced value that lags by `delay`
-    const [query, setQuery, debouncedQuery, controls] = useDebounce('', 200);
+    const [query, setQuery, debouncedQuery, { reset, cancel }] = useDebounce('', 200);
     const inputRef = useRef(null);
     const overlayRef = useRef(null);
     const [overlayStyle, setOverlayStyle] = useState(null);
+    // Set by Escape; cleared when the user types again
+    const [dismissed, setDismissed] = useState(false);
 
     // compute filtered results directly (useMemo not necessary here)
     const debq = String(debouncedQuery || '').trim().toLowerCase();
@@ -32,12 +34,11 @@ export default function SearchBox({ recipes = [], onSelect }) {
         });
     }
 
+    const isOpen = Boolean(q) && filtered.length > 0 && !dismissed;
+
     function handleSelect(r) {
-        // clear pending debounce and reset state
-        if (controls && controls.reset) controls.reset('');
+        reset(''); // clears the input and any pending debounce, which closes the overlay
         if (onSelect) onSelect(r);
-        setQuery('');
-        setOverlayStyle(null);
     }
 
     // highlight matching substring in the recipe name
@@ -58,64 +59,52 @@ export default function SearchBox({ recipes = [], onSelect }) {
         );
     }
 
-    // position overlay under the input
-    function updateOverlayPos() {
-        const el = inputRef.current;
-        if (!el) return setOverlayStyle(null);
-        const rect = el.getBoundingClientRect();
-        setOverlayStyle({
-            top: rect.bottom + 'px',
-            left: rect.left + 'px',
-            width: rect.width + 'px'
-        });
-    }
-
+    // While the overlay is open: keep it positioned under the input, and close it
+    // on an outside click or Escape. Runs only when the overlay opens or closes,
+    // not on every render, so listeners are added once per open.
     useEffect(() => {
-        if (query && filtered && filtered.length > 0) updateOverlayPos();
-        function onResize() {
-            if (query && filtered && filtered.length > 0) updateOverlayPos();
-        }
-        window.addEventListener('resize', onResize);
-        window.addEventListener('scroll', onResize, true);
+        if (!isOpen) return;
 
-        // pointerdown (captures clicks/touches) to close overlay when clicking outside
+        function updateOverlayPos() {
+            const el = inputRef.current;
+            if (!el) return;
+            const rect = el.getBoundingClientRect();
+            setOverlayStyle({
+                top: rect.bottom + 'px',
+                left: rect.left + 'px',
+                width: rect.width + 'px'
+            });
+        }
+        updateOverlayPos();
+
+        // pointerdown covers mouse and touch; capture phase sees it before other handlers
         function onDocPointer(e) {
             const o = overlayRef.current;
             const inp = inputRef.current;
-            if (!o || !inp) return;
-            // if click is inside overlay or input, do nothing
-            if (o.contains(e.target) || inp.contains(e.target)) return;
-            // clicked outside -> clear both immediate and debounced values and close overlay
-            if (controls && controls.reset) controls.reset('');
-            else {
-                // fallback
-                setQuery('');
-            }
-            setOverlayStyle(null);
+            if (o?.contains(e.target) || inp?.contains(e.target)) return;
+            reset('');
         }
-        // use boolean capture for simpler removal compatibility
-        const useCapture = true;
-        document.addEventListener('pointerdown', onDocPointer, useCapture);
 
-        // Escape key closes overlay
         function onKeyDown(e) {
-            if (e.key === 'Escape' || e.key === 'Esc') {
-                if (controls && controls.cancel) controls.cancel();
-                setOverlayStyle(null);
-                // return focus to input
-                if (inputRef.current) inputRef.current.focus();
+            if (e.key === 'Escape') {
+                cancel();
+                setDismissed(true);
+                inputRef.current?.focus();
             }
         }
+
+        window.addEventListener('resize', updateOverlayPos);
+        window.addEventListener('scroll', updateOverlayPos, true);
+        document.addEventListener('pointerdown', onDocPointer, true);
         document.addEventListener('keydown', onKeyDown);
 
         return () => {
-            window.removeEventListener('resize', onResize);
-            window.removeEventListener('scroll', onResize, true);
-            document.removeEventListener('pointerdown', onDocPointer, useCapture);
+            window.removeEventListener('resize', updateOverlayPos);
+            window.removeEventListener('scroll', updateOverlayPos, true);
+            document.removeEventListener('pointerdown', onDocPointer, true);
             document.removeEventListener('keydown', onKeyDown);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [query, debouncedQuery, filtered]);
+    }, [isOpen, reset, cancel]);
 
     return (
         <div className={styles.container}>
@@ -126,9 +115,8 @@ export default function SearchBox({ recipes = [], onSelect }) {
                 ref={inputRef}
                 value={query}
                 onChange={e => {
-                    const v = e.target.value;
-                    // setQuery schedules debounce via the hook
-                    setQuery(v);
+                    setQuery(e.target.value); // also schedules the debounced update
+                    setDismissed(false); // typing again reopens results closed with Escape
                 }}
                 placeholder="Search by name, ingredient, or instruction..."
                 className={styles.input}
@@ -136,7 +124,7 @@ export default function SearchBox({ recipes = [], onSelect }) {
             <div className={styles.resultCount}>{filtered.length} result{filtered.length !== 1 ? 's' : ''}</div>
 
             {/* render overlaid results so the page layout doesn't shift */}
-            {query && filtered.length > 0 && overlayStyle && (
+            {isOpen && overlayStyle && (
                 <div
                     ref={overlayRef}
                     className={styles.overlay}

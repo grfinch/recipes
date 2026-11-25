@@ -8,8 +8,12 @@ This file provides guidance to AI coding agents working with code in this reposi
 - `npm run build`: production build to `dist/`
 - `npm run preview`: serve the built `dist/`
 - `npm run lint`: ESLint (flat config, `eslint.config.js`)
+- `npm test`: run Vitest once (jsdom + React Testing Library); `npm run test:watch` for watch mode
+- `npx vitest run src/components/search` or `npx vitest run -t "Escape"`: run one file or one test by name
 
-There is no test framework set up yet.
+Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/test/setup.js`. Requires Node 26 (see `.nvmrc`).
+
+**Windows:** run Vitest from a working directory with an uppercase drive letter (`C:\...`; in Git Bash, `cd /C/...` rather than `/c/...`). A lowercase `c:\` makes Vitest load the setup file as a separate module copy and fail with "failed to find the current suite". If it starts failing after switching paths, delete `node_modules/.vite` and `node_modules/.vitest-cache`.
 
 ## Deployment
 

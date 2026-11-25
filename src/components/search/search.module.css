@@ -72,7 +72,14 @@
   cursor: pointer;
 }
 
-.resultButton:hover {
+@media (hover: hover) {
+  .resultButton:hover {
+    background: var(--link-tint);
+  }
+}
+
+/* Touch screens have no hover: tint the row while it's pressed instead */
+.resultButton:active {
   background: var(--link-tint);
 }
 

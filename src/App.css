@@ -69,20 +69,31 @@
   grid-area: wake;
 }
 
-/* Wide screens: one row. Everything bottom-aligns with the 44px search input. */
-@media (min-width: 1000px) {
+/* One row when there's room, and on short landscape screens (a phone on its side, a Google
+   Nest Hub at 1024x600) where a tall header would eat the screen. The search label sits
+   beside the input instead of above it, and the keep-screen-on label may wrap to two lines. */
+@media (min-width: 1000px), (min-width: 760px) and (max-height: 700px) {
   #root > .siteHeader {
     grid-template-columns: auto minmax(0, 36rem) auto 1fr auto;
     grid-template-areas: 'title search wake . nav';
-    align-items: end;
-    column-gap: 1.5rem;
-    padding-block: 0.75rem;
+    column-gap: 1rem;
+    padding-block: 0.5rem;
   }
 
-  .siteTitle {
-    min-height: 44px;
+  .headerSearch > div {
     display: flex;
     align-items: center;
+    gap: 0.75rem;
+  }
+
+  .headerSearch label {
+    margin: 0;
+    white-space: nowrap;
+  }
+
+  .headerWake label {
+    max-width: 10.5em;
+    line-height: 1.25;
   }
 }
 
@@ -101,8 +112,10 @@
   white-space: nowrap;
 }
 
-.navLink:hover {
-  background: var(--link-tint);
+@media (hover: hover) {
+  .navLink:hover {
+    background: var(--link-tint);
+  }
 }
 
 /* Current page: tinted fill plus an underline, so the state isn't shown by color alone */

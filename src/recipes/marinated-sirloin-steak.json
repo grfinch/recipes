@@ -1,0 +1,34 @@
+{
+  "id": "marinated-sirloin-steak",
+  "name": "Marinated Sirloin Steak",
+  "course": "Dinner",
+  "cookingMethod": "Grill",
+  "ingredients": [
+    {
+      "items": [
+        "2 to 2 1/2 lb sirloin steak (about 1 inch thick)",
+        "1 1/2 cups water",
+        "3/4 cup soy sauce",
+        "1/4 cup Worcestershire sauce",
+        "1 medium onion, chopped",
+        "2 Tbsp apple cider vinegar",
+        "2 Tbsp lemon juice",
+        "2 Tbsp Dijon mustard",
+        "2 garlic cloves, minced",
+        "2 tsp dried parsley flakes",
+        "1 tsp dried thyme",
+        "1 tsp Italian seasoning",
+        "1 tsp pepper"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Combine all ingredients.",
+        "Marinate for at least 4 hours; overnight is better.",
+        "Grill steak to desired doneness."
+      ]
+    }
+  ]
+}

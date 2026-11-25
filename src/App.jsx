@@ -103,7 +103,7 @@ function App() {
     const link = cameFrom && mainRef.current?.querySelector(`[data-recipe-id="${cameFrom.id}"]`);
     if (link) {
       link.focus({ preventScroll: true });
-      link.scrollIntoView?.({ block: 'center' });
+      link.scrollIntoView?.({ block: 'start' });
     } else {
       mainRef.current?.querySelector('h1')?.focus();
     }

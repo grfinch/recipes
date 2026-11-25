@@ -22,12 +22,12 @@ Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/tes
 **Git hooks** (husky, installed by `npm ci`/`npm install` through the `prepare` script):
 
 - `pre-commit` runs lint-staged (`lint-staged.config.js`) on the staged files: `eslint --fix` and `prettier --write`, with the fixes added to the commit, plus `npm run validate:recipes` when a recipe or `src/recipeCategories.json` is staged. A commit whose only change Prettier undoes is stopped as empty.
-- `pre-push` runs CI's `check` steps: lint, format check, recipe validation, tests, and build. It first moves to `git rev-parse --show-toplevel`, so Vitest gets an uppercase drive letter on Windows.
+- `pre-push` runs CI's `check` steps: lint, format check, recipe validation, tests, build, and the browser checks (on port 5199 with `--fresh`; parallel agents set `PREPUSH_PORT` to their own port). It first moves to `git rev-parse --show-toplevel`, so Vitest gets an uppercase drive letter on Windows.
 - Don't bypass them with `--no-verify` to get past a failure; fix the cause.
 
 ## Deployment
 
-`.github/workflows/ci.yml` has a `check` job (lint, format check, tests, build; Node version from `.nvmrc`) that runs on pull requests and on pushes to `main`. A push to `main` deploys to GitHub Pages (<https://grfinch.github.io/recipes/>), but only after `check` passes.
+`.github/workflows/ci.yml` has a `check` job (lint, format check, recipe validation, tests, build, and the browser checks in `.claude/skills/run-recipes/flows/regression.mjs`; Node version from `.nvmrc`) that runs on pull requests and on pushes to `main`. A push to `main` deploys to GitHub Pages (<https://grfinch.github.io/recipes/>), but only after `check` passes.
 
 Dependabot (`.github/dependabot.yml`) opens weekly update PRs. `.github/workflows/dependabot-auto-merge.yml` auto-merges patch and minor updates once `check` passes; majors need review. ESLint 10 is on hold until `eslint-plugin-react` and `eslint-plugin-jsx-a11y` support it.
 

@@ -19,17 +19,19 @@ export default function NumberedClickableItem({ item, index }) {
 
     return (
         <li className={`${styles.li_no_bullets} ${checked ? styles.checked : ''}`}>
+            {/* No aria-label: it would replace the visible text, so screen readers would
+                hear "Toggle item 3" instead of the step. The name comes from the content. */}
             <div //TODO: change this to a label?
                 role="button"
                 tabIndex={0}
                 aria-pressed={!!checked}
-                aria-label={`Toggle item ${index}`}
                 onClick={toggle}
                 onKeyDown={onKeyDown}
                 className={styles.label}
             >
+                {/* The ✓ is decorative; aria-pressed already says whether it's done */}
                 <span className={`${styles.numberBtn} ${checked ? styles.checkMark : ''}`}>
-                    {checked ? '✓' : `${index}.`}
+                    {checked ? <span aria-hidden="true">✓</span> : `${index}.`}
                 </span>
                 <span>{item}</span>
             </div>

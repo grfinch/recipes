@@ -14,7 +14,9 @@ export default function RecipeSection({ header, listItems, ordered, clickable })
         : (Array.isArray(listItems) ? splitFlatNotes(listItems) : [])
 
     function renderListItem(item, iIdx, gIdx) {
-        const key = `${item}-${gIdx}`;
+        // Position-based key: item text can repeat (e.g. "1 tsp salt" twice). The list
+        // never reorders, and App remounts Recipe per recipe, so position is stable.
+        const key = `${gIdx}-${iIdx}`;
         if (!ordered && clickable) return <CheckboxItem key={key} item={item} />;
         if (ordered && clickable) return <NumberedClickableItem key={key} item={item} index={iIdx + 1} />;
         return <BulletItem key={key} item={item} />;

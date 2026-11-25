@@ -16,5 +16,5 @@ npm run build
 # Browser checks (CSS, contrast, native behavior), as in CI. The driver's own dependency
 # (playwright-core, which uses your installed Chrome) is installed on first use. Port 5199
 # with --fresh, so it never tests a dev server that's running other code.
-[ -d .claude/skills/run-recipes/node_modules ] || npm ci --prefix .claude/skills/run-recipes --silent
+[ -d .claude/skills/run-recipes/node_modules ] || npm install --prefix .claude/skills/run-recipes --silent --no-audit --no-fund
 RECIPES_PORT=5199 node .claude/skills/run-recipes/driver.mjs regression --fresh

@@ -43,8 +43,9 @@ jobs:
 
       # CSS and native browser behavior that jsdom can't test (focus outlines, contrast,
       # the checkmark, Escape in the search box). Uses the runner's installed Chrome.
+      # npm install, not ci: the driver pins its one dependency exactly and has no lockfile.
       - name: Install browser driver
-        run: npm ci --prefix .claude/skills/run-recipes
+        run: npm install --prefix .claude/skills/run-recipes --no-audit --no-fund
 
       - name: Browser checks
         run: node .claude/skills/run-recipes/driver.mjs regression --fresh

@@ -3,11 +3,8 @@
 // on every pull request. Exits 1 and lists every problem if anything is wrong.
 import { readFileSync } from 'node:fs';
 import { fileURLToPath, pathToFileURL } from 'node:url';
-import { slugify } from '../src/utils/recipeHash.js';
-
-// Hash routes the app uses for its own views. A recipe whose slug matched one would be
-// unreachable, so these names are taken. Keep in sync with the routes in App.jsx.
-export const RESERVED_SLUGS = ['browse'];
+// RESERVED_SLUGS: links the app uses for its own views (e.g. #/browse), so no recipe can take them
+import { RESERVED_SLUGS, slugify } from '../src/utils/recipeHash.js';
 
 const KNOWN_KEYS = ['name', 'course', 'cookingMethod', 'ingredients', 'instructions', 'notes'];
 const isSeparator = (s) => s.trim().startsWith('-');

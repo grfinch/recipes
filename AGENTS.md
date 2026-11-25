@@ -45,6 +45,15 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 
 **Suggest page:** `#/suggest` shows `SuggestRecipe` (`src/components/suggest/`), a form where visitors suggest a recipe. The site footer (on every page) links to it, and so do the browse page and the empty state. It is in the footer rather than the header to keep the header to the one "All recipes" pill on phones. Fields and limits live in `src/utils/suggestion.js`: name, ingredients and steps are required, and the rest are optional. Errors show only after Send: a focused summary links to each field, and the summary links move focus without changing the hash. The unsent draft is kept in `localStorage` under `recipes:suggestion-draft`. It POSTs JSON to `VITE_SUGGEST_ENDPOINT`, a relay that opens a GitHub issue, with a Cloudflare Turnstile token (`src/hooks/useTurnstile.js`, only when `VITE_TURNSTILE_SITE_KEY` is set) and a hidden honeypot field. Without an endpoint (dev, tests, forks), the page shows a link to GitHub issues instead of the form. Tests pass `endpoint` and `turnstileSiteKey` as props, and they fake `fetch` and `window.turnstile`.
 
+**Suggestion pipeline:** `relay/` is a Cloudflare Worker (its own `package.json`, deployed with wrangler; setup is in `relay/README.md`). It checks the origin, size, honeypot, rate limit, Turnstile and fields, then opens a GitHub issue labeled `recipe-suggestion` with a fine-grained token. Visitor text goes inside code fences with `@` mentions broken up. When the repo owner adds the `make-recipe-pr` label, `.github/workflows/recipe-suggestion.yml` runs the `add-recipe` skill in unattended mode:
+
+- Claude may only write to its temp folder and run `write-recipe.mjs`.
+- A shell guard then requires that the only change is one new `src/recipes/<id>.json`, and runs Prettier, validation, the tests and the recipe's browser check.
+- The workflow commits, opens a draft PR (`Closes #N`), and dispatches `ci.yml`, because PRs opened with `GITHUB_TOKEN` don't trigger CI.
+- If it can't draft the recipe, it comments with questions (`needs-info`) or closes the issue as not a recipe.
+
+`claude.yml` ignores issues labeled `recipe-suggestion`, because the relay opens them with the owner's token.
+
 **Recipe schema** (`src/recipes/<id>.json`, one recipe object per file):
 
 - `id`: required, permanent, and equal to the file name. Lowercase letters, digits and dashes, made once from the name with `slugify` and never changed afterwards, even if the recipe is renamed. It is the recipe's link (`#/<id>`) and its saved-checklist key, and it must not be a reserved slug.

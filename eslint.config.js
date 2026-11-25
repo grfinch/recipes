@@ -61,6 +61,12 @@ export default defineConfig([
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
   },
 
+  // The suggestion relay: a Cloudflare Worker (service-worker style globals)
+  {
+    files: ['relay/**/*.js'],
+    languageOptions: { globals: globals.serviceworker },
+  },
+
   // Last: turn off stylistic rules that Prettier handles
   eslintConfigPrettier,
 ]);

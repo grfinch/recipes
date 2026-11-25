@@ -1,0 +1,19 @@
+# Cloudflare Worker for the "Suggest a recipe" page. Setup: README.md in this folder.
+name = "recipes-suggestion-relay"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+
+[vars]
+GITHUB_REPO = "grfinch/recipes"
+# The pages allowed to send suggestions: the live site, and the Vite dev server
+ALLOWED_ORIGINS = "https://grfinch.github.io,http://localhost:5173"
+
+# Secrets (set with `npx wrangler secret put <NAME>`, never committed):
+#   GITHUB_TOKEN      fine-grained token: this repo only, Issues read and write
+#   TURNSTILE_SECRET  the Turnstile widget's secret key
+
+# At most 5 suggestions a minute from one IP address
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1001"
+simple = { limit = 5, period = 60 }

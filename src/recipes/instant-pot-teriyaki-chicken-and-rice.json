@@ -1,0 +1,36 @@
+{
+  "id": "instant-pot-teriyaki-chicken-and-rice",
+  "name": "Instant-pot Teriyaki Chicken and Rice",
+  "course": "Main",
+  "cookingMethod": "Instant-pot",
+  "ingredients": [
+    {
+      "title": "Chicken",
+      "items": [
+        "8-12 chicken thighs",
+        "Teriyaki sauce, your choice, enough to cover the chicken",
+        "About 1 Tbsp water"
+      ]
+    },
+    {
+      "title": "Rice",
+      "items": ["Rice"]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Chicken",
+      "items": [
+        "Add chicken thighs to the instant pot",
+        "Add your choice of teriyaki sauce to cover the chicken",
+        "Use about a tablespoon of water and swish around the bottle to get all the remaining sauce out",
+        "Pressure cook on high for 9-12 minutes",
+        "Slow release recommended for more tender chicken"
+      ]
+    },
+    {
+      "title": "Rice",
+      "items": ["When that's set and going, make rice in a rice cooker"]
+    }
+  ]
+}

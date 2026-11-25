@@ -109,6 +109,11 @@ function App() {
       <header className="siteHeader">
         {/* Site name, not a heading: each page has its own h1 */}
         <p className="siteTitle">{SITE_TITLE}</p>
+        <div className="headerSearch">
+          <SearchBox recipes={allRecipes} onSelect={handleSelect} />
+        </div>
+        {/* After the search box in the source, so Tab follows the wide layout; on phones the CSS
+            shows it beside the site title instead */}
         <nav className="siteNav" aria-label="Site">
           {/* On All recipes, tapping the highlighted pill again goes back to the last recipe.
               The name stays the visible "All recipes"; screen readers hear where it goes as its
@@ -127,9 +132,6 @@ function App() {
             </span>
           ) : null}
         </nav>
-        <div className="headerSearch">
-          <SearchBox recipes={allRecipes} onSelect={handleSelect} />
-        </div>
         {/* Display settings: Keep screen on and the theme button, on one line */}
         <div className="headerSettings">
           <KeepScreenOn />

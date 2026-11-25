@@ -30,7 +30,7 @@ export default function RecipeSection({
   }
 
   return (
-    <>
+    <section className={styles.section}>
       <h2>{header}</h2>
       {groups.map((group, gIdx) => (
         // Titled groups get a heading; untitled ones a decorative rule (CSS) to set them apart
@@ -41,6 +41,6 @@ export default function RecipeSection({
           </ul>
         </div>
       ))}
-    </>
+    </section>
   );
 }

@@ -66,7 +66,7 @@ Items are controlled: `Recipe` owns the "checked" state through `src/hooks/useCh
 
 ## Conventions
 
-- Component styles use CSS Modules (`*.module.css` imported as `styles`). Global styles live in `src/index.css` and `src/App.css`.
+- Component styles use CSS Modules (`*.module.css` imported as `styles`). Global styles live in `src/index.css` and `src/App.css`. Colors come from the tokens on `:root` in `src/index.css` (`--text`, `--muted`, `--link`, `--surface`, `--line`, and others), with light and dark values; use them rather than literal colors, so both schemes keep their contrast.
 - Component files are in PascalCase and match their default export (`RecipeSection.jsx` → `RecipeSection`). Hooks are camelCase (`useDebounce.js`). Folders and CSS modules are camelCase.
 - Import paths must match the file name's case exactly. Windows ignores case, but the Linux CI build doesn't, so a mismatch passes locally and breaks the deploy.
 - ESLint has separate blocks for different code: `src/` gets React, hooks (including the React Compiler rules), react-refresh, `jsx-a11y`, and browser globals. Config files and `.claude/` scripts get Node globals. The browser flows in `.claude/skills/` get both, because their `page.evaluate()` callbacks run in the page. `eslint-config-prettier` comes last, to turn off style rules.

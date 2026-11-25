@@ -63,14 +63,24 @@ function App() {
 
   return (
     <>
-      <header>
-        <SearchBox recipes={allRecipes} onSelect={handleSelect} />
-        <KeepScreenOn />
-        <nav className="siteNav">
-          <a href={BROWSE_HASH} aria-current={view?.page === 'browse' ? 'page' : undefined}>
+      <header className="siteHeader">
+        {/* Site name, not a heading: each page has its own h1 */}
+        <p className="siteTitle">{SITE_TITLE}</p>
+        <nav className="siteNav" aria-label="Site">
+          <a
+            href={BROWSE_HASH}
+            className="navLink"
+            aria-current={view?.page === 'browse' ? 'page' : undefined}
+          >
             All recipes
           </a>
         </nav>
+        <div className="headerSearch">
+          <SearchBox recipes={allRecipes} onSelect={handleSelect} />
+        </div>
+        <div className="headerWake">
+          <KeepScreenOn />
+        </div>
       </header>
 
       <main ref={mainRef}>

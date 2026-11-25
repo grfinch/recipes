@@ -8,15 +8,20 @@
   display: flex;
   flex-wrap: wrap;
   align-items: baseline;
-  gap: 0.25rem 0.75rem;
-  padding: 0.75rem 0;
+  gap: 0 0.75rem;
+  padding: 0.25rem 0;
 }
 
+/* Decorative separators: a light line, not the heavier muted text color */
 .item:not(:first-child) {
-  border-top: 1px solid var(--muted);
+  border-top: 1px solid var(--line);
 }
 
+/* The recipe name is the tap target: 44px tall */
 .link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   font-size: 1.15rem;
   font-weight: 600;
 }
@@ -24,4 +29,5 @@
 .details {
   color: var(--muted);
   font-size: 0.9rem;
+  padding-bottom: 0.5rem;
 }

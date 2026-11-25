@@ -1,0 +1,35 @@
+{
+  "id": "brown-sugar-glazed-salmon",
+  "name": "Brown Sugar Glazed Salmon",
+  "course": "Dinner",
+  "cookingMethod": "Air fryer",
+  "ingredients": [
+    {
+      "items": ["Salmon", "Olive oil", "Salt", "Brown sugar", "Dark chili powder"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat air fryer to 400",
+        "Have a piece of parchment paper in air frying basket",
+        "Cut salmon into approximately 6-8 oz portions",
+        "Quick rinse and dry salmon",
+        "Give each piece a small coating of olive oil and place skin side down on parchment paper (if skinless, coat a bit extra of the bottom with oil to stick less)",
+        "Salt the salmon",
+        "Sprinkle chili powder",
+        "Sprinkle brown sugar generously (can layer chili powder and brown sugar if desired)",
+        "Put in air fryer for 10-12 min"
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "I found I like more chili powder than expected to balance out the brown sugar.",
+        "Take the fish off when warm/hot or it sticks to the parchment more.",
+        "Use a thermometer and take it out at 140; it will cook to the 145 safety mark while getting plates, etc., so it's not overdone."
+      ]
+    }
+  ]
+}

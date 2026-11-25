@@ -5,7 +5,7 @@ import { loadRecipeFiles, validateRecipes } from './validate-recipes.mjs';
 const valid = (overrides = {}) => ({
   id: 'lentil-stew',
   name: 'Lentil Stew',
-  course: 'Main',
+  course: 'Dinner',
   cookingMethod: 'Instant-pot',
   ingredients: [{ title: 'Sauté', items: ['1 Tbsp olive oil'] }, { items: ['1 cup lentils'] }],
   instructions: [{ items: ['Heat the oil'] }, { items: ['Simmer'] }],

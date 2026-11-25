@@ -4,7 +4,7 @@ import { matchesQuery } from './recipeSearch';
 const stew = {
   id: 'lentil-stew',
   name: 'Lentil Stew',
-  course: 'Main',
+  course: 'Dinner',
   cookingMethod: 'Instant-pot',
   ingredients: [
     { title: 'Sauté', items: ['1 Tbsp olive oil', '1 carrot'] },
@@ -24,7 +24,7 @@ describe('matchesQuery', () => {
   });
 
   it('matches course and cooking method', () => {
-    expect(matchesQuery(stew, 'main')).toBe(true);
+    expect(matchesQuery(stew, 'dinner')).toBe(true);
     expect(matchesQuery(stew, 'instant-pot')).toBe(true);
   });
 

@@ -28,7 +28,7 @@ It prints `PASS`/`FAIL` per check and exits non-zero if any check fails. Screens
 | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `smoke` (default)        | Loads the page, searches "lentil", opens it, checks an ingredient.                                                                                                  |
 | `regression`             | Counter, native Escape, focus return, accessible step names, checked state across recipes, checkmark and focus styles, no `---` separator text, React key warnings. |
-| `--random`               | Keep the app's random first recipe. By default `Math.random()` returns 0, so the page opens on the first recipe by name (Instant-pot Creamy Sausage Pasta).         |
+| `--random`               | Keep the app's random first recipe. By default `Math.random()` returns 0, so the page opens on the first recipe by name (Creamy Sausage Pasta).                     |
 | `RECIPES_PORT=5174`      | Use another port. Use this when 5173 is serving something else.                                                                                                     |
 | `BROWSER_CHANNEL=msedge` | Use Edge instead of Chrome.                                                                                                                                         |
 
@@ -37,7 +37,7 @@ It prints `PASS`/`FAIL` per check and exits non-zero if any check fails. Screens
 ```js
 export default async function ({ page, shot, check, consoleMsgs }) {
   await page.getByLabel('Search recipes').pressSequentially('pasta', { delay: 30 });
-  await page.getByRole('button', { name: 'Instant-pot Creamy Sausage Pasta' }).click();
+  await page.getByRole('button', { name: 'Creamy Sausage Pasta' }).click();
   check('recipe opened', await page.getByRole('heading', { level: 1 }).textContent());
   await page.screenshot({ path: shot('my-check.png') });
 }

@@ -1,0 +1,33 @@
+{
+  "id": "molten-lava-cake",
+  "name": "Molten Lava Cake",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "6 squares (1 oz each) bittersweet chocolate",
+        "2 squares (1 oz each) semisweet chocolate",
+        "10 Tbsp (1 1/4 sticks) butter",
+        "1/2 cup flour",
+        "1 1/2 cups powdered sugar",
+        "3 large eggs",
+        "3 egg yolks",
+        "1 tsp vanilla extract",
+        "1 Tbsp water"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat oven to 425°F. Grease 6 (6-oz) custard cups.",
+        "Melt the chocolates and butter in the microwave (30 seconds at a time, and stir), or in a double boiler.",
+        "Add the flour and sugar to chocolate mixture. Stir in the eggs and yolks until smooth. Stir in the vanilla and water.",
+        "Divide the batter evenly among the custard cups.",
+        "Place in the oven and bake for 14 minutes. The edges should be firm but the center will be runny.",
+        "Run a knife around the edges to loosen and invert onto dessert plates."
+      ]
+    }
+  ]
+}

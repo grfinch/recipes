@@ -38,7 +38,7 @@ Ask Claude Code to add it: the `add-recipe` skill drafts the recipe from pasted 
 
 ## Continuous integration and deploys
 
-[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs lint, the format check, the tests, and the build on every pull request and every push to `main`. A push to `main` deploys to GitHub Pages, but only if all of those pass.
+[`.github/workflows/ci.yml`](.github/workflows/ci.yml) runs lint, the format check, recipe validation, the tests, the build, and browser checks for styling and accessibility (focus outlines, contrast, native behavior) on every pull request and every push to `main`. A push to `main` deploys to GitHub Pages, but only if all of those pass.
 
 Dependabot checks for dependency updates weekly. Patch and minor updates merge automatically once CI passes. Major updates wait for review. Auto-merged updates go live with the next push to `main`, because merges made by GitHub Actions don't start new workflow runs.
 

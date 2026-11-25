@@ -1,11 +1,13 @@
 // Drives the recipes app in headless Chrome.
 //
-//   node .claude/skills/run-recipes/driver.mjs [flow] [--random]
+//   node .claude/skills/run-recipes/driver.mjs [flow] [--random] [--fresh]
 //
-// flow:     a name in ./flows (default "smoke") or a path to a .mjs file whose default
+// flow:     a name in ./flows (default "regression") or a path to a .mjs file whose default
 //           export is `async ({ page, shot, check, consoleMsgs }) => {}`.
 // --random: keep the app's random first recipe. By default Math.random() returns 0,
 //           so the page opens on the first recipe by name (src/recipes/index.js sorts them).
+// --fresh:  always start a new dev server from this checkout; fail if the port is taken,
+//           instead of reusing a server that may be serving other code (CI and pre-push).
 //
 // Env: RECIPES_PORT (default 5173), BROWSER_CHANNEL (default "chrome", e.g. "msedge").
 // Reuses a dev server already listening on the port; otherwise starts one and stops it after.
@@ -24,7 +26,8 @@ const SHOTS = path.join(HERE, 'shots');
 
 const args = process.argv.slice(2);
 const random = args.includes('--random');
-const flowArg = args.find((a) => !a.startsWith('--')) || 'smoke';
+const fresh = args.includes('--fresh');
+const flowArg = args.find((a) => !a.startsWith('--')) || 'regression';
 const flowPath = /[\\/]|\.mjs$/.test(flowArg)
   ? path.resolve(flowArg)
   : path.join(HERE, 'flows', `${flowArg}.mjs`);
@@ -40,7 +43,10 @@ const isUp = async () => {
 
 // --- Dev server: reuse or start -------------------------------------------------
 let server;
-if (await isUp()) {
+if (fresh && (await isUp())) {
+  console.error(`--fresh: port ${PORT} is already in use. Set RECIPES_PORT to a free port.`);
+  process.exit(1);
+} else if (await isUp()) {
   console.log(`Reusing dev server at ${APP_URL}`);
 } else {
   // Run vite directly (not `npm run dev`): no --open browser window, and killing

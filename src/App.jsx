@@ -18,7 +18,10 @@ function App() {
       </header>
 
       <main>
-        <Recipe recipe={selected} />
+        {selected
+          // key: a new recipe remounts, so checked items don't carry over
+          ? <Recipe key={selected.name} recipe={selected} />
+          : <p>No recipes yet.</p>}
       </main>
     </>
   )

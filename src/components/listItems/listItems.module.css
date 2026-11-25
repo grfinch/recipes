@@ -139,3 +139,14 @@
   text-decoration: line-through;
   color: var(--muted);
 }
+
+/* Touch screens have no hover: tint a row while it's pressed, so a tap visibly lands */
+@media (hover: none) {
+  .label:active {
+    background: var(--link-tint);
+  }
+}
+
+.label {
+  border-radius: 6px;
+}

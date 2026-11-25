@@ -59,6 +59,8 @@ export default function SearchBox({ recipes = [], onSelect }) {
   useEffect(() => {
     if (!isOpen) return;
 
+    const rem = () => parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
+
     function updateOverlayPos() {
       const el = inputRef.current;
       if (!el) return;
@@ -66,7 +68,12 @@ export default function SearchBox({ recipes = [], onSelect }) {
       setOverlayStyle({
         top: rect.bottom + 'px',
         left: rect.left + 'px',
-        width: rect.width + 'px',
+        // At least 22rem where there's room, so names don't wrap under a narrow header input
+        width:
+          Math.max(rect.width, Math.min(22 * rem(), window.innerWidth - rect.left - 16)) + 'px',
+        // Never taller than the space below the input, so the panel fits short screens
+        // (a phone in landscape, a kitchen display). At most 320px, at least 120px.
+        maxHeight: Math.min(320, Math.max(120, window.innerHeight - rect.bottom - 12)) + 'px',
       });
     }
     updateOverlayPos();
@@ -135,6 +142,7 @@ export default function SearchBox({ recipes = [], onSelect }) {
             top: overlayStyle.top,
             left: overlayStyle.left,
             width: overlayStyle.width,
+            maxHeight: overlayStyle.maxHeight,
           }}
         >
           <div className={styles.overlayHeader}>

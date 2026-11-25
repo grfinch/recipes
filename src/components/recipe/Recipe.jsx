@@ -7,10 +7,13 @@ export default function Recipe({ recipe: { id, name, ingredients, instructions, 
 
   return (
     <div className={styles.recipe}>
-      <h1 tabIndex={-1}>{name}</h1>
-      <button type="button" onClick={reset} className={styles.resetButton}>
-        Reset checklist
-      </button>
+      {/* Title and Reset share a row when there's room, saving height on short screens */}
+      <div className={styles.titleRow}>
+        <h1 tabIndex={-1}>{name}</h1>
+        <button type="button" onClick={reset} className={styles.resetButton}>
+          Reset checklist
+        </button>
+      </div>
       <RecipeSection
         header={'Ingredients'}
         groups={ingredients}

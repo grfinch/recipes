@@ -8,7 +8,20 @@
   padding-left: 0.25rem;
 }
 
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem 1.5rem;
+  margin: 1.25rem 0 0.75rem;
+}
+
+.titleRow h1 {
+  margin: 0;
+}
+
 .resetButton {
+  flex: 0 0 auto;
   min-height: 44px;
   padding: 0.25rem 1rem;
   border: 1px solid var(--muted);
@@ -50,4 +63,37 @@
 .groupTitle {
   margin: 0.5rem 0 0.125rem 0.25rem;
   font-size: 1.05rem;
+}
+
+/* Wide landscape screens (a Nest Hub, a tablet on its side, desktop): ingredients beside
+   the instructions, so both are on screen while cooking. Notes span both columns. */
+@media (min-width: 900px) and (orientation: landscape) {
+  .recipe {
+    max-width: none;
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr);
+    column-gap: 2.5rem;
+    align-items: start;
+  }
+
+  .recipe > :not(.section),
+  .recipe > .section:nth-of-type(n + 3) {
+    grid-column: 1 / -1;
+  }
+
+  .section {
+    max-width: 40rem;
+  }
+}
+
+/* Short landscape screens (a Nest Hub, a phone on its side): a smaller title, so the
+   checklist starts higher up */
+@media (orientation: landscape) and (max-height: 700px) {
+  .titleRow {
+    margin-top: 0.75rem;
+  }
+
+  .titleRow h1 {
+    font-size: 2.25rem;
+  }
 }

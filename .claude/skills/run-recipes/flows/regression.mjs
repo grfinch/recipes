@@ -1,6 +1,7 @@
 // Browser-only checks: things jsdom can't test because they need real CSS or native browser
 // behavior. Everything else (search, counts, focus, checklists, links) is covered by the
-// Vitest tests. Runs in CI (.github/workflows/ci.yml) and in the pre-push hook.
+// Vitest tests. Also checks layout at phone, tablet, and Nest Hub sizes. Runs in CI
+// (.github/workflows/ci.yml) and in the pre-push hook.
 //
 // This flow must never name a recipe or depend on how many there are. It works from whatever
 // the page shows, so adding or editing recipes can't break it.
@@ -116,6 +117,98 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
     await page.screenshot({ path: shot(`regression-${scheme}.png`), fullPage: true });
   }
   await page.emulateMedia({ colorScheme: null });
+
+  // 6. Layout at phone, tablet, and kitchen-display sizes. Each size gets its own touch-enabled
+  //    browser context, so (pointer: coarse) and (hover: none) styles apply as on the device.
+  //    It searches for the first letter of whichever recipe is open, so it never names one.
+  const VIEWPORTS = [
+    ['phone 320x568', 320, 568, 24],
+    ['phone 360x800', 360, 800, 24],
+    ['phone 390x844', 390, 844, 24],
+    ['phone 430x932', 430, 932, 24],
+    ['phone landscape 844x390', 844, 390, 24],
+    ['tablet 768x1024', 768, 1024, 24],
+    ['Nest Hub 1024x600', 1024, 600, 44],
+    ['Nest Hub Max 1280x800', 1280, 800, 44],
+  ];
+  const appUrl = page.url().split('#')[0];
+  for (const [label, width, height, minTarget] of VIEWPORTS) {
+    const ctx = await page
+      .context()
+      .browser()
+      .newContext({ viewport: { width, height }, hasTouch: true });
+    const p = await ctx.newPage();
+    p.on('pageerror', (e) => consoleMsgs.push(`pageerror: ${e.message}`));
+    await p.goto(appUrl);
+    const h1 = p.getByRole('heading', { level: 1 });
+    await h1.waitFor();
+    const layout = await p.evaluate(() => {
+      const size = (el) => {
+        const r = el.getBoundingClientRect();
+        return { w: Math.round(r.width), h: Math.round(r.height) };
+      };
+      // The tap targets: whole checkbox rows (the label), steps, header controls, Reset
+      const targets = [
+        ...document.querySelectorAll('main li label, main li button'),
+        ...document.querySelectorAll('header a, header input[type="search"]'),
+        ...[...document.querySelectorAll('header input[type="checkbox"]')].map((c) =>
+          c.closest('label'),
+        ),
+        ...[...document.querySelectorAll('main button')].filter((b) => !b.closest('li')),
+      ].filter(Boolean);
+      const smallest = targets
+        .map((el) => ({ ...size(el), name: el.textContent.trim().slice(0, 30) || el.type }))
+        .sort((a, b) => Math.min(a.w, a.h) - Math.min(b.w, b.h))[0];
+      return {
+        overflow: document.documentElement.scrollWidth - window.innerWidth,
+        targets: targets.length,
+        smallest,
+      };
+    });
+    check(`${label}: no horizontal scrolling`, layout.overflow <= 0, `${layout.overflow}px over`);
+    const s = layout.smallest;
+    check(
+      `${label}: tap targets at least ${minTarget}px`,
+      layout.targets > 0 && Math.min(s.w, s.h) >= minTarget,
+      `${layout.targets} targets; smallest "${s?.name}" ${s?.w}x${s?.h}`,
+    );
+
+    // The search results panel fits on screen
+    const search = p.getByLabel('Search recipes');
+    await search.fill((await h1.textContent()).trim()[0]);
+    const results = p.getByRole('banner').getByRole('list');
+    await results.waitFor();
+    const panel = await results.evaluate((ul) => {
+      const r = ul.parentElement.getBoundingClientRect();
+      return { left: r.left, right: r.right, bottom: r.bottom, w: innerWidth, h: innerHeight };
+    });
+    check(
+      `${label}: search results fit on screen`,
+      panel.left >= 0 && panel.right <= panel.w && panel.bottom <= panel.h,
+      JSON.stringify(panel),
+    );
+    await p.screenshot({ path: shot(`regression-7-${width}x${height}-search.png`) });
+
+    // Keyboard focus on a step is still visible: Tab from the first ingredient
+    await search.fill('');
+    await p.getByRole('main').getByRole('checkbox').first().focus();
+    for (let i = 0; i < 100; i++) {
+      await p.keyboard.press('Tab');
+      if (await p.evaluate(() => document.activeElement?.matches('main li button'))) break;
+    }
+    const stepFocus = await p.evaluate(() => {
+      const el = document.activeElement;
+      const s = getComputedStyle(el);
+      return `${el.matches('main li button')} ${s.outlineStyle} ${s.outlineWidth}`;
+    });
+    check(
+      `${label}: focused step shows a solid outline`,
+      stepFocus === 'true solid 3px',
+      stepFocus,
+    );
+    await p.screenshot({ path: shot(`regression-7-${width}x${height}-focus.png`) });
+    await ctx.close();
+  }
 
   // React reports duplicate keys in the console; this catches them with the real recipe data.
   const keyWarnings = consoleMsgs.filter((m) => /same key|unique "key"/i.test(m));

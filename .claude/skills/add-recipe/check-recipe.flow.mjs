@@ -21,12 +21,24 @@ export default async function checkRecipe({ page, shot, check }) {
   check('its link opens it', (await h1.textContent()).trim() === recipe.name, `#/${id}`);
 
   const main = page.getByRole('main');
-  const ingredientCount = recipe.ingredients.flat().length;
-  const stepCount = recipe.instructions.filter((s) => !s.trim().startsWith('-')).length;
+  const count = (groups) => groups.reduce((n, g) => n + g.items.length, 0);
+  const ingredientCount = count(recipe.ingredients);
+  const stepCount = count(recipe.instructions);
+  const titles = [...recipe.ingredients, ...recipe.instructions, ...(recipe.notes ?? [])]
+    .map((g) => g.title)
+    .filter(Boolean);
   const boxes = await main.getByRole('checkbox').count();
   const steps = await main.getByRole('listitem').getByRole('button').count();
   check('every ingredient is a checkbox', boxes === ingredientCount, `${boxes}/${ingredientCount}`);
   check('every step is a button', steps === stepCount, `${steps}/${stepCount}`);
+  const lastStep = await main.getByRole('listitem').getByRole('button').last().textContent();
+  check('steps are numbered 1 to N', lastStep.trim().startsWith(`${stepCount}.`), lastStep.trim());
+  const headings = await main.getByRole('heading', { level: 3 }).allTextContents();
+  check(
+    'group titles are headings',
+    titles.every((t) => headings.includes(t)),
+    headings.join(', '),
+  );
 
   await page.screenshot({ path: shot(`add-recipe-${id}.png`), fullPage: true });
 }

@@ -13,7 +13,7 @@ export default function Recipe({ recipe: { id, name, ingredients, instructions, 
       </button>
       <RecipeSection
         header={'Ingredients'}
-        listItems={ingredients}
+        groups={ingredients}
         ordered={false}
         clickable={true}
         checked={checked}
@@ -21,14 +21,14 @@ export default function Recipe({ recipe: { id, name, ingredients, instructions, 
       />
       <RecipeSection
         header={'Instructions'}
-        listItems={instructions}
+        groups={instructions}
         ordered={true}
         clickable={true}
         checked={checked}
         onToggle={toggle}
       />
       {notes?.length > 0 ? (
-        <RecipeSection header={'Notes'} listItems={notes} ordered={false} clickable={false} />
+        <RecipeSection header={'Notes'} groups={notes} ordered={false} clickable={false} />
       ) : null}
     </>
   );

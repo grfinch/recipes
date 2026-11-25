@@ -7,9 +7,9 @@ const valid = (overrides = {}) => ({
   name: 'Lentil Stew',
   course: 'Main',
   cookingMethod: 'Instant-pot',
-  ingredients: [['1 Tbsp olive oil'], ['1 cup lentils']],
-  instructions: ['Heat the oil', '---', 'Simmer'],
-  notes: ['Freezes well.'],
+  ingredients: [{ title: 'Sauté', items: ['1 Tbsp olive oil'] }, { items: ['1 cup lentils'] }],
+  instructions: [{ items: ['Heat the oil'] }, { items: ['Simmer'] }],
+  notes: [{ items: ['Freezes well.'] }],
   ...overrides,
 });
 
@@ -74,25 +74,33 @@ describe('validateRecipes', () => {
     expectError(check(valid({ cookingMethod: 'Instant Pot' })), /cookingMethod: "Instant Pot"/);
   });
 
-  it('rejects flat or empty ingredient groups and separator items in them', () => {
-    expectError(check(valid({ ingredients: ['1 egg'] })), /ingredients\[0\]: must be/);
-    expectError(check(valid({ ingredients: [[]] })), /ingredients\[0\]: must be/);
-    expectError(check(valid({ ingredients: [['1 egg', '---']] })), /starts with "-"/);
+  it('requires non-empty ingredient and instruction groups', () => {
+    expectError(check(valid({ ingredients: [] })), /ingredients: must be a non-empty array/);
+    expectError(check(valid({ instructions: undefined })), /instructions: must be a non-empty/);
+    expectError(check(valid({ notes: [] })), /notes: must be a non-empty array/);
   });
 
-  it('rejects separators that leave an empty group', () => {
-    expectError(check(valid({ instructions: ['---', 'Simmer'] })), /empty group/);
-    expectError(check(valid({ instructions: ['Heat', '---', '---', 'Simmer'] })), /empty group/);
-    expectError(check(valid({ notes: ['Tip', '---'] })), /notes\[1\].*empty group/);
+  it('rejects groups in the old formats', () => {
+    expectError(check(valid({ ingredients: [['1 egg']] })), /must be a group object/);
+    expectError(
+      check(valid({ instructions: ['Heat', '---', 'Simmer'] })),
+      /must be a group object/,
+    );
   });
 
-  it('rejects odd separators, blank strings, and stray spaces', () => {
-    expectError(check(valid({ instructions: ['Heat', '- -', 'Simmer'] })), /exactly "---"/);
-    expectError(check(valid({ instructions: ['Heat', ''] })), /non-empty string/);
+  it('checks each group: items, title, and unknown fields', () => {
+    expectError(check(valid({ ingredients: [{ title: 'Dry' }] })), /items: must be a non-empty/);
+    expectError(check(valid({ ingredients: [{ items: [] }] })), /items: must be a non-empty/);
+    expectError(check(valid({ ingredients: [{ title: '', items: ['1 egg'] }] })), /title: must be/);
+    expectError(
+      check(valid({ ingredients: [{ name: 'Dry', items: ['1 egg'] }] })),
+      /unknown field "name"/,
+    );
+  });
+
+  it('rejects leftover "---" separators, blank items, and stray spaces', () => {
+    expectError(check(valid({ instructions: [{ items: ['Heat', '---'] }] })), /isn't a separator/);
+    expectError(check(valid({ instructions: [{ items: ['Heat', ''] }] })), /non-empty string/);
     expectError(check(valid({ name: ' Lentil Stew' })), /leading or trailing spaces/);
-  });
-
-  it('requires at least one instruction step', () => {
-    expectError(check(valid({ instructions: [] })), /at least one item/);
   });
 });

@@ -24,7 +24,7 @@ If the working tree has unrelated changes, stop and ask. Adding several recipes 
 **Interview:** when the user describes a recipe loosely or says "let's add my X", ask a few questions at a time, in this order. Skip anything they've already said.
 
 1. Name, course, and cooking method. Offer choices from `src/recipeCategories.json` with AskUserQuestion.
-2. Ingredients with amounts. Ask what gets added together at each stage; those stages become the ingredient groups.
+2. Ingredients with amounts. Ask what gets added together at each stage; those stages become the groups, and their names become group titles.
 3. Steps, in order, with times and temperatures.
 4. Tips, substitutions, storage, or serving ideas (optional; these become notes).
 
@@ -39,20 +39,29 @@ If the working tree has unrelated changes, stop and ask. Adding several recipes 
   "course": "Main",
   "cookingMethod": "Instant-pot",
   "ingredients": [
-    ["1 Tbsp olive oil", "1 onion, chopped or diced"],
-    ["1 box beef broth (about 4 cups)", "1.5 cups brown lentils"]
+    { "title": "Sauté", "items": ["1 Tbsp olive oil", "1 onion, chopped or diced"] },
+    {
+      "title": "Pressure cook",
+      "items": ["1 box beef broth (about 4 cups)", "1.5 cups brown lentils"]
+    }
   ],
-  "instructions": ["Set instant pot to sauté and add olive oil", "---", "Add beef broth"],
-  "notes": ["Cook longer for more tender meat."]
+  "instructions": [
+    { "title": "Sauté", "items": ["Set instant pot to sauté and add olive oil"] },
+    { "title": "Pressure cook", "items": ["Add beef broth"] }
+  ],
+  "notes": [{ "items": ["Cook longer for more tender meat."] }]
 }
 ```
 
 - **name:** Title Case, the way the user names it.
 - **id:** the recipe's permanent link (`#/<id>`), its file name (`src/recipes/<id>.json`), and its saved-checklist key. Make it from the name: lowercase, accents dropped, and runs of anything else turned into `-` (`slugify` in `src/utils/recipeHash.js`). It never changes after the recipe is added, even if the name does. If a file with that id or a recipe with the same name already exists, ask whether this is a different recipe that needs another name, or an edit to the existing one, which this skill doesn't cover. `browse` is reserved.
 - **course / cookingMethod:** exactly one value from `src/recipeCategories.json`. If nothing fits, propose a new value and ask. If the user agrees, add it to the list in the same commit. Match the existing style: first word capitalized, and hyphenate only where it's one name ("Instant-pot", "No-cook"). Don't create near-duplicates like "Instant Pot" or "Stove top".
-- **ingredients:** an array of groups, and each group is an array of strings. Group by stage, the things that go in together. A recipe with no stages is a single group. Never put `---` inside ingredients.
-- **instructions:** a flat array of steps. Put `"---"` between stages, usually lining up with the ingredient groups. Never put `---` first, last, or twice in a row.
-- **notes:** optional, a flat array. Use it for tips, substitutions, storage, and serving ideas. Leave it out instead of writing `[]`.
+- **ingredients, instructions, notes:** each is an array of groups, `{ "title"?: string, "items": [string] }`, and every group needs at least one item.
+  - Group ingredients by stage, the things that go in together. Group steps by the same stages where they line up. A recipe with no stages has a single group.
+  - Give a group a `title` when the source has sections ("For the sauce:") or the stages are clear ("Sauté", "Pressure cook", "To finish"). Keep titles short, and use the same title for matching ingredient and step groups. Titles show as headings; untitled groups are set apart by a rule. Don't invent titles for a recipe that has only one group.
+  - Step numbers run straight through all groups, so never number steps yourself.
+  - Never use `"---"` items; start a new group instead.
+- **notes:** optional. Use it for tips, substitutions, storage, and serving ideas, usually as one untitled group. Leave the field out instead of writing `[]`.
 
 ## 4. Light cleanup (keep the user's voice)
 
@@ -77,7 +86,7 @@ Don't do these:
 Show the recipe the way the app would show it, not as raw JSON:
 
 - The name, its id and link (`#/<id>`), the course, and the cooking method
-- Ingredients by group (blank line between groups), numbered steps by stage, and notes
+- Ingredients by group (with titles), steps numbered straight through by group, and notes
 - "Changes I made:" with each cleanup change (`"stew meet" → "stew meat"`, `"tbsp" → "Tbsp"`), or "none"
 - Any new category value being added
 
@@ -102,7 +111,7 @@ Then check it in a browser with the run-recipes skill's driver. Read `.claude/sk
 RECIPE_ID=<id> node .claude/skills/run-recipes/driver.mjs .claude/skills/add-recipe/check-recipe.flow.mjs
 ```
 
-It opens the recipe's link and checks that every ingredient is a checkbox and every step is a button. Look at the full-page screenshot it saves (`shots/add-recipe-<id>.png`) for anything odd, such as a stray divider or a step that runs together.
+It opens the recipe's link and checks that every ingredient is a checkbox and every step is a button. Look at the full-page screenshot it saves (`shots/add-recipe-<id>.png`) for anything odd, such as an item in the wrong group, a missing title, or a step that runs together.
 
 If the driver says "Reusing dev server" but the page shows old data, the running server may be serving stale files. Save the recipe file again (`touch` it) or restart `npm run dev`.
 

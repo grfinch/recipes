@@ -9,22 +9,22 @@ vi.mock('./recipes/index.js', () => ({
     {
       id: 'lentil-stew',
       name: 'Lentil Stew',
-      ingredients: [['1 Tbsp olive oil', '1 cup lentils']],
-      instructions: ['Heat the oil', 'Simmer'],
+      ingredients: [{ items: ['1 Tbsp olive oil', '1 cup lentils'] }],
+      instructions: [{ items: ['Heat the oil', 'Simmer'] }],
     },
     {
       id: 'sausage-pasta',
       name: 'Sausage Pasta',
-      ingredients: [['1 Tbsp olive oil', '1 lb sausage']],
-      instructions: ['Heat the oil', 'Boil pasta'],
+      ingredients: [{ items: ['1 Tbsp olive oil', '1 lb sausage'] }],
+      instructions: [{ items: ['Heat the oil', 'Boil pasta'] }],
     },
     {
       id: 'apple-crisp',
       name: 'Apple Crisp',
       course: 'Dessert',
       cookingMethod: 'Oven',
-      ingredients: [['4 apples', '1 cup oats']],
-      instructions: ['Bake'],
+      ingredients: [{ items: ['4 apples', '1 cup oats'] }],
+      instructions: [{ items: ['Bake'] }],
     },
   ],
 }));

@@ -22,7 +22,6 @@ const KNOWN_KEYS = [
   'instructions',
   'notes',
 ];
-const isSeparator = (s) => s.trim().startsWith('-');
 
 // Every recipe file as { file, recipe }, or { file, error } if it isn't valid JSON.
 export function loadRecipeFiles(dir = RECIPES_DIR) {
@@ -47,24 +46,33 @@ function checkText(value, where, errors) {
   return true;
 }
 
-// A flat list (instructions, notes) where "---" items split groups, as RecipeSection reads it.
-function checkFlatList(list, where, errors, { required }) {
-  if (!Array.isArray(list)) {
-    errors.push(`${where}: must be an array of strings`);
+const GROUP_KEYS = ['title', 'items'];
+
+// ingredients, instructions, notes: a non-empty array of { title?, items: [string] } groups.
+function checkGroups(groups, where, errors) {
+  if (!Array.isArray(groups) || groups.length === 0) {
+    errors.push(`${where}: must be a non-empty array of groups ({ "title"?, "items": [...] })`);
     return;
   }
-  if (required && list.filter((s) => typeof s === 'string' && !isSeparator(s)).length === 0) {
-    errors.push(`${where}: needs at least one item`);
-  }
-  list.forEach((item, i) => {
-    if (!checkText(item, `${where}[${i}]`, errors) || !isSeparator(item)) return;
-    // A separator first, last, or next to another leaves an empty group and a stray divider.
-    const prev = list[i - 1];
-    if (i === 0 || i === list.length - 1 || (typeof prev === 'string' && isSeparator(prev))) {
-      errors.push(`${where}[${i}]: "${item}" separator would leave an empty group`);
-    } else if (item.trim() !== '---') {
-      errors.push(`${where}[${i}]: separators must be exactly "---" (got "${item}")`);
+  groups.forEach((group, g) => {
+    const at = `${where}[${g}]`;
+    if (!group || typeof group !== 'object' || Array.isArray(group)) {
+      errors.push(`${at}: must be a group object ({ "title"?, "items": [...] })`);
+      return;
     }
+    for (const key of Object.keys(group)) {
+      if (!GROUP_KEYS.includes(key)) errors.push(`${at}: unknown field "${key}"`);
+    }
+    if (group.title !== undefined) checkText(group.title, `${at}.title`, errors);
+    if (!Array.isArray(group.items) || group.items.length === 0) {
+      errors.push(`${at}.items: must be a non-empty array of strings`);
+      return;
+    }
+    group.items.forEach((item, i) => {
+      if (checkText(item, `${at}.items[${i}]`, errors) && /^-+$/.test(item)) {
+        errors.push(`${at}.items[${i}]: "${item}" isn't a separator; start a new group instead`);
+      }
+    });
   });
 }
 
@@ -102,31 +110,10 @@ function checkRecipe(recipe, file, label, categories, errors) {
     }
   }
 
-  // Ingredients: an array of groups, each a non-empty array of strings.
-  const groups = recipe.ingredients;
-  if (!Array.isArray(groups) || groups.length === 0) {
-    errors.push(`${label}.ingredients: must be a non-empty array of groups (arrays of strings)`);
-  } else {
-    groups.forEach((group, g) => {
-      const where = `${label}.ingredients[${g}]`;
-      if (!Array.isArray(group) || group.length === 0) {
-        errors.push(`${where}: must be a non-empty array of strings`);
-        return;
-      }
-      group.forEach((item, i) => {
-        if (checkText(item, `${where}[${i}]`, errors) && isSeparator(item)) {
-          errors.push(
-            `${where}[${i}]: "${item}" starts with "-"; groups are separate arrays, not "---" items`,
-          );
-        }
-      });
-    });
-  }
-
-  checkFlatList(recipe.instructions, `${label}.instructions`, errors, { required: true });
-  if (recipe.notes !== undefined) {
-    checkFlatList(recipe.notes, `${label}.notes`, errors, { required: false });
-  }
+  checkGroups(recipe.ingredients, `${label}.ingredients`, errors);
+  checkGroups(recipe.instructions, `${label}.instructions`, errors);
+  // Optional, but leave it out rather than writing an empty list
+  if (recipe.notes !== undefined) checkGroups(recipe.notes, `${label}.notes`, errors);
 }
 
 // entries: [{ file, recipe }] or [{ file, error }], as loadRecipeFiles returns.

@@ -39,13 +39,12 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 
 - `id`: required, permanent, and equal to the file name. Lowercase letters, digits and dashes, made once from the name with `slugify` and never changed afterwards, even if the recipe is renamed. It is the recipe's link (`#/<id>`) and its saved-checklist key, and it must not be a reserved slug.
 - `name`, `course`, `cookingMethod`: strings. `course` and `cookingMethod` come from the lists in `src/recipeCategories.json` and appear only in the browse list.
-- `ingredients`: an **array of arrays** of strings. Each inner array is a group, and groups are separated by a divider when rendered.
-- `instructions`: a flat array of strings.
-- `notes`: an optional flat array of strings.
+- `ingredients`, `instructions`: arrays of **groups**, `{ "title"?: string, "items": [string] }`. Every group has at least one item. Titled groups render an `h3`; untitled ones are set apart by a decorative dashed rule (CSS only, nothing for screen readers to read).
+- `notes`: optional, the same group shape. Leave it out rather than writing `[]`.
 
-`course` and `cookingMethod` must be values listed in `src/recipeCategories.json`. `scripts/validate-recipes.mjs` (`npm run validate:recipes`, also run in CI) checks every recipe file: valid JSON, required fields, unknown fields, the id's format and that it matches the file name, duplicate ids and names, reserved ids, empty groups, and misplaced `---` separators. To add a recipe, use the `add-recipe` skill (`.claude/skills/add-recipe/`), which drafts, validates, and opens a PR.
+`course` and `cookingMethod` must be values listed in `src/recipeCategories.json`. `scripts/validate-recipes.mjs` (`npm run validate:recipes`, also run in CI) checks every recipe file: valid JSON, required fields, unknown fields, the id's format and that it matches the file name, duplicate ids and names, reserved ids, and the group shape (no empty groups or titles, no unknown group fields, no leftover `"---"` items). To add a recipe, use the `add-recipe` skill (`.claude/skills/add-recipe/`), which drafts, validates, and opens a PR.
 
-**Rendering lists:** `RecipeSection` normalizes `listItems` into groups. It accepts either nested arrays or a flat array, where any string starting with `-` acts as a group separator. It picks the item component from the `ordered` and `clickable` props:
+**Rendering lists:** `RecipeSection` takes a section's `groups` and renders, under its `h2`, each group's optional `h3` title and its own list. Steps are numbered straight through the section, not restarted in each group. It picks the item component from the `ordered` and `clickable` props:
 
 - `CheckboxItem`: unordered and clickable (ingredients)
 - `NumberedClickableItem`: ordered and clickable (instructions)
@@ -55,7 +54,7 @@ Items are controlled: `Recipe` owns the "checked" state through `src/hooks/useCh
 
 **Keep screen on:** `KeepScreenOn` (in the header) is an opt-in checkbox backed by `src/hooks/useWakeLock.js` and the Screen Wake Lock API. It renders nothing in browsers without `navigator.wakeLock`. Browsers release the lock when the tab is hidden, so the hook requests it again on `visibilitychange`. If a request is refused, the box unchecks and a polite `aria-live` message explains why. It is deliberately not `role="status"`, so it stays separate from the search result count. jsdom has no Wake Lock API, so tests install a fake `navigator.wakeLock`.
 
-**Search:** `SearchBox` uses `src/hooks/useDebounce.js`, which returns `[value, setValue, debouncedValue, { cancel, flush, reset }]`. It filters by name, ingredients, instructions, and notes with a case-insensitive substring match. Results appear in a `position: fixed` overlay positioned from the input's bounding rect. Clicking outside or pressing Escape closes the overlay.
+**Search:** `SearchBox` uses `src/hooks/useDebounce.js`, which returns `[value, setValue, debouncedValue, { cancel, flush, reset }]`. It filters with `matchesQuery` (`src/utils/recipeSearch.js`): a case-insensitive substring match against the name, course, cooking method, group titles, and each ingredient, step, and note separately, so a query can't match across two items. Results appear in a `position: fixed` overlay positioned from the input's bounding rect. Clicking outside or pressing Escape closes the overlay.
 
 ## Conventions
 

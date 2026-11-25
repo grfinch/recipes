@@ -1,0 +1,57 @@
+{
+  "id": "carrot-cake",
+  "name": "Carrot Cake",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Cake",
+      "items": [
+        "2 cups sugar",
+        "3/4 cup oil",
+        "3/4 cup applesauce",
+        "4 eggs",
+        "1 tsp vanilla",
+        "2 cups flour",
+        "2 tsp baking soda",
+        "3 tsp cinnamon",
+        "1/2 tsp salt",
+        "3 cups finely grated carrots*"
+      ]
+    },
+    {
+      "title": "Cream cheese frosting",
+      "items": [
+        "4 oz cream cheese, softened",
+        "1/2 cup butter, softened",
+        "2 tsp vanilla",
+        "1 lb powdered sugar",
+        "Milk as needed to thin"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Cake",
+      "items": [
+        "Mix all ingredients together until smooth, pour into a greased pan.",
+        "Bake in a 9x13 pan for 35-40 minutes, or in a large cookie sheet for 30-35 minutes, at 350°F."
+      ]
+    },
+    {
+      "title": "Cream cheese frosting",
+      "items": [
+        "Cream together the cream cheese, butter, and vanilla.",
+        "Add sugar gradually, adding milk as needed. Beat until smooth and creamy.",
+        "Spread over cooled cake."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "*It is roughly 6-8 carrots, and I use my food processor to chop them into tiny bits."
+      ]
+    }
+  ]
+}

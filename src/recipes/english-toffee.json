@@ -1,0 +1,40 @@
+{
+  "id": "english-toffee",
+  "name": "English Toffee",
+  "course": "Dessert",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "1/2 tsp plus 2 cups butter, divided",
+        "2 cups sugar",
+        "1 cup slivered almonds",
+        "1 cup milk chocolate chips",
+        "1 cup chopped walnuts",
+        "1/2 cup semisweet chocolate chips",
+        "1/2 cup white baking chips",
+        "1-1/2 tsp shortening"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Butter a 15x10x1-inch pan with 1/2 tsp butter.",
+        "In a heavy saucepan over medium-low heat, bring sugar and remaining butter to a boil, stirring constantly. Cover and cook for 2-3 minutes.",
+        "Uncover; add almonds. Cook and stir with a clean spoon until a candy thermometer reads 300°F (hard-crack stage) and mixture is golden brown.",
+        "Pour into prepared pan (do not scrape sides of saucepan). Surface will be buttery. Cool for 1-2 minutes.",
+        "Sprinkle with milk chocolate chips. Let stand for 1-2 minutes; spread chocolate over the top.",
+        "Sprinkle with walnuts; press down gently with the back of a spoon. Chill for 10 minutes.",
+        "In a microwave, melt semisweet chips; stir until smooth. Drizzle over walnuts. Refrigerate for 10 minutes.",
+        "Melt vanilla chips and shortening; stir until smooth. Drizzle over walnuts.",
+        "Cover and refrigerate for 1-2 hours. Break into pieces."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes about 2-1/2 lb."]
+    }
+  ]
+}

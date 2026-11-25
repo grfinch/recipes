@@ -1,0 +1,31 @@
+{
+  "id": "spiced-pecans",
+  "name": "Spiced Pecans",
+  "course": "Snack",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 egg white, lightly beaten",
+        "1 Tbsp water",
+        "3 cups pecan halves",
+        "1/2 cup white sugar",
+        "1/2 tsp salt",
+        "1 tsp cinnamon",
+        "1/2 tsp ground cloves",
+        "1/2 tsp nutmeg"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat oven to 350°F (175°C). Line a baking sheet with aluminum foil.",
+        "In a small bowl beat the egg white with the water. Stir in the pecans, mixing until well moistened.",
+        "In a small bowl, mix together sugar, salt, cinnamon, cloves and nutmeg. Sprinkle over the moistened nuts.",
+        "Spread nuts on prepared pan.",
+        "Bake in preheated oven for 30 minutes, stirring once or twice. Be careful not to overcook and burn the nuts."
+      ]
+    }
+  ]
+}

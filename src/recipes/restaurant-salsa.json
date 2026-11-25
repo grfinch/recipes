@@ -1,0 +1,41 @@
+{
+  "id": "restaurant-salsa",
+  "name": "Restaurant Salsa",
+  "course": "Appetizer",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "1 can (28 oz) whole tomatoes with juice",
+        "1 can (10 oz) Rotel (diced tomatoes and green chilies)",
+        "2 large fresh tomatoes",
+        "1/4 cup chopped onion",
+        "1 clove garlic, minced",
+        "2 whole jalapeños, quartered and sliced thin (seeded if you want it mild)",
+        "1/4 tsp sugar",
+        "1/2 tsp salt",
+        "1/4 tsp ground cumin",
+        "1/2 cup cilantro (more to taste!)",
+        "Juice of 1/2 lime"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Combine whole tomatoes, Rotel, fresh tomatoes, onion, jalapeño, garlic, sugar, salt, cumin, lime juice, and cilantro in a blender or food processor.",
+        "Pulse until you get the salsa to the consistency you'd like. I do about 10 to 15 pulses.",
+        "Test seasonings with a tortilla chip and adjust as needed.",
+        "Refrigerate salsa for at least an hour.",
+        "Serve with tortilla chips or cheese nachos."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "This is a very large batch. Recommend using a 12-cup food processor, or you can process the ingredients in batches and then mix everything together in a large mixing bowl."
+      ]
+    }
+  ]
+}

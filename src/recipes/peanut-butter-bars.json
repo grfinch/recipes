@@ -1,0 +1,52 @@
+{
+  "id": "peanut-butter-bars",
+  "name": "Peanut Butter Bars",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Bars",
+      "items": [
+        "1 cup butter, softened",
+        "1 cup sugar",
+        "1-1/2 cups packed brown sugar",
+        "2-1/2 cups creamy peanut butter, divided",
+        "1 egg",
+        "1-1/2 tsp vanilla extract",
+        "2-1/2 cups quick-cooking oats",
+        "2 cups all-purpose flour",
+        "1 tsp baking soda",
+        "1/2 tsp salt"
+      ]
+    },
+    {
+      "title": "Chocolate frosting",
+      "items": [
+        "6 Tbsp butter, softened",
+        "4 cups powdered sugar",
+        "1/2 cup baking cocoa",
+        "1 tsp vanilla extract",
+        "6 to 8 Tbsp milk"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Bars",
+      "items": [
+        "In a large bowl, cream butter and sugars until light and fluffy.",
+        "Beat in 1 cup peanut butter, egg and vanilla.",
+        "Combine oats, flour, baking soda and salt; gradually add to creamed mixture, beating well after each addition.",
+        "Spread into a greased 15x10x1-inch baking pan. Bake at 350°F for 13-17 minutes or until golden brown.",
+        "Cool slightly on a wire rack, about 12 minutes. Spread with remaining peanut butter. Cool completely."
+      ]
+    },
+    {
+      "title": "Chocolate frosting",
+      "items": [
+        "In a large bowl, beat the butter, confectioners' sugar, cocoa, vanilla and enough milk to achieve spreading consistency.",
+        "Spread over peanut butter. Cut into bars."
+      ]
+    }
+  ]
+}

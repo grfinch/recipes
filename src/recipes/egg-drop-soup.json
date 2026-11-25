@@ -1,0 +1,41 @@
+{
+  "id": "egg-drop-soup",
+  "name": "Egg Drop Soup",
+  "course": "Soup",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "4 cups chicken stock",
+        "2 Tbsp cornstarch",
+        "1 tsp ground ginger",
+        "1/4 tsp garlic powder",
+        "2 large eggs",
+        "2 egg whites",
+        "1/2 tsp sesame oil",
+        "3 green onions, sliced thin",
+        "1/4 cup corn",
+        "1/4 cup peas",
+        "Salt and pepper to taste"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Whisk together chicken stock (chilled or room-temperature), cornstarch, ginger and garlic powder in a medium saucepan until combined and no lumps remain.",
+        "Heat over high heat until boiling, stirring occasionally.",
+        "Meanwhile, whisk together the eggs and egg whites in a small measuring cup or bowl. (I find the measuring cup easier for pouring.)",
+        "Once the broth reaches a boil, remove from heat. Then use a fork or whisk to stir the broth in a circular motion, while slowly pouring the whisked eggs into the soup to create egg ribbons.",
+        "Stir in the sesame oil, green onions and corn (optional) until combined.",
+        "Season with salt and pepper to taste."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["The peas are listed but never used in the steps. Do they go in with the corn?"]
+    }
+  ]
+}

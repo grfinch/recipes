@@ -1,0 +1,32 @@
+{
+  "id": "broccoli-salad",
+  "name": "Broccoli Salad",
+  "course": "Salad",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "title": "Sauce",
+      "items": ["1 cup mayonnaise", "2 Tbsp apple cider vinegar", "1/4 cup sugar"]
+    },
+    {
+      "title": "Salad",
+      "items": [
+        "1 1/2 lb raw broccoli florets",
+        "1/2 cup craisins",
+        "1/2 cup celery, diced",
+        "1/2 cup red or sweet onions, chopped",
+        "1/2 cup slivered almonds",
+        "3/4 cup sunflower seeds",
+        "1/2 cup shredded cheese"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix mayonnaise, vinegar, and sugar in a small bowl.",
+        "Toss remaining ingredients in a salad bowl and mix in sauce right before serving."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "steak-ends",
+  "name": "Steak Ends",
+  "course": "Dinner",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "1 lb sirloin steak or pre-cut beef tips",
+        "Montreal steak seasoning",
+        "Kosher salt and freshly ground pepper",
+        "2 Tbsp butter, plus a little more for each batch"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Trim off the large obvious piece of fat that runs along the side of the meat.",
+        "Next, cut strips less than 1-inch wide. Rotate the meat and cut into small bite-sized pieces. If you see any more large chunks of fat, gristle or long silvery membrane, cut them off.",
+        "Sprinkle generously with kosher salt and freshly ground pepper. Toss the meat around a bit to thoroughly coat with the seasonings.",
+        "Next, turn on your ventilation fan overhead. Heat the skillet over medium-high to high heat.",
+        "As the pan heats, add about 2 Tbsp butter to the skillet. Allow the butter to melt, then brown, before you add the meat.",
+        "Place some of the meat in the pan in a single layer. It should sizzle loudly when it hits the pan; if it doesn't, the pan isn't hot enough.",
+        "Don't stir or disrupt the meat for 30-45 seconds. You want it to sizzle and brown on one side.",
+        "Scoop as many steak bites as you can with your spatula and flip them over. Repeat until all the meat is turned.",
+        "Cook for an additional 30 to 45 seconds, just long enough to sear the outside of the meat but NOT cook the inside. Remove the meat to a clean plate.",
+        "Add a little more butter to the pan and repeat the cooking process with the next batch just as before.",
+        "Lastly, when all the meat is nicely browned and removed to the plate, pour all that browned/blackened butter all over the meat."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The list has Montreal steak seasoning, but the steps season with kosher salt and pepper. Which one (or both)?"
+      ]
+    }
+  ]
+}

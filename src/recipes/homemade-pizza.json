@@ -1,0 +1,51 @@
+{
+  "id": "homemade-pizza",
+  "name": "Homemade Pizza",
+  "course": "Dinner",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Sauce",
+      "items": [
+        "1 can (8 oz) tomato sauce",
+        "1 tsp dry oregano",
+        "1/2 tsp marjoram",
+        "1/2 tsp dry basil",
+        "1/2 tsp garlic salt",
+        "1/2 tsp sugar"
+      ]
+    },
+    {
+      "title": "Crust",
+      "items": [
+        "2 1/2 cups flour",
+        "1/2 tsp salt",
+        "1 Tbsp sugar",
+        "1 Tbsp melted butter",
+        "1 1/2 Tbsp yeast",
+        "1 cup warm water"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Sauce",
+      "items": ["Combine sauce ingredients and let sit for 1 hour."]
+    },
+    {
+      "title": "Crust",
+      "items": [
+        "Mix together by hand or in a mixer.",
+        "Let rise about 20 minutes or until needed.",
+        "Roll out onto pizza pan.",
+        "I prebake crust for 10 minutes before putting topping on.",
+        "Bake at 400°F."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes one large or 2 small pizzas."]
+    }
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "id": "zucchini-bread",
+  "name": "Zucchini Bread",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "3 eggs, beaten",
+        "1 cup oil",
+        "1 cup sugar",
+        "1 cup brown sugar",
+        "2 cups grated zucchini",
+        "3 tsp vanilla",
+        "3 cups flour",
+        "1 tsp baking soda",
+        "1 tsp salt",
+        "3 tsp cinnamon",
+        "1/4 tsp baking powder",
+        "1 cup chopped nuts"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix all ingredients together.",
+        "Pour into two greased and floured loaf pans.",
+        "Bake at 350°F for about an hour."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "id": "snickerdoodles",
+  "name": "Snickerdoodles",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Dough",
+      "items": [
+        "1 cup butter",
+        "1 1/2 cups sugar",
+        "2 large eggs",
+        "2 3/4 cups flour",
+        "2 tsp cream of tartar",
+        "1 tsp baking soda",
+        "1/4 tsp salt"
+      ]
+    },
+    {
+      "title": "Coating",
+      "items": ["3 Tbsp sugar", "3 tsp cinnamon"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat oven to 400°F.",
+        "Mix butter, 1 1/2 cups sugar and eggs thoroughly in a large bowl.",
+        "Combine flour, cream of tartar, baking soda and salt in a separate bowl. Blend dry ingredients into butter mixture.",
+        "Meanwhile, mix 3 Tbsp sugar and 3 tsp cinnamon in a small bowl.",
+        "Scoop 1-inch globs of dough into the sugar/cinnamon mixture. Coat by gently rolling balls of dough in the sugar mixture.",
+        "Place on ungreased cookie sheet, and bake 8-10 minutes.",
+        "Remove from pan immediately."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,60 @@
+{
+  "id": "real-cheesecake",
+  "name": "Real Cheesecake",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Crust",
+      "items": [
+        "1/4 cup finely chopped pecans",
+        "1/4 cup finely chopped almonds",
+        "1/4 cup finely chopped walnuts",
+        "1/4 cup finely chopped vanilla wafer",
+        "2 Tbsp melted butter"
+      ]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "1 1/2 lb light cream cheese",
+        "1 1/3 cups sugar",
+        "5 large eggs",
+        "1/4 cup flour",
+        "2 tsp vanilla extract",
+        "2 tsp lemon juice",
+        "16 oz sour cream"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Crust",
+      "items": [
+        "Mix all nuts and vanilla wafer crumbs with melted butter and press into a 9-inch buttered springform pan, trying to line the sides as much as possible, about 1 1/2 inches up the sides of the pan. Set aside."
+      ]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "All ingredients should be at room temperature before you begin.",
+        "Start by beating the cream cheese until light and fluffy. Keep the mixer on a low setting throughout the beating and mixing process.",
+        "Add the sugar a little at a time and continue beating until creamy.",
+        "Add one egg at a time and beat after each egg.",
+        "When eggs have been mixed into the cream cheese add flour, vanilla and lemon juice; mix well.",
+        "Add the sour cream last and beat well.",
+        "Pour cream cheese into the springform pan.",
+        "Place on the top rack in the middle of a 325°F preheated oven for one hour and 15 minutes.",
+        "When time is up, turn oven off, prop open oven door and leave in oven for one hour.",
+        "After one hour, remove from oven. Let cool enough before the cheesecake is put into the refrigerator for 24 hours."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "A cheesecake should season. The wait is worth it. The flavor ripens and becomes enriched."
+      ]
+    }
+  ]
+}

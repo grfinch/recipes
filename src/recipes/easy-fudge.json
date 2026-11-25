@@ -1,0 +1,25 @@
+{
+  "id": "easy-fudge",
+  "name": "Easy Fudge",
+  "course": "Dessert",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "Nonstick spray",
+        "3 cups semi-sweet chocolate chips",
+        "1 can (14 oz) sweetened condensed milk"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Line a square 8x8 pan with foil and smooth the surface. Spray foil with nonstick spray.",
+        "Combine the chocolate chips and sweetened condensed milk in a double boiler over medium heat or gradually in the microwave.",
+        "Heat until melted, about 5-7 minutes.",
+        "Stir until smooth, then immediately pour it into the foil-lined pan."
+      ]
+    }
+  ]
+}

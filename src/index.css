@@ -16,7 +16,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light;
   color: var(--text);
   background-color: var(--bg);
 
@@ -26,18 +26,20 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #242424;
-    --text: rgba(255, 255, 255, 0.87);
-    --muted: #9ca3af;
-    --line: #3d3d45;
-    --surface: #2c2c31;
-    --link: #8b93ff;
-    --link-tint: #2b2c48;
-    --done: #4ade80;
-    --control-border: #8f8f8f;
-  }
+/* Dark theme. data-theme on <html> is always 'light' or 'dark': the visitor's choice, or their
+   system's when they pick System (src/hooks/useTheme.js, and the script in index.html that sets
+   it before first paint). */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --bg: #242424;
+  --text: rgba(255, 255, 255, 0.87);
+  --muted: #9ca3af;
+  --line: #3d3d45;
+  --surface: #2c2c31;
+  --link: #8b93ff;
+  --link-tint: #2b2c48;
+  --done: #4ade80;
+  --control-border: #8f8f8f;
 }
 
 body {
@@ -97,5 +99,36 @@ h1[tabindex='-1']:focus {
 @media (pointer: coarse) and (min-width: 900px) {
   :root {
     font-size: 118.75%; /* 19px */
+  }
+}
+
+/* Printing: black on white whatever the theme, with only the page's content (see the print
+   styles in each component's CSS module). Links print as plain text. */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    color-scheme: light;
+    --bg: #fff;
+    --text: #000;
+    --muted: #555;
+    --line: #bbb;
+    --surface: #fff;
+    --link: #000;
+    --link-tint: transparent;
+    --done: #000;
+    --control-border: #555;
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+
+  /* Point sizes, so text doesn't follow the screen-size rules (like the Nest Hub's) */
+  :root {
+    font-size: 11pt;
+  }
+
+  a {
+    text-decoration: none;
   }
 }

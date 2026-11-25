@@ -1,0 +1,42 @@
+{
+  "id": "butterhorns",
+  "name": "Butterhorns",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 Tbsp active dry yeast",
+        "1/4 cup warm water",
+        "1/2 cup butter or margarine",
+        "3/4 cup milk",
+        "1/2 cup sugar",
+        "3 eggs, beaten",
+        "3/4 tsp salt",
+        "4 to 4 1/2 cups flour, scooped",
+        "1/2 cup melted butter"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Combine yeast and warm water; allow to stand 5 minutes until it foams, then stir down.",
+        "Melt butter in pan. Add milk immediately and remove from heat.",
+        "Blend in sugar, eggs, salt, and dissolved yeast.",
+        "Stir in enough flour to make soft dough. Cover and allow to rise until double.",
+        "Turn dough (which is very soft and should remain so) onto floured board. Knead slightly to handle.",
+        "Divide in half. Roll each half into a circle 12 to 14 inches in diameter.",
+        "Spread with softened or melted butter. Cut pie fashion into 16 pieces.",
+        "Roll each piece from large end to pointed tip. Place point down on baking sheet.",
+        "Repeat with 2nd half of dough.",
+        "Let rise until double. Bake at 375°F for 12 to 15 minutes."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Can be frozen. If so, let rise until double and bake as usual."]
+    }
+  ]
+}

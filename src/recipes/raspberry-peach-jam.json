@@ -1,0 +1,47 @@
+{
+  "id": "raspberry-peach-jam",
+  "name": "Raspberry Peach Jam",
+  "course": "Sauce",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Jam",
+      "items": [
+        "7 cups washed, peeled, and crushed peaches",
+        "10 cups sugar",
+        "2 pkg frozen raspberries or 2 heaping cups fresh raspberries",
+        "2 Tbsp butter",
+        "2 pkg (3 oz) raspberry jello"
+      ]
+    },
+    {
+      "title": "Bottling",
+      "items": ["6-7 pint jars, with lids and rings"]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Jam",
+      "items": [
+        "Mix peaches, sugar, and berries together in a big pot and bring to boil over medium-high heat, stirring constantly.",
+        "Scrape down sugar from sides of pan and add 2 Tbsp butter to keep the foam down. Boil this for 15 minutes.",
+        "Take off heat. Add the jello. Stir in slowly so it doesn't get on the sides. Stir until jello is dissolved."
+      ]
+    },
+    {
+      "title": "Bottling",
+      "items": [
+        "Sterilize 6-7 pint jars. Heat lids on low in water.",
+        "When ready, fill jars 1/2 inch from the top. DO NOT scrape pan into jars; it turns to sugar!",
+        "Wipe rims of jam clean, add lids, adjust rings, and tighten.",
+        "Invert jam bottles for 8 minutes and then tip back up.",
+        "Store away from draft to seal completely."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Add 1 more cup of fruit to make ice cream syrup."]
+    }
+  ]
+}

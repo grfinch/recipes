@@ -1,0 +1,36 @@
+{
+  "id": "jerky",
+  "name": "Jerky",
+  "course": "Snack",
+  "cookingMethod": "Other",
+  "ingredients": [
+    {
+      "items": [
+        "1 lb lean meat",
+        "2 Tbsp soy sauce",
+        "1 Tbsp Worcestershire sauce",
+        "1 Tbsp brown sugar",
+        "2 tsp salt",
+        "1 tsp cracked pepper",
+        "1 tsp onion powder",
+        "1 clove garlic",
+        "Liquid smoke"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Combine all ingredients.",
+        "Marinate and stir in the fridge for 6 to 8 hours.",
+        "Dry in a dehydrator."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["How much liquid smoke? And how should the meat be cut (thin strips)?"]
+    }
+  ]
+}

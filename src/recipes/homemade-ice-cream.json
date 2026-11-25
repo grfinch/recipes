@@ -1,0 +1,42 @@
+{
+  "id": "homemade-ice-cream",
+  "name": "Homemade Ice Cream",
+  "course": "Dessert",
+  "cookingMethod": "Other",
+  "ingredients": [
+    {
+      "items": [
+        "1 pint heavy cream",
+        "1 can sweetened condensed milk",
+        "1 can evaporated milk",
+        "1 quart whole milk",
+        "1 small pkg vanilla pudding",
+        "3/4 cup sugar",
+        "4 Tbsp vanilla"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": ["Mix into ice cream freezer and freeze."]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Variations",
+      "items": [
+        "Crushed candy such as Butterfingers, Heath or Skor bars, Reese's peanut butter cups, etc."
+      ]
+    },
+    {
+      "title": "Strawberry",
+      "items": ["Use 2 cups sugar instead of 3/4 cup and add 1 quart mashed strawberries."]
+    },
+    {
+      "title": "Mint chocolate",
+      "items": [
+        "Omit vanilla and use chocolate pudding instead of vanilla. Add 1 pkg Andes mints (chopped), 1/2 pkg grasshopper cookies (chopped up), and 1 tsp peppermint extract."
+      ]
+    }
+  ]
+}

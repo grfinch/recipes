@@ -1,0 +1,35 @@
+{
+  "id": "cinnamon-sugared-almonds",
+  "name": "Cinnamon Sugared Almonds",
+  "course": "Snack",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "1 cup sugar",
+        "1/2 Tbsp cinnamon",
+        "1 tsp maple extract",
+        "1/4 tsp salt",
+        "1/4 cup water",
+        "3 cups whole almonds, raw"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a large skillet or pot combine the sugar, cinnamon, extract and water over medium-high heat until the sugar has dissolved.",
+        "Add the almonds and stir constantly with a spoon or spatula, coating the almonds with the syrupy mixture.",
+        "Keep stirring until the sugar crystallizes (this takes about 8-10 minutes) and it looks sandy. Don't stop stirring!",
+        "Remove the pan from heat and scoop the almonds onto wax or parchment paper.",
+        "Let the cinnamon almonds cool for a few minutes before serving."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["The salt is listed but not in the steps. Does it go in with the sugar?"]
+    }
+  ]
+}

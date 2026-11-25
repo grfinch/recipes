@@ -1,0 +1,58 @@
+{
+  "id": "spicy-chicken-and-broccoli",
+  "name": "Spicy Chicken and Broccoli",
+  "course": "Dinner",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Chicken",
+      "items": [
+        "1 package (15 oz) chicken breast tenders (not breaded)",
+        "2 tsp cornstarch",
+        "1/2 tsp salt",
+        "1/4 tsp white pepper"
+      ]
+    },
+    {
+      "title": "Broccoli",
+      "items": ["1 lb broccoli"]
+    },
+    {
+      "title": "Stir-fry",
+      "items": [
+        "3 Tbsp chili or vegetable oil",
+        "1 tsp dried red pepper flakes",
+        "2 Tbsp brown bean sauce or soy sauce",
+        "2 tsp finely chopped garlic",
+        "1 tsp sugar",
+        "1 tsp finely chopped gingerroot",
+        "1 package (8 oz) mushrooms, sautéed",
+        "3 green onions, cut diagonally into 1-inch pieces"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Chicken",
+      "items": [
+        "Mix chicken, cornstarch, salt and white pepper in medium bowl. Cover and refrigerate 20 minutes."
+      ]
+    },
+    {
+      "title": "Broccoli",
+      "items": [
+        "Peel outer layer from broccoli. Cut broccoli lengthwise into 1-inch stems; remove flowerets. Cut stems diagonally into 1/4-inch slices.",
+        "Place broccoli flowerets and stems in boiling water; heat to boiling. Cover and cook 1 minute; drain. Immediately rinse with cold water; drain."
+      ]
+    },
+    {
+      "title": "Stir-fry",
+      "items": [
+        "Heat wok or 12-inch skillet over high heat. Add oil; rotate wok to coat side.",
+        "Add chili, brown bean sauce, garlic, sugar and gingerroot; stir-fry 10 seconds.",
+        "Add chicken; stir-fry about 2 minutes or until chicken is no longer pink in center.",
+        "Add broccoli, mushrooms, and onions; stir-fry about 1 minute or until broccoli is heated through."
+      ]
+    }
+  ]
+}

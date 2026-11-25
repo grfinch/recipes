@@ -1,0 +1,32 @@
+{
+  "id": "super-easy-caramels",
+  "name": "Super Easy Caramels",
+  "course": "Dessert",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "1 cup butter",
+        "1 cup sugar",
+        "1 cup brown sugar",
+        "1 cup corn syrup",
+        "1 can sweetened condensed milk",
+        "Butter, for the pan",
+        "Wax paper"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt the butter in a large microwave-safe glass bowl (at least 10-cup capacity).",
+        "Add all ingredients except milk and stir well.",
+        "Add milk and stir.",
+        "Microwave on high for 13 minutes. To be safe, put a plate under your bowl in case it starts to boil over.",
+        "Remove from microwave and stir again.",
+        "Pour hot caramel into a buttered 9x13 pan and allow to cool.",
+        "Cut into 1-inch squares and wrap in wax paper."
+      ]
+    }
+  ]
+}

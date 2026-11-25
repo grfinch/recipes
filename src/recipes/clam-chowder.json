@@ -1,0 +1,37 @@
+{
+  "id": "clam-chowder",
+  "name": "Clam Chowder",
+  "course": "Soup",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "1 pkg (12 oz) bacon, diced",
+        "1 medium onion, finely diced",
+        "2 celery stalks, sliced",
+        "3 Tbsp all-purpose flour",
+        "2 cups chicken or vegetable stock",
+        "2 cans (10 oz) chopped clams in juice",
+        "1 cup heavy cream",
+        "2 bay leaves",
+        "1 tsp garlic powder",
+        "1 tsp thyme",
+        "1 lb Idaho potatoes, cut into 1/2-inch cubes",
+        "1 cup sweet corn",
+        "Salt and freshly ground black pepper"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Cook the bacon in a large pot over medium heat. Remove the bacon when crisp.",
+        "Add the onion and celery to the drippings and sauté until softened, mixing often.",
+        "Stir in the flour to distribute evenly.",
+        "Add the stock, juice from 2 cans of chopped clams (reserve clams), cream, bay leaves, garlic powder, thyme, and potatoes and stir to combine.",
+        "Bring to a simmer, stirring consistently (the mixture will thicken), then reduce the heat to medium-low and cook 20 minutes, stirring often, until the potatoes are nice and tender.",
+        "Then add clams and corn and season to taste with salt and pepper, cook until clams are just firm, another 2 minutes."
+      ]
+    }
+  ]
+}

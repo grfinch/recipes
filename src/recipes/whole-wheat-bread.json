@@ -1,0 +1,42 @@
+{
+  "id": "whole-wheat-bread",
+  "name": "Whole Wheat Bread",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Yeast mixture",
+      "items": ["1/4 cup warm water", "1 tsp honey", "1/4 tsp ginger", "2 pkg yeast"]
+    },
+    {
+      "title": "Dough",
+      "items": [
+        "1 Tbsp salt",
+        "1/4 cup honey",
+        "2 cups warm milk",
+        "1/4 cup oil",
+        "2 eggs",
+        "1/2 cup wheat gluten",
+        "1/2 cup ground flaxseed (optional)",
+        "3 cups whole wheat flour (more as needed)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Yeast mixture",
+      "items": ["Mix together and set aside."]
+    },
+    {
+      "title": "Dough",
+      "items": [
+        "In mixing bowl, mix together salt, honey, warm milk, oil and eggs.",
+        "Add wheat gluten and flaxseed to the mixture and beat.",
+        "Add yeast mixture and then add flour, 1/2 cup at a time, and knead until soft.",
+        "Put into greased bowl and spread oil on top. Cover and let rise about an hour.",
+        "Punch down, shape into loaves, and let rise in pans about 1/2 hour.",
+        "Bake at 350°F for 30 minutes."
+      ]
+    }
+  ]
+}

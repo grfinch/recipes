@@ -1,0 +1,33 @@
+{
+  "id": "honey-lemon-chicken",
+  "name": "Honey Lemon Chicken",
+  "course": "Dinner",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1/2 cup flour",
+        "1 tsp salt",
+        "1/2 tsp cayenne pepper",
+        "3 lb chicken breasts",
+        "1/2 cup butter or margarine, melted and divided",
+        "1/4 cup packed brown sugar",
+        "1/4 cup honey",
+        "1/4 cup lemon juice",
+        "1 Tbsp soy sauce",
+        "1 1/2 tsp curry powder"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Combine flour, salt and cayenne in a bag. Add chicken and shake to coat.",
+        "Pour 4 Tbsp butter into a 9x13 pan. Place chicken in pan and turn once to coat.",
+        "Bake uncovered at 350°F for 30 minutes (15 minutes for chicken breast).",
+        "Combine the rest of the ingredients and pour over chicken.",
+        "Bake 45 minutes longer or until chicken is tender."
+      ]
+    }
+  ]
+}

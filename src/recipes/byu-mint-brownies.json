@@ -1,0 +1,68 @@
+{
+  "id": "byu-mint-brownies",
+  "name": "BYU Mint Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Brownies",
+      "items": [
+        "1 cup margarine",
+        "1/2 cup cocoa",
+        "2 Tbsp honey",
+        "4 eggs",
+        "2 cups sugar",
+        "1 3/4 cups flour",
+        "1/2 Tbsp baking powder",
+        "1/2 tsp salt",
+        "1 cup chopped walnuts or pecans"
+      ]
+    },
+    {
+      "title": "Mint icing",
+      "items": [
+        "5 Tbsp margarine",
+        "Dash of salt",
+        "1 Tbsp light corn syrup",
+        "2 1/3 cups powdered sugar",
+        "1/2 tsp mint extract",
+        "1-2 drops green food coloring",
+        "3 Tbsp milk"
+      ]
+    },
+    {
+      "title": "Chocolate icing",
+      "items": [
+        "12 oz chocolate icing (use your own icing recipe or purchase some chocolate frosting)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Brownies",
+      "items": [
+        "Melt margarine and mix in cocoa. Allow to cool.",
+        "Add honey, eggs, sugar, flour, baking powder, and salt. Mix well.",
+        "Add nuts.",
+        "Pour batter into a greased 9x13 baking pan. Bake at 350°F for 25 minutes. Cool."
+      ]
+    },
+    {
+      "title": "Mint icing",
+      "items": [
+        "Soften margarine.",
+        "Add salt, corn syrup, and powdered sugar. Beat until smooth and fluffy.",
+        "Add mint extract and food coloring. Mix.",
+        "Add milk gradually until the consistency is a little thinner than cake frosting."
+      ]
+    },
+    {
+      "title": "Chocolate icing",
+      "items": [
+        "Spread mint icing over brownies.",
+        "Place brownies in the freezer for a short time to stiffen the icing.",
+        "Remove from the freezer and carefully add a layer of chocolate icing."
+      ]
+    }
+  ]
+}

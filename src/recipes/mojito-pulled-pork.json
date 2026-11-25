@@ -1,0 +1,39 @@
+{
+  "id": "mojito-pulled-pork",
+  "name": "Mojito Pulled Pork",
+  "course": "Dinner",
+  "cookingMethod": "Slow cooker",
+  "ingredients": [
+    {
+      "items": [
+        "1 boneless pork shoulder roast (4 to 5 lb)",
+        "2 tsp salt",
+        "2 tsp dried oregano",
+        "2 tsp each ground cumin, paprika and pepper",
+        "1 bunch fresh cilantro, divided",
+        "2 medium onions, halved and sliced",
+        "1/4 cup canned chopped green chilies",
+        "4 garlic cloves, minced",
+        "2 cans (14-1/2 oz each) reduced-sodium chicken broth",
+        "2/3 cup orange juice",
+        "1/2 cup lime juice",
+        "16 sandwich buns, split",
+        "Barbecue sauce"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Cut roast in half. Combine the salt, oregano, cumin, paprika and pepper; rub over pork. Place in a 4- or 5-quart slow cooker.",
+        "Mince cilantro to measure 1/4 cup; set aside. Trim remaining cilantro, discarding stems.",
+        "Add the whole cilantro leaves, onions, chilies and garlic to the slow cooker.",
+        "Combine the broth, orange juice and lime juice; pour over roast.",
+        "Cover and cook on low for 7-9 hours or until meat is tender.",
+        "Remove roast; cool slightly. Skim fat from cooking juices; set aside 3 cups juices. Discard remaining juices.",
+        "Shred pork with two forks and return to slow cooker. Stir in minced cilantro and reserved cooking juices; heat through.",
+        "Spoon 1/2 cup meat onto each bun. Serve with barbecue sauce."
+      ]
+    }
+  ]
+}

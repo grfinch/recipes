@@ -1,0 +1,41 @@
+{
+  "id": "chicken-enchilada-chili",
+  "name": "Chicken Enchilada Chili",
+  "course": "Soup",
+  "cookingMethod": "Slow cooker",
+  "ingredients": [
+    {
+      "title": "Chili",
+      "items": [
+        "2 chicken breasts",
+        "2 cups red enchilada sauce",
+        "1 cup green enchilada sauce",
+        "1 can (23 oz) cream of chicken soup",
+        "1 cup milk",
+        "1 can (10 oz) Rotel tomatoes with green chiles",
+        "2 Tbsp chili powder",
+        "1 tsp paprika",
+        "1 tsp salt",
+        "1 can (15 oz) black beans, drained and rinsed",
+        "1 can (15 oz) corn, drained",
+        "1 cup cheddar cheese, shredded",
+        "1/2 cup sour cream"
+      ]
+    },
+    {
+      "title": "Toppings",
+      "items": ["Tortilla strips", "Cheddar cheese, shredded", "Sour cream"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a large slow cooker, add the chicken breasts and both kinds of enchilada sauce.",
+        "Cook for several hours on high until the chicken is cooked and will shred into the sauce.",
+        "Add all the remaining soup ingredients, except the sour cream, and cook for 1 more hour.",
+        "Whisk in the sour cream and turn off the heat.",
+        "Serve in individual bowls and top with tortilla strips, sour cream, and cheddar cheese."
+      ]
+    }
+  ]
+}

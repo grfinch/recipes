@@ -1,0 +1,49 @@
+{
+  "id": "lemon-bars",
+  "name": "Lemon Bars",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Crust",
+      "items": ["1 cup flour", "1/4 cup powdered sugar", "1/2 cup butter, softened"]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "1 cup granulated sugar",
+        "2 tsp grated lemon peel, if desired",
+        "3 Tbsp lemon juice",
+        "1/2 tsp baking powder",
+        "1/4 tsp salt",
+        "2 Tbsp flour",
+        "2 eggs",
+        "Powdered sugar"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Crust",
+      "items": [
+        "Mix together until crumbly and press in an ungreased 8x8 or 9x9 square pan, building up 1/2 inch around the edges.",
+        "Bake for 15 minutes."
+      ]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "Beat granulated sugar, lemon peel, lemon juice, baking powder, salt, flour and eggs with electric mixer on high speed about 3 minutes or until light and fluffy.",
+        "Pour over hot crust.",
+        "Bake 25 to 30 minutes or until no indentation remains when touched lightly in center.",
+        "Cool; dust with powdered sugar. Cut into about 1 1/2-inch squares."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["No oven temperature is given. What temperature?"]
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "id": "guacamole",
+  "name": "Guacamole",
+  "course": "Appetizer",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "2 large avocados",
+        "1/2 pkg cream cheese",
+        "1/3 cup salsa",
+        "1-2 tsp lemon juice",
+        "1/2 tsp garlic powder",
+        "Salt to taste"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": ["Mash avocados together with cream cheese.", "Stir in the rest of the ingredients."]
+    }
+  ]
+}

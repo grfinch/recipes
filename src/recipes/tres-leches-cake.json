@@ -1,0 +1,75 @@
+{
+  "id": "tres-leches-cake",
+  "name": "Tres Leches Cake",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Cake",
+      "items": [
+        "Cooking spray",
+        "1 cup flour",
+        "1-1/2 tsp baking powder",
+        "1/4 tsp salt",
+        "5 whole eggs",
+        "1 cup sugar, divided",
+        "1/3 cup milk",
+        "1 tsp vanilla"
+      ]
+    },
+    {
+      "title": "Milk mixture",
+      "items": ["1 can sweetened condensed milk", "1 can evaporated milk", "1/4 cup heavy cream"]
+    },
+    {
+      "title": "Icing",
+      "items": [
+        "1 pint heavy cream, for whipping",
+        "3 Tbsp sugar",
+        "Maraschino cherries, whole or chopped"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Cake",
+      "items": [
+        "Preheat oven to 350°F. Spray a 9x13-inch pan liberally until coated.",
+        "Combine flour, baking powder, and salt in a large bowl.",
+        "Separate eggs. Beat egg yolks with 3/4 cup sugar on high speed until yolks are pale yellow. Stir in milk and vanilla.",
+        "Pour egg yolk mixture over the flour mixture and stir very gently until combined.",
+        "Beat egg whites on high speed until soft peaks form. With the mixer on, pour in remaining 1/4 cup sugar and beat until egg whites are stiff but not dry.",
+        "Fold egg white mixture into the batter very gently until just combined.",
+        "Pour into prepared pan and spread to even out the surface.",
+        "Bake for 35 to 45 minutes or until a toothpick comes out clean.",
+        "Turn cake out onto a rimmed platter and allow to cool."
+      ]
+    },
+    {
+      "title": "Milk mixture",
+      "items": [
+        "Combine condensed milk, evaporated milk, and heavy cream in a small pitcher.",
+        "When cake is cool, pierce the surface with a fork several times.",
+        "Slowly drizzle all but about 1 cup of the milk mixture. Try to get as much around the edges of the cake as you can.",
+        "Allow the cake to absorb the milk mixture for 30 minutes."
+      ]
+    },
+    {
+      "title": "Icing",
+      "items": [
+        "To ice the cake, whip 1 pint heavy cream with 3 Tbsp sugar until thick and spreadable.",
+        "Spread over the surface of the cake.",
+        "Decorate cake with whole or chopped maraschino cherries.",
+        "Cut into squares and serve."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "What is the leftover 1 cup of milk mixture for? (The source doesn't say; often it's served with the cake.)"
+      ]
+    }
+  ]
+}

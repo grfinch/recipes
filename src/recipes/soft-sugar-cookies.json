@@ -1,0 +1,41 @@
+{
+  "id": "soft-sugar-cookies",
+  "name": "Soft Sugar Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1/2 cup butter",
+        "1/2 cup shortening",
+        "2 cups sugar",
+        "4 eggs",
+        "2 tsp vanilla",
+        "6 cups flour (or enough to make stiff dough)",
+        "8 tsp baking powder",
+        "1/2 tsp baking soda",
+        "1/2 tsp salt",
+        "1 cup buttermilk"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Cream shortening and sugar.",
+        "Beat in eggs until fluffy. Add vanilla.",
+        "Mix in dry ingredients along with the buttermilk. (This mixture is a little sticky but by the time you get it rolled out, it will be okay.)",
+        "Roll out and cut.",
+        "Put on greased cookie sheets and bake at 375°F for 8 to 10 minutes."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The butter is listed but the steps cream only the shortening and sugar. Is the butter creamed with the shortening?"
+      ]
+    }
+  ]
+}

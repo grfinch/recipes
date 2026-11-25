@@ -1,0 +1,41 @@
+{
+  "id": "pineapple-pretzel-salad",
+  "name": "Pineapple Pretzel Salad",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Pretzels",
+      "items": ["2 cups broken pretzels", "1/4 cup butter", "1/4 cup sugar"]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "1 pkg (8 oz) light cream cheese",
+        "1 can (20 oz) pineapple tidbits",
+        "1 small pkg instant coconut cream pudding",
+        "1 carton (8 oz) Cool Whip",
+        "1/2 bag miniature marshmallows"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Pretzels",
+      "items": [
+        "Put broken pretzels in a 9x13 pan.",
+        "Melt butter and sugar together and pour over pretzels.",
+        "Bake at 350°F for 8-10 minutes."
+      ]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "Cream together cream cheese and pineapple juice by adding the juice gradually to the cream cheese and beating it in a little at a time.",
+        "Add the pineapple and pudding mix and mix thoroughly.",
+        "Stir in the Cool Whip.",
+        "Stir in the pretzels and marshmallows right before serving."
+      ]
+    }
+  ]
+}

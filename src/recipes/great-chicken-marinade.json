@@ -1,0 +1,29 @@
+{
+  "id": "great-chicken-marinade",
+  "name": "Great Chicken Marinade",
+  "course": "Dinner",
+  "cookingMethod": "Grill",
+  "ingredients": [
+    {
+      "items": [
+        "4 chicken breasts",
+        "4 Tbsp soy sauce",
+        "4 Tbsp oil",
+        "2 Tbsp lemon juice",
+        "1 Tbsp brown sugar",
+        "2 cloves garlic, minced",
+        "1/2 tsp dried thyme",
+        "1/2 tsp dried basil",
+        "Tiny pinch of ground cloves"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Combine all ingredients and marinate for 4 hours or more.",
+        "Broil or grill chicken until done."
+      ]
+    }
+  ]
+}

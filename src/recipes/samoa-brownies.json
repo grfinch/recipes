@@ -1,0 +1,74 @@
+{
+  "id": "samoa-brownies",
+  "name": "Samoa Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Brownies",
+      "items": [
+        "1 cup butter, softened",
+        "2 cups sugar",
+        "4 eggs",
+        "1 tsp vanilla",
+        "1/2 tsp salt",
+        "1/2 cup cocoa",
+        "1 1/3 cups flour"
+      ]
+    },
+    {
+      "title": "Salted caramel buttercream",
+      "items": [
+        "1/2 cup butter, softened",
+        "3 cups powdered sugar",
+        "1/2 tsp salt",
+        "tsp vanilla",
+        "1/4 cup caramel ice cream topping",
+        "2-3 Tbsp milk"
+      ]
+    },
+    {
+      "title": "Additional toppings",
+      "items": [
+        "1 cup toasted coconut",
+        "4 oz chocolate candy coating (can use chocolate chips)",
+        "1/2 cup Kraft caramel bits",
+        "1 Tbsp water"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Brownies",
+      "items": [
+        "Cream butter and sugar together. Add eggs and vanilla and blend well.",
+        "Add salt, cocoa and flour and stir to combine. Don't overbeat.",
+        "Pour into a greased 9x13 pan. Bake at 350°F for 20-25 minutes. Let cool completely."
+      ]
+    },
+    {
+      "title": "Salted caramel buttercream",
+      "items": [
+        "Cream butter in stand mixer.",
+        "Add powdered sugar, salt, vanilla, caramel and milk to stand mixer and mix until well combined.",
+        "Add more milk and/or powdered sugar as needed to reach desired consistency.",
+        "Frost the tops of completely cooled brownies."
+      ]
+    },
+    {
+      "title": "Additional toppings",
+      "items": [
+        "Sprinkle toasted coconut evenly over the top of buttercream.",
+        "Melt chocolate candy coating in 30-second increments, stirring in between until smooth and melted.",
+        "Combine caramel bits and water in microwave-safe bowl and microwave for 45 seconds. Stir until smooth and well combined.",
+        "Drizzle melted chocolate candy coating and caramel over toasted coconut."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["The buttercream vanilla has no amount (\"tsp. vanilla\"). How much?"]
+    }
+  ]
+}

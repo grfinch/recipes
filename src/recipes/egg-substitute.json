@@ -1,0 +1,26 @@
+{
+  "id": "egg-substitute",
+  "name": "Egg Substitute",
+  "course": "Sauce",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": ["3 Tbsp cold water", "1 tsp unflavored gelatin", "2 Tbsp plus 1 tsp boiling water"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Place cold water in mixing bowl. Sprinkle gelatin in cold water to soften; beat.",
+        "Add boiling water and beat until dissolved.",
+        "Place in freezer to thicken while preparing cake or cookie recipe.",
+        "When recipe calls for addition of eggs, beat thickened gelatin on high speed until frothy. Add to batter in place of eggs."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Replaces 1 egg."]
+    }
+  ]
+}

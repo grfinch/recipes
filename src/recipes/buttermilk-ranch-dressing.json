@@ -1,0 +1,38 @@
+{
+  "id": "buttermilk-ranch-dressing",
+  "name": "Buttermilk Ranch Dressing",
+  "course": "Sauce",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "1 cup mayo",
+        "2/3 cup buttermilk",
+        "1/4 tsp white vinegar",
+        "1 tsp parsley",
+        "1/8 tsp dill",
+        "1/4 tsp garlic powder",
+        "1/4 tsp onion powder",
+        "1 1/2 tsp dried chives",
+        "1/8 tsp black pepper",
+        "1/4 tsp seasoned salt",
+        "1/8 tsp dry mustard"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Combine mayo and buttermilk and whisk together until it's lump-free.",
+        "Add in vinegar and all spices. Stir, stir, stir."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "For best results, make ahead of time and store in the fridge so the dry herbs have time to let all their yummy flavors out."
+      ]
+    }
+  ]
+}

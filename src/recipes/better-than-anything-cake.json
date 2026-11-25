@@ -1,0 +1,28 @@
+{
+  "id": "better-than-anything-cake",
+  "name": "Better Than Anything Cake",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 box devil's food cake mix",
+        "1 jar caramel ice cream topping",
+        "1 can sweetened condensed milk",
+        "1 carton (8 oz) Cool Whip",
+        "6 Skor or Heath candy bars (crushed up)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Prepare cake according to directions. Cook in 9x13 pan.",
+        "As soon as cake comes out of the oven, pierce top with fork all over.",
+        "Pour caramel topping and milk over top of cake.",
+        "Let cool, then top with Cool Whip and crushed candy bars.",
+        "Chill in refrigerator."
+      ]
+    }
+  ]
+}

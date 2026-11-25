@@ -1,0 +1,55 @@
+{
+  "id": "beef-and-asparagus-stirfry",
+  "name": "Beef and Asparagus Stirfry",
+  "course": "Dinner",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Beef",
+      "items": [
+        "1 lb beef top round steak (3/4 inch thick)",
+        "2 Tbsp cornstarch",
+        "2 Tbsp plus 1/2 cup water, divided",
+        "1/2 tsp salt",
+        "1/4 tsp pepper",
+        "1/4 tsp hot pepper sauce",
+        "3 Tbsp canola oil, divided"
+      ]
+    },
+    {
+      "title": "Vegetables",
+      "items": [
+        "2 cups fresh asparagus pieces or fresh broccoli florets",
+        "1 cup sliced cauliflower",
+        "1 small sweet red or green pepper, julienned",
+        "1 small onion, cut into 1/4-inch wedges"
+      ]
+    },
+    {
+      "title": "Sauce",
+      "items": [
+        "2 tsp beef bouillon granules",
+        "1 Tbsp soy sauce",
+        "1 Tbsp ketchup",
+        "1 tsp red wine vinegar",
+        "2 Tbsp sugar"
+      ]
+    },
+    {
+      "items": ["Hot cooked rice"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Slice beef into thin 3-inch strips.",
+        "In a large resealable plastic bag, combine the cornstarch, 2 Tbsp water, salt, pepper and hot pepper sauce; add the beef. Seal bag and turn to coat.",
+        "In a large skillet or wok, stir-fry half of the beef in 1 Tbsp oil until no longer pink; remove from the skillet and keep warm. Repeat with remaining beef and 1 Tbsp oil.",
+        "Stir-fry the asparagus and cauliflower in remaining oil for 4 minutes.",
+        "Add red pepper and onion; stir-fry for 2 minutes. Return beef to skillet.",
+        "In a small bowl, combine the bouillon, soy sauce, ketchup, vinegar, sugar and remaining water; add to the skillet.",
+        "Cook and stir for 2 minutes or until heated through. Serve with rice."
+      ]
+    }
+  ]
+}

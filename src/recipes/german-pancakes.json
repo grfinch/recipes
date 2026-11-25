@@ -1,0 +1,35 @@
+{
+  "id": "german-pancakes",
+  "name": "German Pancakes",
+  "course": "Breakfast",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "6 eggs",
+        "1 cup milk",
+        "1 cup all-purpose flour",
+        "1/2 tsp salt",
+        "1 tsp vanilla",
+        "4 Tbsp butter, melted"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a blender, combine the eggs, milk, flour and salt; cover and process until smooth.",
+        "Pour the butter into an ungreased 13x9-inch baking dish; add the batter.",
+        "Bake, uncovered, at 400°F for 20 minutes."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The vanilla is listed but not in the steps. Does it go in the blender with the eggs?"
+      ]
+    }
+  ]
+}

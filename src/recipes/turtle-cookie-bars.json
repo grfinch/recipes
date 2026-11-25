@@ -1,0 +1,37 @@
+{
+  "id": "turtle-cookie-bars",
+  "name": "Turtle Cookie Bars",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Crust",
+      "items": [
+        "2 cups flour",
+        "1 cup packed brown sugar",
+        "1/2 cup butter, softened",
+        "1 cup pecan halves"
+      ]
+    },
+    {
+      "title": "Topping",
+      "items": [
+        "2/3 cup butter or margarine",
+        "1/2 cup packed brown sugar",
+        "1 cup chocolate chips"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix flour, sugar, and margarine together until crumbly.",
+        "Press firmly into an ungreased 9x13 baking pan. Arrange pecans over crust.",
+        "Combine butter and brown sugar in a heavy sauce pan. Bring to a boil and boil for 1 minute, stirring constantly.",
+        "Pour over pecans. Bake at 350°F for 18 to 22 minutes or until bubbly.",
+        "Sprinkle with chocolate chips and spread when melted.",
+        "Cool completely and cut into small squares."
+      ]
+    }
+  ]
+}

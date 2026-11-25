@@ -1,0 +1,59 @@
+{
+  "id": "lasagna",
+  "name": "Lasagna",
+  "course": "Dinner",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Sauce",
+      "items": [
+        "1 1/2 lb ground beef or Italian sausage",
+        "1 jar spaghetti sauce",
+        "1 can (15 oz) Italian style tomatoes (pureed)",
+        "1 pkg (8 oz) fresh mushrooms",
+        "1 tsp sugar"
+      ]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "1 carton (24 oz) cottage cheese",
+        "2 eggs",
+        "1 Tbsp dried parsley",
+        "1/2 tsp pepper"
+      ]
+    },
+    {
+      "title": "Layers",
+      "items": [
+        "Cooking spray",
+        "2 lb mozzarella cheese, sliced",
+        "Lasagna noodles",
+        "Parmesan cheese"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Sauce",
+      "items": [
+        "Brown meat.",
+        "Add the rest of the ingredients and let simmer while the other layers are prepared."
+      ]
+    },
+    {
+      "title": "Filling",
+      "items": ["Mix together thoroughly."]
+    },
+    {
+      "title": "Layers",
+      "items": [
+        "Line a 9x13-inch pan with foil and spray with cooking spray.",
+        "Layer bottom of pan with uncooked lasagna noodles.",
+        "Add half the filling and a layer of cheese slices. Cover with half of the sauce.",
+        "Repeat layers and sprinkle top with Parmesan cheese.",
+        "Cover and bake at 350°F for 1 hour and 15 minutes to an hour and a half or until noodles are done."
+      ]
+    }
+  ]
+}

@@ -11,9 +11,19 @@ export default function NumberedClickableItem({ item, index, checked, onToggle }
         onClick={onToggle}
         className={`${styles.label} ${styles.stepButton}`}
       >
-        {/* The ✓ is decorative; aria-pressed already says whether it's done */}
+        {/* The ✓ is decorative; aria-pressed already says whether it's done. A printout always
+            shows the step number (the printOnly span is display: none on screen). */}
         <span className={`${styles.numberBtn} ${checked ? styles.checkMark : ''}`}>
-          {checked ? <span aria-hidden="true">✓</span> : `${index}.`}
+          {checked ? (
+            <>
+              <span aria-hidden="true" className={styles.screenOnly}>
+                ✓
+              </span>
+              <span className={styles.printOnly}>{index}.</span>
+            </>
+          ) : (
+            `${index}.`
+          )}
         </span>
         <span className={styles.itemText}>{item}</span>
       </button>

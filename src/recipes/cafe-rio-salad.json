@@ -1,0 +1,98 @@
+{
+  "id": "cafe-rio-salad",
+  "name": "Café Rio Salad",
+  "course": "Dinner",
+  "cookingMethod": "Slow cooker",
+  "ingredients": [
+    {
+      "title": "Chicken",
+      "items": [
+        "1 small bottle Kraft Zesty Italian Dressing",
+        "1 Tbsp chili powder",
+        "1 Tbsp cumin",
+        "1 tsp garlic powder",
+        "5 lb boneless skinless chicken breast"
+      ]
+    },
+    {
+      "title": "Sweet pork",
+      "items": [
+        "3 1/2-4 lb pork roast or boneless ribs",
+        "1 can diced tomatoes, undrained and blended in a food processor",
+        "2 cans diced green chiles",
+        "1 clove garlic, minced",
+        "3-5 Tbsp taco seasoning mix",
+        "1 1/2-2 cups brown sugar",
+        "1/2 bunch cilantro, chopped",
+        "1 bunch green onions, chopped"
+      ]
+    },
+    {
+      "title": "Rice",
+      "items": [
+        "3 cups water",
+        "1 1/2 cups rice",
+        "4 tsp chicken bouillon",
+        "2 tsp garlic powder",
+        "1 tsp cumin",
+        "3/4 tsp salt",
+        "1/2 onion",
+        "1/2 bunch cilantro",
+        "1 small can green chilies",
+        "1 Tbsp butter"
+      ]
+    },
+    {
+      "title": "Dressing",
+      "items": [
+        "1 pkg ranch dressing mix, made with the buttermilk ranch directions",
+        "1-2 tomatillos",
+        "1/4 tsp garlic powder",
+        "1/2 bunch cilantro",
+        "1/2 tsp lime juice",
+        "1/2-1 jalapeño pepper (seeded)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Chicken",
+      "items": [
+        "Cook on low in a crock pot for several hours until chicken is tender and falls apart."
+      ]
+    },
+    {
+      "title": "Sweet pork",
+      "items": [
+        "Cook pork in a slow cooker until the pork falls apart.",
+        "Drain about 1/2 of the liquid from the pork.",
+        "Add the rest of the ingredients except the cilantro and green onions. Cook for at least an hour (longer is better).",
+        "Add green onions and cilantro right before serving.",
+        "Mix everything together and put in a crock pot. Roast for 7-9 hours (shred meat after 6-8 hours and let cook another hour)."
+      ]
+    },
+    {
+      "title": "Rice",
+      "items": [
+        "Put everything in a food processor except water and rice.",
+        "Add to water and rice and simmer until done (about 30 minutes)."
+      ]
+    },
+    {
+      "title": "Dressing",
+      "items": [
+        "Make buttermilk ranch as directed.",
+        "Put everything else in blender and add ranch."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The sweet pork has two methods: cook the pork first and then add the rest, or mix everything together and roast 7-9 hours. I kept both in the source's order. Should one go?",
+        "There are no salad assembly steps (lettuce, tortillas, toppings). Add any, or keep it as the four parts?"
+      ]
+    }
+  ]
+}

@@ -8,6 +8,7 @@ import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
 import SuggestChange from './components/suggest/SuggestChange';
 import SuggestRecipe from './components/suggest/SuggestRecipe';
+import ThemePicker from './components/theme/ThemePicker';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
 import { BROWSE_HASH, SUGGEST_HASH, hashFor, hashForView, viewFromHash } from './utils/recipeHash';
 import { NO_CHOICES } from './utils/recipePick';
@@ -148,8 +149,10 @@ function App() {
         <div className="headerSearch">
           <SearchBox recipes={allRecipes} onSelect={handleSelect} />
         </div>
-        <div className="headerWake">
+        {/* Display settings: Keep screen on and the theme button, on one line */}
+        <div className="headerSettings">
           <KeepScreenOn />
+          <ThemePicker />
         </div>
       </header>
 

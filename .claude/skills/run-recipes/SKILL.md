@@ -18,7 +18,7 @@ npm install --prefix .claude/skills/run-recipes   # driver's own deps, not added
 
 ```bash
 node .claude/skills/run-recipes/driver.mjs              # smoke flow
-node .claude/skills/run-recipes/driver.mjs regression   # 17 browser checks
+node .claude/skills/run-recipes/driver.mjs regression   # 21 browser checks
 node .claude/skills/run-recipes/driver.mjs path/to/my-flow.mjs
 ```
 
@@ -27,7 +27,7 @@ It prints `PASS`/`FAIL` per check and exits non-zero if any check fails. Screens
 | Option | Effect |
 |---|---|
 | `smoke` (default) | Loads the page, searches "pasta", opens it, checks an ingredient. |
-| `regression` | Counter, native Escape, focus return, accessible step names, checked state across recipes, React key warnings. |
+| `regression` | Counter, native Escape, focus return, accessible step names, checked state across recipes, checkmark and focus styles, hidden dividers, React key warnings. |
 | `--random` | Keep the app's random first recipe. By default `Math.random()` returns 0, so the page opens on the first recipe (Instant-pot Lentil Stew). |
 | `RECIPES_PORT=5174` | Use another port. Use this when 5173 is serving something else. |
 | `BROWSER_CHANNEL=msedge` | Use Edge instead of Chrome. |

@@ -29,7 +29,7 @@ Dependabot (`.github/dependabot.yml`) opens weekly update PRs. `.github/workflow
 
 ## Architecture
 
-This is a static, client-only React 19 app (plain JSX, no TypeScript, no router, no backend). All data is bundled from the recipe files in `src/recipes/`: one file per recipe, `src/recipes/<id>.json`, loaded by `src/recipes/index.js` (`import.meta.glob`, sorted by name). One file each means two PRs that add recipes never conflict. Tests mock `./recipes/index.js`, not the JSON files.
+This is a static, client-only React 19 app (plain JSX, no TypeScript, no router, no backend). All data is bundled from the recipe files in `src/recipes/`: one file per recipe, `src/recipes/<id>.json`, loaded by `src/recipes/index.js` (`import.meta.glob`, sorted by name). One file each means two PRs that add recipes never conflict. Tests mock `./recipes/index.js`, not the JSON files. With the dev server, adding, editing, or removing a recipe file reloads the whole page (`import.meta.hot` in `index.js`), because hot-swapping the list would leave `App`'s hashchange listener and the shown recipe on the old data.
 
 **Data flow:** `App.jsx` imports the recipe list from `./recipes/index.js` and holds a `view` state: `{ page: 'recipe', recipe }` or `{ page: 'browse' }` (`null` only when there are no recipes). The first view comes from the URL hash, or is a random recipe if the hash names none. `SearchBox` receives every recipe and calls `onSelect`. `Recipe` renders a recipe view; `BrowseRecipes` renders the browse view.
 

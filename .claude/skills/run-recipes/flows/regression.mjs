@@ -26,7 +26,8 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   const left = () => h1.evaluate((el) => Math.round(el.getBoundingClientRect().left));
   const leftBefore = await left();
   await page.getByRole('link', { name: 'All recipes' }).click();
-  const links = main.getByRole('link');
+  // The recipe list only: the page may also show a "Back to <recipe>" link above it
+  const links = main.getByRole('list').getByRole('link');
   await links.first().waitFor();
   const names = (await links.allTextContents()).map((n) => n.trim());
   const other = names.find((n) => n !== firstName);

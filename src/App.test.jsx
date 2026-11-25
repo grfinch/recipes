@@ -254,3 +254,54 @@ describe('Browse all recipes', () => {
     expect(screen.getByRole('heading', { level: 1, name: 'Sausage Pasta' })).toHaveFocus();
   });
 });
+
+describe('Getting back from All recipes', () => {
+  async function openBrowseFromRecipe(user) {
+    window.history.replaceState(null, '', '#/sausage-pasta');
+    render(<App />);
+    await user.click(screen.getByRole('checkbox', { name: /sausage/ }));
+    await user.click(screen.getByRole('link', { name: 'All recipes' }));
+    await screen.findByRole('heading', { level: 1, name: 'All recipes' });
+  }
+
+  it('offers a link back to the recipe you came from', async () => {
+    const user = userEvent.setup();
+    await openBrowseFromRecipe(user);
+
+    const back = screen.getByRole('link', { name: 'Back to Sausage Pasta' });
+    expect(back).toHaveAttribute('href', '#/sausage-pasta');
+    await user.click(back);
+
+    const heading = await screen.findByRole('heading', { level: 1, name: 'Sausage Pasta' });
+    expect(heading).toHaveFocus();
+    expect(window.location.hash).toBe('#/sausage-pasta');
+    expect(document.title).toBe("Sausage Pasta | Twig's Cook Book");
+    expect(screen.getByRole('checkbox', { name: /sausage/ })).toBeChecked();
+  });
+
+  it('goes back to the recipe when the highlighted pill is tapped again', async () => {
+    const user = userEvent.setup();
+    await openBrowseFromRecipe(user);
+
+    const pill = within(screen.getByRole('banner')).getByRole('link', { name: 'All recipes' });
+    expect(pill).toHaveAccessibleDescription('Back to Sausage Pasta');
+    expect(pill).toHaveAttribute('aria-current', 'page');
+    expect(pill).toHaveAttribute('href', '#/sausage-pasta');
+    await user.click(pill);
+
+    expect(await screen.findByRole('heading', { level: 1, name: 'Sausage Pasta' })).toHaveFocus();
+    const pillOnRecipe = within(screen.getByRole('banner')).getByRole('link', {
+      name: 'All recipes',
+    });
+    expect(pillOnRecipe).toHaveAttribute('href', '#/browse');
+    expect(pillOnRecipe).not.toHaveAttribute('aria-current');
+    expect(pillOnRecipe).not.toHaveAttribute('aria-describedby');
+  });
+
+  it('offers no way back on a deep link to #/browse', () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    expect(screen.queryByRole('link', { name: /^Back to/ })).not.toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'All recipes' })).toHaveAttribute('href', '#/browse');
+  });
+});

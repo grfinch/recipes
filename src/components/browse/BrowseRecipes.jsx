@@ -1,4 +1,4 @@
-import { hashFor } from '../../utils/recipeHash';
+import { SUGGEST_HASH, hashFor } from '../../utils/recipeHash';
 import styles from './browse.module.css';
 
 export default function BrowseRecipes({ recipes = [] }) {
@@ -25,6 +25,9 @@ export default function BrowseRecipes({ recipes = [] }) {
       ) : (
         <p>No recipes yet.</p>
       )}
+      <p className={styles.suggest}>
+        Don&apos;t see a favorite? <a href={SUGGEST_HASH}>Suggest a recipe</a>
+      </p>
     </>
   );
 }

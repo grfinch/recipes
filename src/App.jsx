@@ -4,10 +4,12 @@ import allRecipes from './recipes/index.js';
 import BrowseRecipes from './components/browse/BrowseRecipes';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
+import SuggestRecipe from './components/suggest/SuggestRecipe';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
-import { BROWSE_HASH, hashForView, viewFromHash } from './utils/recipeHash';
+import { BROWSE_HASH, SUGGEST_HASH, hashForView, viewFromHash } from './utils/recipeHash';
 
 const SITE_TITLE = "Twig's Cook Book";
+const PAGE_TITLES = { browse: 'All recipes', suggest: 'Suggest a recipe' };
 
 function randomRecipeView() {
   const recipe = allRecipes[Math.floor(Math.random() * allRecipes.length)];
@@ -19,7 +21,8 @@ function sameView(a, b) {
 }
 
 function App() {
-  // view: { page: 'browse' } or { page: 'recipe', recipe }; null only when there are no recipes.
+  // view: { page: 'browse' }, { page: 'suggest' }, or { page: 'recipe', recipe }; null only when
+  // there are no recipes.
   // The page in the URL hash, else a random recipe. The function form runs only on first render.
   const [view, setView] = useState(() => viewFromHash(allRecipes) ?? randomRecipeView());
   const mainRef = useRef(null);
@@ -41,7 +44,7 @@ function App() {
     if (!view) return;
     const hash = hashForView(view);
     if (window.location.hash !== hash) window.history.replaceState(null, '', hash);
-    const pageTitle = view.page === 'browse' ? 'All recipes' : view.recipe.name;
+    const pageTitle = view.page === 'recipe' ? view.recipe.name : PAGE_TITLES[view.page];
     document.title = `${pageTitle} | ${SITE_TITLE}`;
   }, [view]);
 
@@ -66,20 +69,33 @@ function App() {
         <SearchBox recipes={allRecipes} onSelect={handleSelect} />
         <KeepScreenOn />
         <nav className="siteNav">
-          <a href={BROWSE_HASH} aria-current={view?.page === 'browse' ? 'page' : undefined}>
-            All recipes
-          </a>
+          <ul>
+            <li>
+              <a href={BROWSE_HASH} aria-current={view?.page === 'browse' ? 'page' : undefined}>
+                All recipes
+              </a>
+            </li>
+            <li>
+              <a href={SUGGEST_HASH} aria-current={view?.page === 'suggest' ? 'page' : undefined}>
+                Suggest a recipe
+              </a>
+            </li>
+          </ul>
         </nav>
       </header>
 
       <main ref={mainRef}>
         {view?.page === 'browse' ? (
           <BrowseRecipes recipes={allRecipes} />
+        ) : view?.page === 'suggest' ? (
+          <SuggestRecipe />
         ) : view ? (
           // key: a new recipe remounts, so its own saved checklist loads
           <Recipe key={view.recipe.id} recipe={view.recipe} />
         ) : (
-          <p>No recipes yet.</p>
+          <p>
+            No recipes yet. <a href={SUGGEST_HASH}>Suggest a recipe</a>
+          </p>
         )}
       </main>
     </>

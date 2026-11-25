@@ -4,7 +4,11 @@
 // Hashes for app pages rather than recipes. They are checked before any recipe lookup, so a
 // recipe whose name slugifies to one of these (say, "Browse") can't take over the page.
 export const BROWSE_HASH = '#/browse';
-export const RESERVED_SLUGS = ['browse'];
+export const SUGGEST_HASH = '#/suggest';
+export const RESERVED_SLUGS = ['browse', 'suggest'];
+
+// Reserved slug -> app page. Each page needs an h1 with tabIndex={-1} (App focuses it).
+const PAGE_HASHES = { browse: BROWSE_HASH, suggest: SUGGEST_HASH };
 
 // Turns a name into an id: lowercase, accents dropped, anything else becomes "-". Used once,
 // when a recipe is created. After that the id never changes, so a rename can't break links.
@@ -36,13 +40,15 @@ export function recipeFromHash(recipes, hash = window.location.hash) {
   return recipes.find((r) => r.id === slug) ?? null;
 }
 
-// What the hash asks to show: { page: 'browse' }, { page: 'recipe', recipe }, or null.
+// What the hash asks to show: { page: 'browse' }, { page: 'suggest' }, { page: 'recipe', recipe },
+// or null.
 export function viewFromHash(recipes, hash = window.location.hash) {
-  if (slugFromHash(hash) === 'browse') return { page: 'browse' };
+  const slug = slugFromHash(hash);
+  if (Object.hasOwn(PAGE_HASHES, slug)) return { page: slug };
   const recipe = recipeFromHash(recipes, hash);
   return recipe ? { page: 'recipe', recipe } : null;
 }
 
 export function hashForView(view) {
-  return view.page === 'browse' ? BROWSE_HASH : hashFor(view.recipe);
+  return view.page === 'recipe' ? hashFor(view.recipe) : PAGE_HASHES[view.page];
 }

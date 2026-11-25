@@ -9,6 +9,7 @@ This file provides guidance to AI coding agents working with code in this reposi
 - `npm run preview`: serve the built `dist/`
 - `npm run lint`: ESLint (flat config, `eslint.config.js`)
 - `npm run format` / `npm run format:check`: Prettier (single quotes, semicolons, 100 columns). Run `format` before committing; CI fails on unformatted files.
+- `npm run validate:recipes`: check `src/recipes.json` against the schema and allowed categories
 - `npm test`: run Vitest once (jsdom + React Testing Library); `npm run test:watch` for watch mode
 - `npx vitest run src/components/search` or `npx vitest run -t "Escape"`: run one file or one test by name
 
@@ -34,10 +35,12 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 
 **Recipe schema** (`src/recipes.json` → `{ recipes: [...] }`):
 
-- `name`, `course`, `cookingMethod`: strings. `course` and `cookingMethod` are not used in the UI yet.
+- `name`, `course`, `cookingMethod`: strings. `course` and `cookingMethod` come from the lists in `src/recipeCategories.json`.
 - `ingredients`: an **array of arrays** of strings. Each inner array is a group, and groups are separated by a divider when rendered.
 - `instructions`: a flat array of strings.
 - `notes`: an optional flat array of strings.
+
+`course` and `cookingMethod` must be values listed in `src/recipeCategories.json`. `scripts/validate-recipes.mjs` (`npm run validate:recipes`, also run in CI) checks the whole file: required fields, unknown fields, duplicate names and links, reserved slugs, empty groups, and misplaced `---` separators. To add a recipe, use the `add-recipe` skill (`.claude/skills/add-recipe/`), which drafts, validates, and opens a PR.
 
 **Rendering lists:** `RecipeSection` normalizes `listItems` into groups. It accepts either nested arrays or a flat array, where any string starting with `-` acts as a group separator. It picks the item component from the `ordered` and `clickable` props:
 

@@ -32,6 +32,9 @@ jobs:
       - name: Check formatting
         run: npm run format:check
 
+      - name: Validate recipes
+        run: npm run validate:recipes
+
       - name: Test
         run: npm test
 

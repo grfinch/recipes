@@ -18,7 +18,7 @@ npm install --prefix .claude/skills/run-recipes   # driver's own deps, not added
 
 ```bash
 node .claude/skills/run-recipes/driver.mjs              # smoke flow
-node .claude/skills/run-recipes/driver.mjs regression   # 21 browser checks
+node .claude/skills/run-recipes/driver.mjs regression   # 26 browser checks
 node .claude/skills/run-recipes/driver.mjs path/to/my-flow.mjs
 ```
 

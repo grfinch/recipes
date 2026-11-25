@@ -8,7 +8,8 @@ import { defineConfig, globalIgnores } from 'eslint/config';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
 
 export default defineConfig([
-  globalIgnores(['dist', 'coverage']),
+  // relay/.wrangler: wrangler's generated bundles (gitignored, but ESLint doesn't read .gitignore)
+  globalIgnores(['dist', 'coverage', 'relay/.wrangler']),
 
   // Every JavaScript file
   {
@@ -59,6 +60,12 @@ export default defineConfig([
   {
     files: ['.claude/skills/**/*.mjs'],
     languageOptions: { globals: { ...globals.node, ...globals.browser } },
+  },
+
+  // The suggestion relay: a Cloudflare Worker (service-worker style globals)
+  {
+    files: ['relay/**/*.js'],
+    languageOptions: { globals: globals.serviceworker },
   },
 
   // Last: turn off stylistic rules that Prettier handles

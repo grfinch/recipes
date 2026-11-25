@@ -1,0 +1,13 @@
+{
+  "name": "recipes-suggestion-relay",
+  "private": true,
+  "type": "module",
+  "description": "Cloudflare Worker that turns a recipe suggestion into a GitHub issue. See README.md.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.168.0"
+  }
+}

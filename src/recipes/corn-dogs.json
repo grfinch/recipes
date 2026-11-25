@@ -31,5 +31,11 @@
         "Drain on paper towels."
       ]
     }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["The list has 1 egg but the step says \"eggs\". One egg?"]
+    }
   ]
 }

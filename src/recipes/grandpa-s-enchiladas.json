@@ -26,5 +26,11 @@
         "Remove and cover with cheese. Return to oven until cheese melts."
       ]
     }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["No oven temperature is given. What temperature?"]
+    }
   ]
 }

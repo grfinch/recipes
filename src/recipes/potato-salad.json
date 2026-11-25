@@ -41,6 +41,13 @@
   "notes": [
     {
       "items": ["Serves 8."]
+    },
+    {
+      "title": "Open questions",
+      "items": [
+        "The steps mention yogurt, but no yogurt is listed. How much, or should \"yogurt\" come out of the step?",
+        "The bacon is listed but never used in the steps. Is it stirred in with the eggs?"
+      ]
     }
   ]
 }

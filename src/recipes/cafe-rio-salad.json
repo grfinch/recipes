@@ -85,5 +85,14 @@
         "Put everything else in blender and add ranch."
       ]
     }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The sweet pork has two methods: cook the pork first and then add the rest, or mix everything together and roast 7-9 hours. I kept both in the source's order. Should one go?",
+        "There are no salad assembly steps (lettuce, tortillas, toppings). Add any, or keep it as the four parts?"
+      ]
+    }
   ]
 }

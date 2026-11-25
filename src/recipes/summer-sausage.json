@@ -31,5 +31,13 @@
         "Bake on racks or a drip pan at 150 degrees for 6-8 hours."
       ]
     }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "\"150 degrees\" is lower than the range I convert, so I left it as written. Is that 150°F?"
+      ]
+    }
   ]
 }

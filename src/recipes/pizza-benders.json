@@ -30,5 +30,11 @@
         "Dip in Ragú pizza sauce."
       ]
     }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["How much cheese and fillings per bender?"]
+    }
   ]
 }

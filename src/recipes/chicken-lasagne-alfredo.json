@@ -67,5 +67,13 @@
         "Bake at 325°F for 1 hour."
       ]
     }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The bacon is listed with the sauce but never used in the steps. Is it stirred into the sauce?"
+      ]
+    }
   ]
 }

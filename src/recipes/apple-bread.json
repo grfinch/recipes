@@ -1,0 +1,44 @@
+{
+  "id": "apple-bread",
+  "name": "Apple Bread",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Bread",
+      "items": [
+        "2 cups sugar",
+        "1/2 cup unsalted butter, melted*",
+        "1/2 cup applesauce*",
+        "3 Tbsp buttermilk",
+        "2 tsp vanilla",
+        "6 eggs",
+        "2 cups raw apples, grated or chopped",
+        "4 cups flour",
+        "2 tsp baking soda",
+        "1 tsp salt"
+      ]
+    },
+    {
+      "title": "Topping",
+      "items": ["1/3 cup brown sugar", "2 tsp vanilla"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix all of the bread ingredients together until moistened.",
+        "Divide into 3 greased and floured loaf pans.",
+        "Sprinkle with topping.",
+        "Bake at 350°F for 45 to 50 minutes or until toothpick comes out clean."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "*The original recipe calls for shortening instead of unsalted butter and applesauce, so that works well also."
+      ]
+    }
+  ]
+}

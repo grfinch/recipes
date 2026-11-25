@@ -1,0 +1,38 @@
+{
+  "id": "bbq-turkey-sanpete-style",
+  "name": "BBQ Turkey (Sanpete Style)",
+  "course": "Dinner",
+  "cookingMethod": "Grill",
+  "ingredients": [
+    {
+      "title": "Marinade",
+      "items": [
+        "2 parts 7-Up or Sprite",
+        "1 part soy sauce",
+        "1 part vegetable oil",
+        "1/2 tsp horseradish",
+        "1/4 tsp garlic powder"
+      ]
+    },
+    {
+      "items": ["Turkey"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Make enough marinade to cover meat.",
+        "Mix everything together thoroughly and marinate meat for 18-24 hours.",
+        "Grill, turning frequently."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "What cut and how much turkey? (The source doesn't list it.) Is the 1/2 tsp horseradish and 1/4 tsp garlic powder per batch, whatever its size?"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "id": "pancakes",
+  "name": "Pancakes",
+  "course": "Breakfast",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Dry",
+      "items": [
+        "2 cups flour",
+        "2 Tbsp sugar",
+        "2 tsp baking powder",
+        "1 tsp baking soda",
+        "1 tsp salt"
+      ]
+    },
+    {
+      "title": "Wet",
+      "items": ["2 eggs", "1 cup buttermilk", "4 Tbsp butter"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix together dry ingredients and mix wet ingredients together in a separate bowl.",
+        "Stir together and cook."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "If you do not have buttermilk, you can make some by adding 1 Tbsp vinegar or 1 Tbsp lemon juice to 1 cup regular milk.",
+        "If you don't have butter, you can use oil."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "id": "buttermilk-waffles",
+  "name": "Buttermilk Waffles",
+  "course": "Breakfast",
+  "cookingMethod": "Other",
+  "ingredients": [
+    {
+      "items": [
+        "3 large eggs",
+        "1 stick butter, melted",
+        "2 cups buttermilk",
+        "1 tsp vanilla",
+        "2 cups flour",
+        "1/4 cup brown sugar",
+        "1 1/2 tsp baking powder",
+        "1 tsp baking soda",
+        "1/2 tsp cinnamon",
+        "1/2 tsp salt"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat waffle iron.",
+        "Beat eggs until fluffy.",
+        "Beat in everything else just until smooth."
+      ]
+    }
+  ]
+}

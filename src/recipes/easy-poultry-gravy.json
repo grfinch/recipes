@@ -1,0 +1,29 @@
+{
+  "id": "easy-poultry-gravy",
+  "name": "Easy Poultry Gravy",
+  "course": "Sauce",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "4 Tbsp butter",
+        "4 Tbsp flour",
+        "2 cups hot water",
+        "2 cubes chicken bouillon",
+        "1/4 tsp garlic powder",
+        "1/2 tsp pepper"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt butter in pan. Whisk in flour and stir well until a paste is formed.",
+        "Allow to cook until frothy and bubbly.",
+        "Dissolve bouillon in water.",
+        "Slowly add the resulting broth to the paste, whisking constantly to avoid lumps.",
+        "Heat until boiling and season with garlic powder and pepper to taste."
+      ]
+    }
+  ]
+}

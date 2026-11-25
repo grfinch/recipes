@@ -1,0 +1,28 @@
+{
+  "id": "bbq-pulled-pork",
+  "name": "BBQ Pulled Pork",
+  "course": "Dinner",
+  "cookingMethod": "Slow cooker",
+  "ingredients": [
+    {
+      "items": ["Boneless pork ribs", "Sweet mesquite seasoning", "Sweet Baby Ray's BBQ sauce"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Put ribs in crock pot and sprinkle generously with seasoning.",
+        "Cook on low for 6-8 hours or until meat easily separates.",
+        "Remove some of the liquid and add BBQ sauce as desired."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "How many pounds of ribs? (No amounts are given; the seasoning and sauce are \"generously\" and \"as desired\".)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "id": "breadsticks",
+  "name": "Breadsticks",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 Tbsp yeast",
+        "1 1/2 cups warm water",
+        "2 Tbsp sugar",
+        "3 1/2 cups flour",
+        "1/2 tsp salt",
+        "1 cube margarine (or butter)",
+        "Garlic salt",
+        "Italian seasoning",
+        "Parmesan cheese"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix yeast, water, and sugar; set aside.",
+        "Measure flour and salt to mixing bowl. Add yeast mixture.",
+        "Knead 3 minutes. Let rise 10 minutes.",
+        "Roll into rectangle and cut into strips widthwise.",
+        "Melt 1 cube butter (or margarine) and pour onto a large cookie sheet.",
+        "Roll dough strips in margarine (or butter). Roll dough strips in butter and place side by side on baking sheet.",
+        "Sprinkle with garlic salt, Italian seasoning and Parmesan cheese.",
+        "Bake at 375°F for 20 to 25 minutes."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Can be sprinkled with cinnamon and sugar for a sweet taste."]
+    },
+    {
+      "title": "Open questions",
+      "items": [
+        "No amounts for the garlic salt, Italian seasoning and Parmesan sprinkled on top. Fine as \"to taste\"?",
+        "The source says to roll the strips in margarine and then, in the next sentence, in butter again. I kept both sentences; is that a repeat?"
+      ]
+    }
+  ]
+}

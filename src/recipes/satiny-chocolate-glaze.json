@@ -1,0 +1,30 @@
+{
+  "id": "satiny-chocolate-glaze",
+  "name": "Satiny Chocolate Glaze",
+  "course": "Sauce",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "3/4 cup semisweet chocolate chips",
+        "3 Tbsp butter",
+        "1 Tbsp light corn syrup",
+        "1/4 tsp vanilla extract"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a double boiler over hot, but not boiling water, combine chocolate chips, butter, and corn syrup.",
+        "Stir until chips are melted and mixture is smooth, then add vanilla.",
+        "Spread warm glaze over top of cake, letting it drizzle down the sides."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["I use the microwave and heat for 30 seconds at a time."]
+    }
+  ]
+}

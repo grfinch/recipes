@@ -1,0 +1,33 @@
+{
+  "id": "peanut-butter-chip-truffles",
+  "name": "Peanut Butter Chip Truffles",
+  "course": "Dessert",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "title": "Truffles",
+      "items": [
+        "1/2 cup peanut butter chips",
+        "1/2 cup milk chocolate chips",
+        "3/4 cup whipped topping"
+      ]
+    },
+    {
+      "title": "Coating",
+      "items": ["1 cup milk chocolate chips", "1 Tbsp shortening", "1/4 cup chopped salted peanuts"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt peanut butter and chocolate chips in microwave, stirring every 15 seconds.",
+        "Cool to lukewarm (about 7 minutes).",
+        "Beat in whipped topping.",
+        "Chill until firm and roll into 1-inch balls.",
+        "Melt chocolate chips and shortening; stir until smooth.",
+        "Dip balls and sprinkle with peanuts.",
+        "Refrigerate until firm."
+      ]
+    }
+  ]
+}

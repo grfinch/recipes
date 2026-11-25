@@ -1,0 +1,27 @@
+{
+  "id": "frozen-fresh-peaches",
+  "name": "Frozen Fresh Peaches",
+  "course": "Snack",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "8 quarts skinned and sliced fresh ripe peaches",
+        "8 Tbsp Fruit Fresh",
+        "4 cups sugar",
+        "8 quart freezer bags"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Divide the peaches among the bags, making sure to leave some head room.",
+        "Mix 1 Tbsp of Fruit Fresh and 1/2 cup of sugar into each bag.",
+        "Stir the fruit and sugar mixture in the bag.",
+        "Allow to sit for 15 minutes or so until some juice forms.",
+        "Seal bags and place them in the freezer."
+      ]
+    }
+  ]
+}

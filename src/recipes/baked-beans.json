@@ -1,0 +1,27 @@
+{
+  "id": "baked-beans",
+  "name": "Baked Beans",
+  "course": "Side",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "3 large cans pork and beans",
+        "2 onions, chopped",
+        "1 large green pepper, diced",
+        "2-3 lb bacon, cooked and crumbled",
+        "3 cups catsup",
+        "1 cup brown sugar",
+        "9 Tbsp Worcestershire sauce"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix everything together and bake at 325°F for 3 hours.",
+        "Uncover the last 45 minutes of baking time."
+      ]
+    }
+  ]
+}

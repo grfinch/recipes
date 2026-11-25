@@ -1,0 +1,68 @@
+{
+  "id": "devil-s-food-cake",
+  "name": "Devil's Food Cake",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Cocoa mixture",
+      "items": ["1/2 cup sugar", "1/2 cup water", "2/3 cup cocoa powder"]
+    },
+    {
+      "title": "Cake",
+      "items": [
+        "1 cup sugar",
+        "1/2 cup butter",
+        "2 eggs",
+        "1 tsp vanilla",
+        "2 cups flour",
+        "1/2 tsp salt",
+        "1 tsp baking soda",
+        "1 cup boiling water"
+      ]
+    },
+    {
+      "title": "Marshmallow frosting",
+      "items": [
+        "2 egg whites",
+        "1/4 salt",
+        "1/4 cup sugar",
+        "3/4 cup Karo syrup",
+        "1 1/4 tsp vanilla"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Cocoa mixture",
+      "items": ["Bring to a boil and cool."]
+    },
+    {
+      "title": "Cake",
+      "items": [
+        "Cream together sugar, butter, eggs and vanilla.",
+        "Add cooked mixture and beat well.",
+        "Then add flour, salt, and the baking soda dissolved in the boiling water.",
+        "Pour into a well-greased cake pan and bake at 375°F for 30-45 minutes."
+      ]
+    },
+    {
+      "title": "Marshmallow frosting",
+      "items": [
+        "Beat egg whites and salt until frothy and white.",
+        "Add sugar gradually and beat until smooth and glossy.",
+        "Slowly add Karo syrup and beat until it stands in firm peaks.",
+        "Fold in vanilla."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The frosting salt's unit is smudged (\"1/4 _ salt\"). Is it 1/4 tsp?",
+        "What size cake pan? (\"a well greased cake pan\")"
+      ]
+    }
+  ]
+}

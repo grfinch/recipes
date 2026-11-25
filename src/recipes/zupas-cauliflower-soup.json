@@ -1,0 +1,46 @@
+{
+  "id": "zupas-cauliflower-soup",
+  "name": "Zupas Cauliflower Soup",
+  "course": "Soup",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "3 Tbsp butter",
+        "1 medium onion, chopped",
+        "1/4 cup flour",
+        "1/2 tsp salt",
+        "1 cup half and half",
+        "1 cup milk",
+        "1 1/2 cups water",
+        "1 can (14.5 oz) chicken broth",
+        "2.5 lb cauliflower",
+        "1 tsp Dijon mustard",
+        "1 1/2 cups sharp cheddar cheese, shredded",
+        "1/2 cup pepper jack cheese, shredded"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt butter and chopped onion together in a large sauce pan and sauté for approximately 10 minutes over medium heat until onion gets golden in color.",
+        "Add flour and stir to make a roux. Heat while stirring for a couple of minutes.",
+        "Slowly add half and half along with the milk. Gradually add and stir the entire time.",
+        "Following the milk, gradually add water and chicken broth and stir constantly.",
+        "Add chopped cauliflower and heat until boil.",
+        "Reduce heat and simmer, covered, until cauliflower is tender. This will take approximately 15 minutes.",
+        "Place contents of sauce pan into blender and blend until smooth. Remove center part of blender cover to allow steam to escape.",
+        "Return cauliflower mixture to saucepan; heat over medium heat until hot, stirring occasionally.",
+        "Remove saucepan from heat; stir in mustard and cheese until melted and smooth.",
+        "Serve soup topped with a little cheese for garnish."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": ["The salt is listed but not in the steps. Does it go in with the flour?"]
+    }
+  ]
+}

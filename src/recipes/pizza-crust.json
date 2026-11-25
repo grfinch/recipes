@@ -1,0 +1,34 @@
+{
+  "id": "pizza-crust",
+  "name": "Pizza Crust",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "2 1/2 cups flour",
+        "1/2 tsp salt",
+        "1 Tbsp sugar",
+        "1 Tbsp melted butter",
+        "1 1/2 Tbsp yeast",
+        "1 cup warm water"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix together by hand or in a mixer.",
+        "Let rise about 20 minutes or until needed.",
+        "Roll out onto pizza pan.",
+        "I prebake crust for 10 minutes before putting topping on.",
+        "Bake at 400°F."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes one large or 2 small pizzas."]
+    }
+  ]
+}

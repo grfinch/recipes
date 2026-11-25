@@ -1,0 +1,51 @@
+{
+  "id": "raspberry-pretzel-salad",
+  "name": "Raspberry Pretzel Salad",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Crust",
+      "items": ["2 cups crushed pretzels", "1 1/2 sticks butter, melted", "3 Tbsp sugar"]
+    },
+    {
+      "title": "Cream cheese layer",
+      "items": [
+        "1 pkg (8 oz) cream cheese, softened",
+        "1/2 cup powdered sugar",
+        "1 carton (8 oz) Cool Whip"
+      ]
+    },
+    {
+      "title": "Raspberry layer",
+      "items": [
+        "1 large pkg raspberry jello",
+        "2 cups boiling water",
+        "1 cup ice cubes",
+        "1 pkg (16 oz) frozen raspberries"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Crust",
+      "items": [
+        "Mix pretzels, butter, and 3 Tbsp sugar and press into the bottom of a 9x13-inch pan.",
+        "Bake at 400°F for 10 minutes."
+      ]
+    },
+    {
+      "title": "Cream cheese layer",
+      "items": ["Blend cream cheese, powdered sugar, and Cool Whip.", "Spread on cooled crust."]
+    },
+    {
+      "title": "Raspberry layer",
+      "items": [
+        "Make jello with two cups boiling water.",
+        "Add 1 cup ice cubes and stir until dissolved.",
+        "Add raspberries and spread over cream cheese layer when it starts to thicken.",
+        "Chill thoroughly."
+      ]
+    }
+  ]
+}

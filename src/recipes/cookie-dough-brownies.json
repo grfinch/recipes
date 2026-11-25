@@ -1,0 +1,66 @@
+{
+  "id": "cookie-dough-brownies",
+  "name": "Cookie Dough Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Brownies",
+      "items": [
+        "1 cup (6 oz) semisweet chocolate chips",
+        "1/2 cup butter, softened",
+        "1 cup sugar",
+        "3 eggs",
+        "1 tsp vanilla",
+        "1-1/4 cups flour",
+        "1/4 tsp baking soda",
+        "1/4 tsp salt",
+        "3/4 cup chopped pecans"
+      ]
+    },
+    {
+      "title": "Cookie dough layer",
+      "items": [
+        "1/2 cup butter, softened",
+        "1/2 cup packed brown sugar",
+        "1/4 cup sugar",
+        "3 Tbsp milk",
+        "1 tsp vanilla",
+        "1 cup flour",
+        "1 cup (6 oz) mini semisweet chocolate chips"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Brownies",
+      "items": [
+        "In a microwave, melt chocolate chips; stir until smooth. Cool slightly.",
+        "In a large bowl, cream butter and sugar until light and fluffy. Beat in eggs and vanilla. Stir in melted chocolate.",
+        "Combine flour and baking soda; gradually add to batter. Stir in pecans.",
+        "Spread into a greased 13x9-inch baking pan. Bake at 350°F for 16-22 minutes or until a toothpick inserted near the center comes out clean.",
+        "Cool on a wire rack."
+      ]
+    },
+    {
+      "title": "Cookie dough layer",
+      "items": [
+        "In a small bowl, cream butter and sugars until light and fluffy.",
+        "Beat in milk and vanilla. Gradually add flour. Stir in chocolate chips.",
+        "Drop by tablespoonfuls over cooled brownies; carefully spread over top.",
+        "Cut into squares. Store in the refrigerator."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes 4 dozen."]
+    },
+    {
+      "title": "Open questions",
+      "items": [
+        "The brownie salt is listed but not in the steps. Is it combined with the flour and baking soda?"
+      ]
+    }
+  ]
+}

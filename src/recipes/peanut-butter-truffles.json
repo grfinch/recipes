@@ -1,0 +1,35 @@
+{
+  "id": "peanut-butter-truffles",
+  "name": "Peanut Butter Truffles",
+  "course": "Dessert",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "5 oz white candy coating, divided",
+        "2/3 cup creamy peanut butter",
+        "1/2 cup confectioners' sugar",
+        "1 Tbsp vanilla",
+        "2/3 cup granola cereal with oats and honey",
+        "6 oz semisweet chocolate",
+        "2 Tbsp shortening"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a microwave, melt 3 oz white candy coating. Stir in peanut butter until smooth.",
+        "Add sugar, vanilla and cereal. Chill until firm.",
+        "Shape into 1-inch balls; set aside.",
+        "Melt chocolate and shortening; dip in chocolate and place on waxed paper. Chill 15 minutes or until firm.",
+        "Melt remaining candy coating and drizzle over truffles."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes 3 dozen."]
+    }
+  ]
+}

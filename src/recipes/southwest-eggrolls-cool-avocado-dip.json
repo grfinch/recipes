@@ -1,0 +1,55 @@
+{
+  "id": "southwest-eggrolls-cool-avocado-dip",
+  "name": "Southwest Eggrolls & Cool Avocado Dip",
+  "course": "Dinner",
+  "cookingMethod": "Deep fryer",
+  "ingredients": [
+    {
+      "title": "Egg rolls",
+      "items": [
+        "2-1/2 cups shredded cooked chicken",
+        "1-1/2 cups (6 oz) shredded Mexican cheese blend",
+        "2/3 cup frozen corn, thawed",
+        "2/3 cup canned black beans, rinsed and drained",
+        "5 green onions, chopped",
+        "1/4 cup minced fresh cilantro",
+        "1 tsp salt",
+        "1 tsp ground cumin",
+        "1 tsp grated lime peel",
+        "1/4 tsp cayenne pepper",
+        "20 egg roll wrappers or small flour tortillas",
+        "Oil for deep-fat frying"
+      ]
+    },
+    {
+      "title": "Dip",
+      "items": [
+        "1 cup ranch salad dressing",
+        "1 medium ripe avocado, peeled and mashed",
+        "1 Tbsp minced fresh cilantro",
+        "1 tsp grated lime peel"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Egg rolls",
+      "items": [
+        "In a large bowl, combine the first 10 ingredients.",
+        "Place 1/4 cup of chicken mixture in the center of one egg roll wrapper. (Keep remaining wrappers covered with a damp paper towel until ready to use.)",
+        "Fold bottom corner over filling. Fold sides toward center over filling. Moisten remaining corner with water; roll up tightly to seal. Repeat.",
+        "In an electric skillet or deep-fat fryer, heat oil to 375°F.",
+        "Fry egg rolls, a few at a time, for 2 minutes on each side or until golden brown. Drain on paper towels."
+      ]
+    },
+    {
+      "title": "Dip",
+      "items": ["Meanwhile, combine the dip ingredients. Serve with egg rolls."]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes 20 egg rolls (1-1/2 cups sauce)."]
+    }
+  ]
+}

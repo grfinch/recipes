@@ -1,0 +1,35 @@
+{
+  "id": "thick-chewy-chocolate-chip-cookies",
+  "name": "Thick & Chewy Chocolate Chip Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "2 1/8 cups flour",
+        "1/2 tsp salt",
+        "1/2 tsp baking soda",
+        "12 Tbsp unsalted butter (1 1/2 sticks), melted and cooled slightly",
+        "1 cup brown sugar",
+        "1/2 cup granulated sugar",
+        "1 large egg",
+        "1 large egg yolk",
+        "2 tsp vanilla",
+        "1-2 cups chocolate chips",
+        "Nuts (optional)"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Heat oven to 325°F. Adjust racks to upper- and lower-middle positions.",
+        "Mix flour, salt, and baking soda together in a medium bowl and set aside.",
+        "Either by hand or electric mixer, mix butter and sugars until thoroughly combined.",
+        "Mix in egg, yolk, and vanilla. Add dry ingredients and mix until just combined. Stir in chips.",
+        "Place large tablespoonfuls of dough on parchment-lined cookie sheets.",
+        "Bake, reversing cookie sheet positions halfway through baking time, until cookies are light golden and outer edges start to harden yet centers are still soft and puffy, 15 to 18 minutes (start checking at 13 minutes)."
+      ]
+    }
+  ]
+}

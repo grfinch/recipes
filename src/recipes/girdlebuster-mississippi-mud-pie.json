@@ -1,0 +1,86 @@
+{
+  "id": "girdlebuster-mississippi-mud-pie",
+  "name": "Girdlebuster (Mississippi Mud Pie)",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Layer 1",
+      "items": [
+        "1 1/2 sticks butter, melted",
+        "1 1/2 cups flour",
+        "1 cup chopped pecans or walnuts"
+      ]
+    },
+    {
+      "title": "Layer 2",
+      "items": [
+        "1 pkg (8 oz) cream cheese, softened",
+        "1 cup powdered sugar",
+        "1 carton (8 oz) Cool Whip"
+      ]
+    },
+    {
+      "title": "Layer 3",
+      "items": ["2 pkg (3 oz) Jell-O instant chocolate pudding", "3 cups milk"]
+    },
+    {
+      "title": "Layer 4",
+      "items": [
+        "Sweetened whipped cream or 1 carton (8 oz) Cool Whip",
+        "Chopped nuts and chocolate curls or shavings, if desired"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Layer 1",
+      "items": ["Bake in 9x13-inch greased pan in 300°F oven for 25 minutes.", "Cool completely!"]
+    },
+    {
+      "title": "Layer 2",
+      "items": ["Blend until smooth.", "Spread over cooled crust."]
+    },
+    {
+      "title": "Layer 3",
+      "items": ["Mix together until thick.", "Spread over 2nd layer."]
+    },
+    {
+      "title": "Layer 4",
+      "items": [
+        "Spread remaining Cool Whip over top of 3rd layer, then sprinkle with chopped nuts and chocolate curls or shavings over top, if desired."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "If I have to speed up the cooling process for layer one, I put it in the freezer after about 5-10 minutes and it will cool more quickly. Otherwise, it may take about an hour to cool completely at room temperature."
+      ]
+    },
+    {
+      "title": "Banana delight",
+      "items": [
+        "Substitute banana pudding mix for the chocolate in the recipe. If desired, garnish with banana slices that have been soaked in lemon juice."
+      ]
+    },
+    {
+      "title": "Coconut delight",
+      "items": [
+        "Substitute coconut pudding and pie filling for chocolate. Spread about 1 cup of coconut on a cookie sheet and bake a few minutes at 350°F until slightly toasted. Sprinkle toasted coconut over top. Refrigerate."
+      ]
+    },
+    {
+      "title": "Pistachio delight",
+      "items": [
+        "Substitute pistachio pudding and pie filling for the chocolate. Garnish with chopped pistachios."
+      ]
+    },
+    {
+      "title": "Open questions",
+      "items": [
+        "Layer 4 says to spread the \"remaining\" Cool Whip, but Layer 2 uses the whole 8 oz carton and Layer 4 has its own. Fine as is?"
+      ]
+    }
+  ]
+}

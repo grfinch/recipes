@@ -1,0 +1,28 @@
+{
+  "id": "peanut-butter-cup-pie",
+  "name": "Peanut Butter Cup Pie",
+  "course": "Dessert",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "50 Hershey's Kisses, unwrapped",
+        "1 carton (12 oz) Cool Whip",
+        "1 graham cracker pie crust",
+        "20 miniature Reese's peanut butter cups, unwrapped and chopped"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt Kisses in microwave until chocolate is melted when stirred.",
+        "Stir in 3 1/2 cups whipped topping until blended.",
+        "Spread half of the chocolate mixture into crust.",
+        "Sprinkle with cut-up Reese's, saving some for garnish.",
+        "Top with remaining chocolate mixture. Refrigerate 3 hours or until set.",
+        "Spread with remaining whipped topping just before serving and garnish with remaining Reese's."
+      ]
+    }
+  ]
+}

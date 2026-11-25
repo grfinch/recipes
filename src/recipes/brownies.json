@@ -1,0 +1,28 @@
+{
+  "id": "brownies",
+  "name": "Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "3 cubes butter, melted",
+        "3 cups sugar",
+        "6 eggs",
+        "1 tsp vanilla",
+        "2 1/4 cups flour",
+        "3/4 cup cocoa powder",
+        "1/2 tsp salt",
+        "1 pkg semi-sweet chocolate chips"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix all ingredients together.",
+        "Pour into a greased jelly roll pan and bake at 350°F for 30 minutes."
+      ]
+    }
+  ]
+}

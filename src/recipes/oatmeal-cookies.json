@@ -1,0 +1,34 @@
+{
+  "id": "oatmeal-cookies",
+  "name": "Oatmeal Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "2 cubes butter",
+        "1 cup brown sugar",
+        "1/2 cup sugar",
+        "2 eggs",
+        "1 tsp vanilla",
+        "1 1/2 cups flour",
+        "1 tsp baking powder",
+        "1 tsp cinnamon",
+        "1/2 tsp salt",
+        "3 cups quick oats",
+        "1 cup chocolate chips"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Cream butter and sugars together.",
+        "Add eggs and vanilla and beat well.",
+        "Mix in dry ingredients.",
+        "Drop onto ungreased cookie sheet.",
+        "Bake at 350°F for 12 minutes."
+      ]
+    }
+  ]
+}

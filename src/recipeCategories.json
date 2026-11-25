@@ -1,5 +1,18 @@
 {
-  "courses": ["Breakfast", "Lunch", "Dinner", "Side", "Soup", "Salad", "Dessert", "Snack", "Drink"],
+  "courses": [
+    "Breakfast",
+    "Lunch",
+    "Dinner",
+    "Appetizer",
+    "Side",
+    "Bread",
+    "Soup",
+    "Salad",
+    "Sauce",
+    "Dessert",
+    "Snack",
+    "Drink"
+  ],
   "cookingMethods": [
     "Instant-pot",
     "Oven",
@@ -7,6 +20,8 @@
     "Slow cooker",
     "Grill",
     "Air fryer",
-    "No-cook"
+    "Deep fryer",
+    "No-cook",
+    "Other"
   ]
 }

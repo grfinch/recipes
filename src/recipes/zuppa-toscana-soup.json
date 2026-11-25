@@ -1,0 +1,36 @@
+{
+  "id": "zuppa-toscana-soup",
+  "name": "Zuppa Toscana Soup",
+  "course": "Soup",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "4 slices bacon, diced",
+        "1 lb spicy Italian sausage, casing removed",
+        "1 Tbsp olive oil",
+        "2 cloves garlic, minced",
+        "1 onion, diced",
+        "4 cups chicken broth",
+        "3 russet potatoes, peeled and thinly sliced",
+        "3 cups baby spinach or kale, chopped",
+        "1 1/2 cups heavy cream",
+        "Kosher salt and freshly ground black pepper, to taste"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Heat a large skillet over medium-high heat. Add bacon and cook until brown and crispy, about 6-8 minutes. Transfer to a paper towel-lined plate; set aside.",
+        "Add Italian sausage to the skillet and cook until browned, about 3-5 minutes, making sure to crumble the sausage as it cooks; drain excess fat and set aside.",
+        "Heat olive oil in a large stockpot or Dutch oven over medium heat. Add garlic and onion, and cook, stirring frequently, until onions have become translucent, about 2-3 minutes.",
+        "Stir in chicken broth and bring to a boil.",
+        "Add potatoes and cook until tender, about 10 minutes.",
+        "Stir in sausage and spinach until spinach begins to wilt, about 1-2 minutes.",
+        "Stir in heavy cream until heated through, about 1 minute; season with salt and pepper, to taste.",
+        "Serve immediately, garnished with bacon."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "id": "caramel-truffles",
+  "name": "Caramel Truffles",
+  "course": "Dessert",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "title": "Caramel",
+      "items": ["26 caramels", "1 cup milk chocolate chips", "1/4 cup heavy whipping cream"]
+    },
+    {
+      "title": "Coating",
+      "items": ["1 1/3 cups semisweet chocolate chips", "1 Tbsp shortening"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Line an 8-inch square dish with plastic wrap and set aside.",
+        "In a microwave-safe bowl, combine the caramels, milk chocolate chips and cream.",
+        "Microwave, uncovered, on high for 1 minute; stir. Microwave 1 minute longer, stirring every 15 seconds or until caramels are melted and the mixture is smooth.",
+        "Spread into prepared dish; refrigerate for 1 hour until firm.",
+        "Using plastic wrap, lift candy out of pan. Cut into 30 pieces; roll each piece into a 1-inch ball.",
+        "Cover and refrigerate for 1 hour or until firm.",
+        "In a microwave-safe bowl, melt semisweet chips and shortening; stir until smooth.",
+        "Dip caramels in chocolate and place on waxed paper-lined baking sheets and refrigerate until firm."
+      ]
+    }
+  ]
+}

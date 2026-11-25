@@ -1,0 +1,30 @@
+{
+  "id": "creamy-coleslaw",
+  "name": "Creamy Coleslaw",
+  "course": "Salad",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "1 package (14 oz) coleslaw mix",
+        "1/2 cup mayonnaise",
+        "1/2 cup sour cream",
+        "1 1/2 Tbsp apple cider vinegar",
+        "2 Tbsp sugar",
+        "1/2 tsp seasoned salt",
+        "1/2 tsp ground mustard",
+        "1/2 tsp celery seed"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Place coleslaw mix in a large bowl.",
+        "In a small bowl, combine the remaining ingredients; stir until blended.",
+        "Pour over coleslaw mix and toss to coat.",
+        "Refrigerate until serving."
+      ]
+    }
+  ]
+}

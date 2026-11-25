@@ -1,0 +1,34 @@
+{
+  "id": "white-bread",
+  "name": "White Bread",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "3 cups warm water",
+        "1/2 cup sugar",
+        "2 Tbsp yeast",
+        "2 eggs",
+        "1/3 cup oil",
+        "4 tsp salt",
+        "7 to 8 cups flour"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix water, sugar, and yeast lightly. Let sit for 10 minutes.",
+        "Beat eggs and oil together; add to yeast mixture along with salt.",
+        "Add 3 cups flour and mix well. Add 4 more cups flour and stir well.",
+        "Add more flour as needed a little at a time to make a workable dough.",
+        "Knead dough.",
+        "Let rise until double, punch down, and let rise again until double.",
+        "Punch down again and form into 2 or 3 loaves. Place in greased loaf pans.",
+        "Cover with a towel and let rise again until almost double.",
+        "Bake for 10 minutes at 400°F, then 25 minutes at 350°F."
+      ]
+    }
+  ]
+}

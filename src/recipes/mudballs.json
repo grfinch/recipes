@@ -1,0 +1,27 @@
+{
+  "id": "mudballs",
+  "name": "Mudballs",
+  "course": "Dessert",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "2 large Hershey bars with almonds",
+        "1 carton (8 oz) Cool Whip",
+        "Coconut, for rolling",
+        "Graham cracker or vanilla wafer crumbs, for rolling"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt chocolate in double boiler or very carefully in microwave, stirring every 15 seconds. Let cool.",
+        "Mix in Cool Whip and beat until fluffy.",
+        "Put in refrigerator until cold.",
+        "Roll into balls, roll in coconut, and then graham crackers.",
+        "Keep in the refrigerator or freezer (love them frozen!)."
+      ]
+    }
+  ]
+}

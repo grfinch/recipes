@@ -1,0 +1,28 @@
+{
+  "id": "whopper-ice-cream",
+  "name": "Whopper Ice Cream",
+  "course": "Dessert",
+  "cookingMethod": "Other",
+  "ingredients": [
+    {
+      "items": [
+        "1 1/2 pints whipping cream, whipped",
+        "1 can evaporated milk",
+        "2 cups sugar",
+        "8 oz chocolate chips",
+        "8-12 oz Whoppers",
+        "Milk, to fill"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Whip the cream.",
+        "Add evaporated milk, sugar, chocolate chips and Whoppers.",
+        "Mix together and add milk to fill 4-quart recipe.",
+        "Freeze."
+      ]
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "id": "congo-bars",
+  "name": "Congo Bars",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 cup pecans (or walnuts), toasted and chopped coarse",
+        "1 1/2 cups shredded coconut",
+        "Nonstick cooking spray",
+        "1 1/2 cups flour",
+        "1 tsp baking powder",
+        "1/2 tsp salt",
+        "12 Tbsp unsalted butter (1 1/2 sticks), melted and cooled",
+        "1 1/2 cups packed light brown sugar (10 1/2 oz)",
+        "2 large eggs, lightly beaten",
+        "4 tsp vanilla extract",
+        "6 oz white chocolate chips (1 cup) or chopped bar, or 3 oz each white chocolate and semisweet chocolate chips"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Adjust oven rack to the middle position and heat oven to 350°F.",
+        "Spread nuts on large rimmed baking sheet and bake until deep golden brown, 10 to 15 minutes. Transfer nuts to cutting board to cool; chop coarsely and set aside.",
+        "Toast coconut on same rimmed baking sheet, stirring 2 to 3 times, until light golden, about 5 to 7 minutes.",
+        "While nuts and coconut toast, cut 18-inch length foil and fold lengthwise to 8-inch width. Fit foil into length of 13x9-inch baking pan, pushing it into corners and up sides of pan; allow excess to overhang pan edges.",
+        "Cut 14-inch length foil and fit into width of baking pan in same manner, perpendicular to first sheet (if using extra-wide foil, fold second sheet lengthwise to 12-inch width).",
+        "Spray foil-lined pan with nonstick cooking spray.",
+        "Whisk flour, baking powder, and salt together in a medium bowl; set aside.",
+        "Whisk melted butter and brown sugar together in medium bowl until combined. Add eggs and vanilla and mix well.",
+        "Using rubber spatula, fold dry ingredients into egg mixture until just combined; do not overmix.",
+        "Fold in chocolate, coconut, and nuts and turn batter into prepared pan, smoothing top with rubber spatula.",
+        "Bake until top is shiny, cracked, and light golden brown, 22 to 25 minutes; do not overbake.",
+        "Cool on wire rack to room temperature.",
+        "Remove bars from pan by lifting foil overhang and transfer to cutting board. Cut into 2-inch squares and serve."
+      ]
+    }
+  ]
+}

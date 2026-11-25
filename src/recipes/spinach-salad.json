@@ -1,0 +1,62 @@
+{
+  "id": "spinach-salad",
+  "name": "Spinach Salad",
+  "course": "Salad",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Salad",
+      "items": [
+        "1 head green leaf lettuce",
+        "1 bunch spinach",
+        "3/4 lb fresh mushrooms",
+        "3/4 lb Swiss or mozzarella cheese",
+        "2 Tbsp minced red onion",
+        "1/2 lb bacon, browned and crumbled",
+        "1/2 cup slivered almonds",
+        "3 Tbsp sugar",
+        "Sliced strawberries (optional, as desired)"
+      ]
+    },
+    {
+      "title": "Dressing",
+      "items": [
+        "1/2 cup white vinegar",
+        "1 tsp kosher salt",
+        "3/4 cup sugar",
+        "1 tsp prepared mustard",
+        "1 Tbsp sweet onion, minced",
+        "1/2 cup oil",
+        "1 Tbsp poppy seed"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Salad",
+      "items": [
+        "Mix first 5 ingredients together a day ahead and store in a Tupperware bowl.",
+        "Cook almonds and sugar on low for 30 minutes to coat nuts.",
+        "Add bacon and nuts.",
+        "Pour dressing on salad right before it is served."
+      ]
+    },
+    {
+      "title": "Dressing",
+      "items": [
+        "In a blender, combine vinegar, salt, sugar, and mustard.",
+        "While the blender is running, add the onion.",
+        "Continue running the blender and add the oil in a steady stream until it is fully incorporated into the dressing.",
+        "Pour the dressing into a serving or storage container."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Open questions",
+      "items": [
+        "The poppy seed is listed in the dressing but never used in the steps. Is it stirred in at the end?"
+      ]
+    }
+  ]
+}

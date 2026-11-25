@@ -1,0 +1,41 @@
+{
+  "id": "fruit-cobbler",
+  "name": "Fruit Cobbler",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": ["3 cups fruit"]
+    },
+    {
+      "title": "Batter",
+      "items": [
+        "3/4 cup sugar",
+        "1/2 cup butter, softened",
+        "1 cup flour",
+        "1 tsp baking powder",
+        "1/8 tsp salt",
+        "1/2 cup milk"
+      ]
+    },
+    {
+      "title": "Topping",
+      "items": ["1 cup sugar", "1 Tbsp cornstarch", "1 cup boiling water"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Put fruit in bottom of 9x13 pan.",
+        "Spread batter over fruit and then sprinkle topping over batter.",
+        "Pour 1 cup boiling water over all.",
+        "Bake at 350°F for 1 hour."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Blueberry peach is my favorite."]
+    }
+  ]
+}

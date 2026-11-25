@@ -1,0 +1,46 @@
+{
+  "id": "perfect-pie-crust",
+  "name": "Perfect Pie Crust",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1/4 cup butter",
+        "1/4 cup shortening",
+        "1 1/4 cups flour",
+        "1 Tbsp sugar",
+        "1/4 tsp salt",
+        "1 egg yolk",
+        "2 Tbsp ice water",
+        "1/2 tsp vinegar"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Dough",
+      "items": [
+        "Beat together the butter and shortening until smooth and creamy and chill until firm.",
+        "Sift together the flour, sugar, and salt in a medium bowl.",
+        "Using a fork, cut the butter and shortening into the dry ingredients, until the mixture has a consistent texture.",
+        "Mix egg yolk, ice water, and vinegar into the dough, then form it into a ball and refrigerate it for 1 hour so that it will be easier to work with."
+      ]
+    },
+    {
+      "title": "Bake",
+      "items": [
+        "Preheat oven to 450°F.",
+        "When dough has chilled, roll it out and press into pie plate.",
+        "Press parchment or aluminum foil into crust and weight crust down with ceramic pie plate filled with dried beans.",
+        "Bake 15 minutes, then remove weight and prick crust with fork to allow steam to escape.",
+        "Bake another 5-10 minutes or until crust is golden brown."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes 1 single-crust pie."]
+    }
+  ]
+}

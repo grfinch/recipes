@@ -1,0 +1,61 @@
+{
+  "id": "cream-pie",
+  "name": "Cream Pie",
+  "course": "Dessert",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": [
+        "1 nine-inch deep-dish baked pie shell",
+        "3/4 cup sugar",
+        "1/4 tsp salt",
+        "1/3 cup cornstarch",
+        "3 cups milk",
+        "4 large egg yolks",
+        "2 Tbsp butter",
+        "1/2 Tbsp vanilla extract"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Prepare and bake a nine-inch pie shell.",
+        "In a medium saucepan, add the sugar, salt, and cornstarch. Stir to mix well.",
+        "Gradually stir in the milk and cook over medium heat, stirring regularly, until the mixture is bubbly. Cook for two minutes more.",
+        "In a medium bowl, whisk four egg yolks. While stirring constantly, gradually add one cup of the hot mixture to the egg yolks. This tempers and warms the egg yolks.",
+        "Add the egg yolk mixture to the hot filling mixture. Cook and stir for two more minutes.",
+        "Add the butter and vanilla.",
+        "Pour the filling into the baked pie shell.",
+        "Cover the top with plastic wrap pressed against the filling to avoid a tough skin on the filling."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "title": "Chocolate cream pie",
+      "items": [
+        "Prepare the pie as for vanilla cream except increase the sugar to one cup and add two ounces unsweetened baking chocolate with the milk."
+      ]
+    },
+    {
+      "title": "Coconut cream pie",
+      "items": [
+        "Add one cup of sweetened, shredded coconut with the vanilla and butter.",
+        "Top the meringue with 1/3 cup coconut prior to baking. The baking of the meringue will toast the coconut."
+      ]
+    },
+    {
+      "title": "Banana cream pie",
+      "items": [
+        "Decrease vanilla to one teaspoon and add 1 tsp banana flavoring. Add bananas as desired."
+      ]
+    },
+    {
+      "title": "Open questions",
+      "items": [
+        "The coconut variation tops \"the meringue\", but the recipe has no meringue. Is a meringue recipe missing?"
+      ]
+    }
+  ]
+}

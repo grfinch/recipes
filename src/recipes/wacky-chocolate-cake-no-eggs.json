@@ -1,0 +1,34 @@
+{
+  "id": "wacky-chocolate-cake-no-eggs",
+  "name": "Wacky Chocolate Cake (No Eggs!)",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Dry",
+      "items": ["3 cups flour", "2 cups sugar", "4 Tbsp cocoa", "2 tsp baking soda", "1 tsp salt"]
+    },
+    {
+      "title": "Wet",
+      "items": ["2 cups water", "3/4 cup oil", "2 tsp vinegar", "2 tsp vanilla"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix dry ingredients together.",
+        "Add wet ingredients and mix well.",
+        "Bake at 350°F for 30 minutes."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Can be mixed in the pan you bake it in."]
+    },
+    {
+      "title": "Open questions",
+      "items": ["What size pan?"]
+    }
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "id": "potato-chip-cookies",
+  "name": "Potato Chip Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 cup butter, softened",
+        "1 cup vegetable oil",
+        "1 cup sugar",
+        "1 cup packed brown sugar",
+        "1 egg",
+        "1 tsp vanilla extract",
+        "3-1/2 cups all-purpose flour",
+        "1 cup quick-cooking oats",
+        "1 tsp baking soda",
+        "1 tsp cream of tartar",
+        "1/2 tsp salt",
+        "1 Tbsp milk",
+        "1 tsp vinegar",
+        "2 cups (12 oz) semisweet chocolate chips",
+        "1 cup crushed potato chips"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a large bowl, cream butter, oil and sugars until light and fluffy. Beat in egg and vanilla.",
+        "Combine the flour, oats, baking soda, cream of tartar and salt; gradually add to the creamed mixture and mix well.",
+        "Combine milk and vinegar; add to creamed mixture.",
+        "Stir in chocolate chips and potato chips.",
+        "Drop by tablespoonfuls 2 inches apart onto ungreased baking sheets.",
+        "Bake at 350°F for 12-15 minutes or until golden brown. Remove to wire racks to cool."
+      ]
+    }
+  ]
+}

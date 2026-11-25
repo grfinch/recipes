@@ -1,0 +1,123 @@
+/* Filter chips for the All recipes page. Colors are local tokens so page restyles don't
+   change them by accident. Contrast against the page background (#242424 dark, #fff light):
+   chip borders 3:1 or more, text 4.5:1 or more, selected text on its fill 4.5:1 or more. */
+.filters,
+.clear {
+  --chip-border: #9ca3af; /* 6.4:1 on #242424 */
+  --chip-selected-bg: #8b93ff;
+  --chip-selected-text: #242424; /* 5.6:1 on #8b93ff */
+  --chip-focus: #8b93ff; /* 5.7:1 on #242424 */
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  margin-bottom: 1rem;
+}
+
+@media (prefers-color-scheme: light) {
+  .filters,
+  .clear {
+    --chip-border: #666; /* 5.7:1 on #fff */
+    --chip-selected-bg: #4f46e5;
+    --chip-selected-text: #ffffff; /* 6.3:1 on #4f46e5 */
+    --chip-focus: #4f46e5; /* 6.3:1 on #fff */
+  }
+}
+
+.group {
+  min-width: 0; /* fieldsets default to min-content width; let the chips wrap instead */
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.legend {
+  padding: 0;
+  margin-bottom: 0.25rem;
+  font-weight: 600;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+/* Each chip is 44px tall or more: a comfortable touch target (WCAG 2.5.8 asks for 24px) */
+.chip {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.75rem;
+  min-width: 2.75rem;
+  box-sizing: border-box;
+  padding: 0 1rem;
+  border: 2px solid var(--chip-border);
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* Visually hidden, but still the focusable, checkable control */
+.input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Selected: filled, bold, and a check mark, so the state doesn't rely on color alone */
+.check {
+  display: none;
+}
+
+.chip:has(.input:checked) {
+  background-color: var(--chip-selected-bg);
+  border-color: var(--chip-selected-bg);
+  color: var(--chip-selected-text);
+  font-weight: 700;
+}
+
+.chip:has(.input:checked) .check {
+  display: inline;
+}
+
+.chip:has(.input:focus-visible) {
+  outline: 3px solid var(--chip-focus);
+  outline-offset: 2px;
+}
+
+/* Windows High Contrast: fills are dropped, so mark the selected chip with a thicker border */
+@media (forced-colors: active) {
+  .chip:has(.input:checked) {
+    border-width: 4px;
+  }
+}
+
+.count {
+  margin: 0 0 0.5rem;
+  font-weight: 600;
+}
+
+.clear {
+  min-height: 2.75rem;
+  padding: 0 1rem;
+  border: 2px solid var(--chip-focus);
+  background: transparent;
+  color: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.clear:focus-visible {
+  outline: 3px solid var(--chip-focus);
+  outline-offset: 2px;
+}

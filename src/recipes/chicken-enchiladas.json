@@ -1,0 +1,48 @@
+{
+  "id": "chicken-enchiladas",
+  "name": "Chicken Enchiladas",
+  "course": "Dinner",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Soup mixture",
+      "items": [
+        "1 can (10.75 oz) condensed cream of chicken soup",
+        "1/3 cup soft jalapeño cream cheese",
+        "3/4 cup sour cream",
+        "1/2 cup milk"
+      ]
+    },
+    {
+      "title": "Filling",
+      "items": [
+        "1 Tbsp butter",
+        "2 cups chopped chicken breast",
+        "1 onion, chopped",
+        "1 tsp dried cilantro",
+        "1 tsp chili powder",
+        "1 can (4 oz) chopped green chile peppers, drained"
+      ]
+    },
+    {
+      "title": "Assembly",
+      "items": ["8 flour tortillas (8 inch)", "1 cup shredded cheddar cheese"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat oven to 350°F (175°C).",
+        "In a small bowl mix the soup, cream cheese, and sour cream; set aside.",
+        "Melt butter in a medium saucepan over medium-high heat. Add chicken and sauté until cooked.",
+        "Add onion, cilantro and chili powder, and sauté until tender.",
+        "Add chile peppers and 1/2 of the soup mixture. Cook and stir until heated through.",
+        "Add milk to remaining soup mixture.",
+        "Grease a 9x13 pan. Spread 1/2 cup of the soup mixture in the baking dish.",
+        "Spoon about 1/4 cup of the chicken mixture down the center of each tortilla. Roll up tortillas, and place, seam-side-down, in the baking dish.",
+        "Spoon remaining soup mixture on top, and sprinkle with cheese.",
+        "Bake 30-40 minutes in the preheated oven, or until bubbly and lightly browned."
+      ]
+    }
+  ]
+}

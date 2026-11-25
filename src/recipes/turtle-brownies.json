@@ -1,0 +1,44 @@
+{
+  "id": "turtle-brownies",
+  "name": "Turtle Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "2 cups sugar",
+        "3/4 cup baking cocoa",
+        "1 cup canola oil",
+        "4 eggs",
+        "1/4 cup 2% milk",
+        "1-1/2 cups all-purpose flour",
+        "1 tsp salt",
+        "1 tsp baking powder",
+        "1 cup (6 oz) semisweet chocolate chips",
+        "1 cup chopped pecans, divided",
+        "14 oz caramels",
+        "1 can (14 oz) sweetened condensed milk"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "In a large bowl, beat the sugar, cocoa, oil, eggs and milk.",
+        "Combine the flour, salt and baking powder; gradually add to egg mixture until well blended.",
+        "Fold in chocolate chips and 1/2 cup walnuts.",
+        "Spoon two-thirds of the batter into a greased 13x9-inch baking pan. Bake at 350°F for 12 minutes.",
+        "Meanwhile, in a large saucepan, heat the caramels and condensed milk over low heat until caramels are melted.",
+        "Pour over baked brownie layer. Sprinkle with remaining walnuts.",
+        "Drop remaining batter by teaspoonfuls over caramel layer; carefully swirl brownie batter with a knife.",
+        "Bake 35-40 minutes longer or until a toothpick inserted near the center comes out with moist crumbs (do not overbake).",
+        "Cool on a wire rack."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes 2 dozen."]
+    }
+  ]
+}

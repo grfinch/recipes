@@ -1,0 +1,46 @@
+{
+  "id": "mint-chocolate-chip-grinch-cookies",
+  "name": "Mint Chocolate Chip (Grinch) Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 cup butter, softened",
+        "1 1/2 cups sugar",
+        "2 large eggs plus 1 egg yolk",
+        "1 tsp peppermint extract (or more to taste)",
+        "About 10 drops of green food coloring",
+        "3 1/4 cups all-purpose flour, spooned and leveled",
+        "2 tsp baking powder",
+        "1 tsp baking soda",
+        "1 tsp cream of tartar",
+        "1/2 tsp kosher salt",
+        "12 oz dark chocolate chips, divided"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat the oven to 350°F. Line one or more baking sheets with parchment paper or a silpat.",
+        "In a large bowl or stand mixer, beat the butter and sugar together. Scrape the sides and bottom of the bowl, then beat on medium for about 2 minutes, or until light and fluffy.",
+        "Add the eggs + yolk, peppermint extract, and food coloring.",
+        "In a separate bowl, combine flour, baking powder, baking soda, cream of tartar, and salt. Add to the wet ingredients and combine until the flour is not quite incorporated.",
+        "Add half of the chocolate chips to the dough.* Chop the other half coarsely, with a knife or in a food processor.",
+        "Add the chopped chocolate to the dough, and mix until just combined.",
+        "Cover the dough and refrigerate for about an hour.**",
+        "Use a 1/4 cup measuring cup to form balls of dough and shape them into a long oval shape (not a ball shape, think more egg shape). Place them on the cookie sheet (the tall way) lined with parchment paper or a silicone mat. These are very large cookies; I only did 8 cookies per pan.",
+        "Bake at 350°F for about 8-10 minutes, or until BARELY starting to brown on the edges. The centers should mostly be not-shiny when you take them out, but a little shine is okay.",
+        "Let cool 5 minutes on the pan, then remove to a cooling rack."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "**Chilling is not mandatory. You can bake them right after you mix it, I tried it. They will still turn out fine. I prefer the texture and flavor after a little chilling though."
+      ]
+    }
+  ]
+}

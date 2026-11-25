@@ -26,7 +26,9 @@ export default function SearchBox({ recipes = [], onSelect }) {
   // Only show a count when there's text in the box and a settled search to count.
   // An empty box (on load, or after Escape clears it natively) shows nothing.
   const hasResults = Boolean(q) && Boolean(debq);
-  const isOpen = hasResults && filtered.length > 0 && !dismissed;
+  // Opens for 0 matches too, so "No recipes match" shows where the results would be
+  const isOpen = hasResults && !dismissed;
+  const countText = `${filtered.length} result${filtered.length !== 1 ? 's' : ''}`;
 
   function handleSelect(r) {
     reset(''); // clears the input and any pending debounce, which closes the overlay
@@ -115,9 +117,11 @@ export default function SearchBox({ recipes = [], onSelect }) {
         placeholder="Search by name, ingredient, or instruction..."
         className={styles.input}
       />
+      {/* Announced to screen readers; on screen, the results panel shows the count, so
+          this line doesn't push the page down while searching */}
       {hasResults && (
-        <div role="status" className={styles.resultCount}>
-          {filtered.length} result{filtered.length !== 1 ? 's' : ''}
+        <div role="status" className="visuallyHidden">
+          {countText}
         </div>
       )}
 
@@ -134,19 +138,22 @@ export default function SearchBox({ recipes = [], onSelect }) {
           }}
         >
           <div className={styles.overlayHeader}>
-            <div className={styles.overlayCount}>
-              {filtered.length} result{filtered.length !== 1 ? 's' : ''}
+            {/* aria-hidden: the status line above already announces the count */}
+            <div className={styles.overlayCount} aria-hidden="true">
+              {filtered.length > 0 ? countText : 'No recipes match'}
             </div>
           </div>
-          <ul className={styles.resultsList}>
-            {filtered.map((r, i) => (
-              <li key={r.id} className={i === 0 ? '' : styles.resultItem}>
-                <button onClick={() => handleSelect(r)} className={styles.resultButton}>
-                  <div className={styles.resultName}>{highlightMatch(r.name, debq)}</div>
-                </button>
-              </li>
-            ))}
-          </ul>
+          {filtered.length > 0 && (
+            <ul className={styles.resultsList}>
+              {filtered.map((r, i) => (
+                <li key={r.id} className={i === 0 ? '' : styles.resultItem}>
+                  <button onClick={() => handleSelect(r)} className={styles.resultButton}>
+                    <div className={styles.resultName}>{highlightMatch(r.name, debq)}</div>
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
       )}
     </div>

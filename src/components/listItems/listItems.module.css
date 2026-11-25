@@ -150,3 +150,61 @@
 .label {
   border-radius: 6px;
 }
+
+.printOnly {
+  display: none;
+}
+
+/* Printing: a clean copy, whatever was ticked on screen. Empty boxes for ingredients (handy
+   for shopping), step numbers instead of checks, no strikethrough, and tighter rows, since
+   paper needs no 44px tap targets. */
+@media print {
+  .screenOnly {
+    display: none;
+  }
+
+  .printOnly {
+    display: inline;
+  }
+
+  li {
+    break-inside: avoid;
+  }
+
+  .label {
+    min-height: 0;
+    padding-block: 0.2rem;
+  }
+
+  .checkbox {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.25rem;
+    border-width: 1px;
+    border-radius: 3px;
+  }
+
+  .checkbox:checked {
+    background: transparent;
+    border-color: var(--muted);
+  }
+
+  .checkbox::before,
+  .checkbox:checked::before {
+    transform: scale(0);
+  }
+
+  .withBullet {
+    padding-block: 0.1rem;
+  }
+
+  .checkMark {
+    color: var(--muted);
+    font-weight: 600;
+  }
+
+  .checked .itemText {
+    text-decoration: none;
+    color: inherit;
+  }
+}

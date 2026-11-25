@@ -1,0 +1,49 @@
+{
+  "id": "pumpkin-pie",
+  "name": "Pumpkin Pie",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Pie",
+      "items": [
+        "1 can (15 oz) pumpkin (about 2 cups)",
+        "1 can (14 oz) sweetened condensed milk",
+        "2 large eggs",
+        "1 tsp ground cinnamon",
+        "1/2 tsp ground ginger",
+        "1/2 tsp ground nutmeg",
+        "1/2 tsp salt",
+        "1 unbaked pie crust (9 inch)"
+      ]
+    },
+    {
+      "title": "Streusel topping (optional)",
+      "items": [
+        "1/2 cup packed brown sugar",
+        "1/2 cup flour",
+        "1/4 cup cold butter",
+        "1/4 cup chopped nuts"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Pie",
+      "items": [
+        "Heat oven to 425°F.",
+        "Whisk pumpkin, sweetened condensed milk, eggs, spices and salt in medium bowl until smooth. Pour into crust.",
+        "Bake 15 minutes. Reduce oven temperature to 350°F; bake an additional 35 to 40 minutes or until knife inserted 1 inch from crust comes out clean.",
+        "Cool. Garnish as desired."
+      ]
+    },
+    {
+      "title": "Streusel topping (optional)",
+      "items": [
+        "Combine brown sugar and flour in a medium bowl.",
+        "Cut in cold butter until mixture resembles coarse crumbs. Stir in chopped nuts.",
+        "After pie has baked 30 minutes, sprinkle over top and bake an additional 10 minutes."
+      ]
+    }
+  ]
+}

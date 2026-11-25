@@ -1,10 +1,17 @@
 import useCheckedItems from '../../hooks/useCheckedItems';
-import { changeHashFor } from '../../utils/recipeHash';
+import { changeHashFor, hashForView } from '../../utils/recipeHash';
 import RecipeSection from './RecipeSection';
 import styles from './recipe.module.css';
 
+// Each detail links to the browse page filtered by its value, e.g. every Dinner recipe
+const DETAILS = [
+  { key: 'course', label: 'Course', filter: 'course' },
+  { key: 'cookingMethod', label: 'Cooking method', filter: 'method' },
+];
+
 export default function Recipe({ recipe }) {
   const { id, name, ingredients, instructions, notes } = recipe;
+  const details = DETAILS.filter(({ key }) => recipe[key]);
   const [checked, toggle, reset] = useCheckedItems(id);
 
   return (
@@ -21,6 +28,18 @@ export default function Recipe({ recipe }) {
           </button>
         </div>
       </div>
+      {details.length > 0 ? (
+        <dl className={styles.details}>
+          {details.map(({ key, label, filter }) => (
+            <div key={key} className={styles.detail}>
+              <dt>{label}</dt>
+              <dd>
+                <a href={hashForView({ page: 'browse', [filter]: recipe[key] })}>{recipe[key]}</a>
+              </dd>
+            </div>
+          ))}
+        </dl>
+      ) : null}
       <RecipeSection
         header={'Ingredients'}
         groups={ingredients}

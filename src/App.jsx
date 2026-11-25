@@ -43,6 +43,7 @@ function App() {
   const [view, setView] = useState(() => viewFromHash(allRecipes) ?? randomRecipeView());
   const mainRef = useRef(null);
   const shownView = useRef(view);
+  const openedFromBrowse = useRef(null);
 
   // The last recipe shown, so All recipes can offer a way back to it after an accidental tap.
   // Updated during render (React's "adjust state when a prop changes" pattern), not in an effect.
@@ -83,11 +84,29 @@ function App() {
   // After navigating, move focus to the new page's h1 so keyboard and screen-reader users start
   // at the top of the new content. The first page load keeps the browser's default focus, and
   // changing a browse filter leaves focus on the filter.
+  // One exception: coming back to All recipes from a recipe opened there focuses that recipe's
+  // link in the list and scrolls it into view, so a long list doesn't send the visitor back to
+  // the top. openedFromBrowse is that recipe; a trip to its Suggest a change page keeps it.
   useEffect(() => {
-    if (shownView.current === view) return;
-    const pageChanged = !samePage(shownView.current, view);
+    const prev = shownView.current;
+    if (prev === view) return;
     shownView.current = view;
-    if (pageChanged) mainRef.current?.querySelector('h1')?.focus();
+    if (samePage(prev, view)) return;
+
+    if (view?.page === 'recipe' && view.recipe !== openedFromBrowse.current) {
+      openedFromBrowse.current = prev?.page === 'browse' ? view.recipe : null;
+    }
+    const cameFrom = view?.page === 'browse' ? openedFromBrowse.current : null;
+    if (view?.page === 'browse') openedFromBrowse.current = null;
+
+    // Recipe ids are lowercase letters, digits and dashes, so they need no escaping here
+    const link = cameFrom && mainRef.current?.querySelector(`[data-recipe-id="${cameFrom.id}"]`);
+    if (link) {
+      link.focus({ preventScroll: true });
+      link.scrollIntoView?.({ block: 'start' });
+    } else {
+      mainRef.current?.querySelector('h1')?.focus();
+    }
   }, [view]);
 
   function handleSelect(recipe) {

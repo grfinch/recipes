@@ -48,3 +48,47 @@
 .suggest {
   margin-top: 1.5rem;
 }
+
+/* Jump to letter: shown only on long lists. Each button is a 44px square tap target. */
+.jumpBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin: 0 0 1rem;
+  padding: 0;
+  list-style: none;
+}
+
+.jumpButton {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+  padding: 0 0.5rem;
+  border: 1px solid var(--control-border);
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--link);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.jumpButton:hover {
+  background-color: var(--link-tint);
+}
+
+.jumpButton:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+}
+
+.letterHeading {
+  margin: 1.5rem 0 0.25rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid var(--line);
+  font-size: 1.4rem;
+}
+
+/* Focus lands here from the jump bar; it's not a control, so no focus ring (like the h1) */
+.letterHeading:focus {
+  outline: none;
+}

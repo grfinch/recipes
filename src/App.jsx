@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import allRecipes from './recipes/index.js';
 import BrowseRecipes from './components/browse/BrowseRecipes';
+import SiteFooter from './components/footer/SiteFooter';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
@@ -92,6 +93,7 @@ function App() {
           <p>No recipes yet.</p>
         )}
       </main>
+      <SiteFooter />
     </>
   );
 }

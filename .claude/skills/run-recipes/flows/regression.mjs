@@ -99,8 +99,10 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
         stepNumber: ratio(color('main li button span', 'color'), bg),
         link: ratio(color('header a', 'color'), bg),
         checkboxBorder: ratio(color('main input[type="checkbox"]', 'borderTopColor'), bg),
+        footer: ratio(color('footer', 'color'), bg),
       };
     });
+    check(`${scheme}: footer text reaches 4.5:1`, ratios.footer >= 4.5, `${ratios.footer}:1`);
     check(
       `${scheme}: step numbers reach 4.5:1`,
       ratios.stepNumber >= 4.5,

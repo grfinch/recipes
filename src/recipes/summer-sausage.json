@@ -1,0 +1,35 @@
+{
+  "id": "summer-sausage",
+  "name": "Summer Sausage",
+  "course": "Snack",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Meat",
+      "items": ["2 1/2 lb ground beef", "2 1/2 lb wild game burger"]
+    },
+    {
+      "title": "Seasoning",
+      "items": [
+        "5 tsp Tender Quick",
+        "2 1/2 tsp hickory smoke salt",
+        "2 1/2 tsp Accent",
+        "1 Tbsp garlic salt",
+        "1 Tbsp mustard seed",
+        "1 1/2 Tbsp coarse ground pepper",
+        "1 Tbsp liquid smoke"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Mix the seasonings together and gradually add to meat.",
+        "Put a little liquid smoke on the meat each time you add seasoning to dry mixture.",
+        "Cover and seal up overnight in a non-metallic bowl.",
+        "Shape into rolls.",
+        "Bake on racks or a drip pan at 150 degrees for 6-8 hours."
+      ]
+    }
+  ]
+}

@@ -70,7 +70,7 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 **Recipe schema** (`src/recipes/<id>.json`, one recipe object per file):
 
 - `id`: required, permanent, and equal to the file name. Lowercase letters, digits and dashes, made once from the name with `slugify` and never changed afterwards, even if the recipe is renamed. It is the recipe's link (`#/<id>`) and its saved-checklist key, and it must not be a reserved slug.
-- `name`, `course`, `cookingMethod`: strings. `course` and `cookingMethod` come from the lists in `src/recipeCategories.json` and appear only in the browse list.
+- `name`, `course`, `cookingMethod`: strings. `course` and `cookingMethod` come from the lists in `src/recipeCategories.json`. They show in the browse list and on the recipe page, under the title (a `<dl>`, each value a link to the browse page filtered by it, `hashForView`).
 - `ingredients`, `instructions`: arrays of **groups**, `{ "title"?: string, "items": [string] }`. Every group has at least one item. Titled groups render an `h3`; untitled ones are set apart by a decorative dashed rule (CSS only, nothing for screen readers to read).
 - `notes`: optional, the same group shape. Leave it out rather than writing `[]`.
 

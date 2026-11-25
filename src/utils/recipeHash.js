@@ -5,8 +5,9 @@
 // recipe whose name slugifies to one of these (say, "Browse") can't take over the page.
 export const BROWSE_HASH = '#/browse';
 export const SUGGEST_HASH = '#/suggest';
+export const PICK_HASH = '#/pick';
 export const CHANGE_SLUG = 'suggest-change';
-export const RESERVED_SLUGS = ['browse', 'suggest', CHANGE_SLUG];
+export const RESERVED_SLUGS = ['browse', 'suggest', 'pick', CHANGE_SLUG];
 
 // Turns a name into an id: lowercase, accents dropped, anything else becomes "-". Used once,
 // when a recipe is created. After that the id never changes, so a rename can't break links.
@@ -73,11 +74,12 @@ export function recipeFromHash(recipes, hash = window.location.hash) {
 }
 
 // What the hash asks to show: { page: 'browse', course?, method? }, { page: 'suggest' },
-// { page: 'change', recipe }, { page: 'recipe', recipe }, or null. Plain #/browse is
-// { page: 'browse' }; filter keys appear only when set. A change page for a recipe that doesn't
-// exist is null, like any unknown link.
+// { page: 'pick' }, { page: 'change', recipe }, { page: 'recipe', recipe }, or null. Plain
+// #/browse is { page: 'browse' }; filter keys appear only when set. A change page for a recipe
+// that doesn't exist is null, like any unknown link.
 export function viewFromHash(recipes, hash = window.location.hash) {
   if (slugFromHash(hash) === 'suggest') return { page: 'suggest' };
+  if (slugFromHash(hash) === 'pick') return { page: 'pick' };
   if (slugFromHash(hash) === CHANGE_SLUG) {
     const id = new URLSearchParams(splitHash(hash)[1]).get('recipe');
     const recipe = recipes.find((r) => r.id === id);
@@ -94,6 +96,7 @@ export function viewFromHash(recipes, hash = window.location.hash) {
 // #/browse?course=Dinner&method=Slow+cooker
 export function hashForView(view) {
   if (view.page === 'suggest') return SUGGEST_HASH;
+  if (view.page === 'pick') return PICK_HASH;
   if (view.page === 'change') return changeHashFor(view.recipe);
   if (view.page !== 'browse') return hashFor(view.recipe);
   const params = new URLSearchParams();

@@ -41,6 +41,10 @@
   padding-bottom: 0.5rem;
 }
 
+.pick {
+  margin: 0 0 1rem;
+}
+
 .suggest {
   margin-top: 1.5rem;
 }

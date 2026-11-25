@@ -1,0 +1,57 @@
+{
+  "id": "swig-cookies",
+  "name": "Swig Cookies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Cookies",
+      "items": [
+        "5 1/2 cups flour",
+        "1/2 tsp baking soda",
+        "1/2 tsp cream of tartar",
+        "1 tsp salt",
+        "1 cup butter, softened",
+        "3/4 cup vegetable oil",
+        "1 1/4 cups sugar (plus 1/4 cup reserved)",
+        "3/4 cup powdered sugar",
+        "2 Tbsp water",
+        "2 eggs"
+      ]
+    },
+    {
+      "title": "Frosting",
+      "items": [
+        "1/2 cup butter, softened",
+        "3/4 cup sour cream",
+        "1 tsp salt",
+        "5 cups powdered sugar",
+        "1/4 cup milk",
+        "Red food coloring"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Cookies",
+      "items": [
+        "Preheat oven to 350°F.",
+        "In a medium-sized mixing bowl, combine flour, baking soda, cream of tartar, and salt. Set aside.",
+        "In a large mixing bowl, cream together butter, vegetable oil, sugar (1 1/4 cups), powdered sugar, and water. Add in eggs.",
+        "Slowly add in flour mixture until combined.",
+        "Roll the dough into golf ball-sized balls and place onto a non-stick cookie sheet.",
+        "To give the cookies their signature rough edge, dip the bottom of a glass into the reserved 1/4 cup sugar and press onto the cookie ball to flatten the cookie. You still want the cookie to be thicker, so don't press them too thin.",
+        "Bake for 8-10 minutes or until the bottom is lightly brown. The cookies stay soft, so do not over bake."
+      ]
+    },
+    {
+      "title": "Frosting",
+      "items": [
+        "Cream together butter, sour cream, and salt.",
+        "Add the powdered sugar.",
+        "Add in the milk to the desired consistency.",
+        "Spread over cooled cookies and store in an airtight container."
+      ]
+    }
+  ]
+}

@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import allRecipes from '../recipes/index.js';
 import {
   BROWSE_HASH,
+  PICK_HASH,
   RESERVED_SLUGS,
   SUGGEST_HASH,
   hashFor,
@@ -48,6 +49,15 @@ describe('recipeHash', () => {
     expect(recipeFromHash(withSuggest, '#/suggest')).toBeNull();
     expect(hashForView({ page: 'suggest' })).toBe(SUGGEST_HASH);
     expect(RESERVED_SLUGS).toContain('suggest');
+  });
+
+  it('reads the pick page from the hash, even if a recipe is named Pick', () => {
+    const withPick = [...recipes, { id: 'pick', name: 'Pick' }];
+    expect(viewFromHash(withPick, '#/pick')).toEqual({ page: 'pick' });
+    expect(viewFromHash(withPick, '#/pick?course=Dinner')).toEqual({ page: 'pick' });
+    expect(recipeFromHash(withPick, '#/pick')).toBeNull();
+    expect(hashForView({ page: 'pick' })).toBe(PICK_HASH);
+    expect(RESERVED_SLUGS).toContain('pick');
   });
 
   it('reads the browse page from the hash', () => {

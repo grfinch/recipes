@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { SUGGEST_HASH, hashFor } from '../../utils/recipeHash';
+import { PICK_HASH, SUGGEST_HASH, hashFor } from '../../utils/recipeHash';
 import { filterOptions, matchesFilters } from '../../utils/recipeFilters';
 import BrowseFilters from './BrowseFilters';
 import styles from './browse.module.css';
@@ -34,6 +34,9 @@ export default function BrowseRecipes({
       <h1 tabIndex={-1}>All recipes</h1>
       {sorted.length > 0 ? (
         <>
+          <p className={styles.pick}>
+            Can&apos;t decide? <a href={PICK_HASH}>Pick a recipe for me</a>
+          </p>
           <BrowseFilters
             options={filterOptions(recipes)}
             filters={filters}

@@ -1,0 +1,19 @@
+{
+  "id": "butter-sauce",
+  "name": "Butter Sauce",
+  "course": "Sauce",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "items": ["1 cup sugar", "1 cube butter", "1/2 cup milk", "1 tsp vanilla"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Melt together until hot but do not boil.",
+        "Use on waffles, pancakes or whatever else."
+      ]
+    }
+  ]
+}

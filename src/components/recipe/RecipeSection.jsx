@@ -4,7 +4,15 @@ import Divider from '../listItems/Divider';
 import BulletItem from '../listItems/BulletItem';
 import NumberedClickableItem from '../listItems/NumberedClickableItem';
 
-export default function RecipeSection({ header, listItems, ordered, clickable }) {
+// checked: Set of checked item ids; onToggle(id) flips one. Ids are `${header}:${group}-${item}`.
+export default function RecipeSection({
+  header,
+  listItems,
+  ordered,
+  clickable,
+  checked = new Set(),
+  onToggle = () => {},
+}) {
   // Normalize listItems into an array of groups (array of arrays).
   // Accept either:
   // - grouped input: [['1 cup flour', ...], ['other group', ...]]
@@ -20,10 +28,15 @@ export default function RecipeSection({ header, listItems, ordered, clickable })
     // Position-based key: item text can repeat (e.g. "1 tsp salt" twice). The list
     // never reorders, and App remounts Recipe per recipe, so position is stable.
     const key = `${gIdx}-${iIdx}`;
-    if (!ordered && clickable) return <CheckboxItem key={key} item={item} />;
-    if (ordered && clickable)
-      return <NumberedClickableItem key={key} item={item} index={iIdx + 1} />;
-    return <BulletItem key={key} item={item} />;
+    if (!clickable) return <BulletItem key={key} item={item} />;
+
+    const id = `${header}:${key}`;
+    const props = { item, checked: checked.has(id), onToggle: () => onToggle(id) };
+    return ordered ? (
+      <NumberedClickableItem key={key} index={iIdx + 1} {...props} />
+    ) : (
+      <CheckboxItem key={key} {...props} />
+    );
   }
 
   return (

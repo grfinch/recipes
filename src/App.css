@@ -84,8 +84,8 @@
    The display settings stay on one line here. */
 @media (min-width: 1000px), (min-width: 760px) and (max-height: 700px) {
   #root > .siteHeader {
-    grid-template-columns: auto minmax(0, 36rem) auto 1fr auto;
-    grid-template-areas: 'title search settings . nav';
+    grid-template-columns: auto minmax(0, 36rem) auto auto 1fr;
+    grid-template-areas: 'title search nav settings .';
     column-gap: 1rem;
     padding-block: 0.5rem;
   }

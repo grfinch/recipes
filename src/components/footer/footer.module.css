@@ -1,0 +1,22 @@
+/* Site footer: small and muted. --muted (listItems.module.css) is 4.5:1+ in both schemes. */
+.footer {
+  margin-top: 3rem;
+  font-size: 0.875rem;
+  color: var(--muted);
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.footer p {
+  margin: 0;
+}
+
+/* A standalone link, so it gets at least a 24px target (WCAG 2.2 target size). Body text size,
+   in the link color, so it doesn't read as part of the muted copyright line. */
+.link {
+  display: inline-block;
+  min-height: 24px;
+  margin-bottom: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  font-size: 1rem;
+}

@@ -2,6 +2,8 @@
 // src/recipes/<id>.json, but only if no recipe with that id exists and every recipe still
 // validates with it added. Nothing is written on failure. Run from the repo root:
 //   node .claude/skills/add-recipe/write-recipe.mjs path/to/draft.json
+// With --check, it runs the same checks but never writes, to test a draft before showing it:
+//   node .claude/skills/add-recipe/write-recipe.mjs --check path/to/draft.json
 import { existsSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
 import {
@@ -11,9 +13,11 @@ import {
   validateRecipes,
 } from '../../../scripts/validate-recipes.mjs';
 
-const draftPath = process.argv[2];
+const args = process.argv.slice(2);
+const checkOnly = args.includes('--check');
+const draftPath = args.find((a) => a !== '--check');
 if (!draftPath) {
-  console.error('Usage: node .claude/skills/add-recipe/write-recipe.mjs <draft.json>');
+  console.error('Usage: node .claude/skills/add-recipe/write-recipe.mjs [--check] <draft.json>');
   process.exit(2);
 }
 if (!existsSync(RECIPES_DIR)) {
@@ -46,6 +50,11 @@ if (errors.length > 0) {
   console.error(`Not added. ${errors.length} problem(s):`);
   for (const e of errors) console.error(`  - ${e}`);
   process.exit(1);
+}
+
+if (checkOnly) {
+  console.log(`OK: "${draft.name}" would be added as src/recipes/${file}. Nothing written.`);
+  process.exit(0);
 }
 
 // Prettier's JSON style: 2-space indent and a final newline. Run `npm run format` after anyway.

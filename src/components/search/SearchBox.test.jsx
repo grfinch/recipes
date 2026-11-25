@@ -47,6 +47,13 @@ describe('SearchBox', () => {
     }
   });
 
+  it('says so in the results panel when nothing matches', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'zzz');
+    expect(await screen.findByText('No recipes match')).toBeInTheDocument();
+    expect(resultsList()).not.toBeInTheDocument();
+  });
+
   it('selects a recipe, clears the input, and closes the results', async () => {
     const { user, input, onSelect } = setup();
     await user.type(input, 'pan');

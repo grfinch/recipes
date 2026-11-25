@@ -28,7 +28,9 @@ Dependabot (`.github/dependabot.yml`) opens weekly update PRs. `.github/workflow
 
 This is a static, client-only React 19 app (plain JSX, no TypeScript, no router, no backend). All data is bundled from `src/recipes.json`.
 
-**Data flow:** `App.jsx` imports `recipes.json`, picks a random recipe as the initial selection, and holds the `selected` state. `SearchBox` receives every recipe and calls `onSelect`. `Recipe` renders the selected one.
+**Data flow:** `App.jsx` imports `recipes.json` and holds the `selected` state. The first recipe comes from the URL hash, or is random if the hash names none. `SearchBox` receives every recipe and calls `onSelect`. `Recipe` renders the selected one.
+
+**Recipe links:** the selected recipe lives in the URL hash as `#/<slug>` (`src/utils/recipeHash.js`; the slug is the lowercased name with accents and punctuation removed). Selecting a recipe sets the hash, which adds a history entry. A `hashchange` listener handles Back, Forward and edited links. The first recipe, or one replacing an unknown hash, uses `history.replaceState`, so it adds no history entry. The tab title follows the recipe. The hash needs no router and works under the `/recipes` base. Renaming a recipe changes its slug and breaks old links to it.
 
 **Recipe schema** (`src/recipes.json` → `{ recipes: [...] }`):
 

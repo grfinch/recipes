@@ -1,6 +1,6 @@
 # Twig's Cook Book
 
-A small, searchable recipe book. Each recipe has ingredients you can check off as you gather them and numbered steps you can mark done as you cook. Your progress is saved in the browser, so a reload doesn't lose your place.
+A small, searchable recipe book. Each recipe has ingredients you can check off as you gather them and numbered steps you can mark done as you cook. Your progress is saved in the browser, so a reload doesn't lose your place. Each recipe has its own link (for example `#/instant-pot-lentil-stew`) that you can bookmark or share.
 
 **Live site:** <https://grfinch.github.io/recipes/>
 

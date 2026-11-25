@@ -17,6 +17,8 @@ Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/tes
 
 **Windows:** run Vitest from a working directory with an uppercase drive letter (`C:\...`; in Git Bash, `cd /C/...` rather than `/c/...`). A lowercase `c:\` makes Vitest load the setup file as a separate module copy and fail with "failed to find the current suite". If it starts failing after switching paths, delete `node_modules/.vite` and `node_modules/.vitest-cache`.
 
+**Parallel agents:** each agent that runs the app or the browser flows (`.claude/skills/run-recipes/`) needs its own port and its own git worktree. Set a different `RECIPES_PORT` for each (5174, 5175, …), and leave 5173 for the main checkout. The driver reuses any dev server already on its port, even one serving another checkout or stale files, so a shared port can test the wrong code. Check that the driver prints "Started dev server", not "Reusing".
+
 ## Deployment
 
 `.github/workflows/ci.yml` has a `check` job (lint, format check, tests, build; Node version from `.nvmrc`) that runs on pull requests and on pushes to `main`. A push to `main` deploys to GitHub Pages (<https://grfinch.github.io/recipes/>), but only after `check` passes.

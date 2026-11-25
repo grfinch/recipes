@@ -152,6 +152,45 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   check('System theme follows the system again', (await pageBg()) === 'rgb(255, 255, 255)');
   await page.emulateMedia({ colorScheme: null });
 
+  // 5c. Print styles: only the recipe, black on white even in the dark theme, with a done
+  //     step printed as its number and no strikethrough. Ends back on System, on screen.
+  await page.getByRole('button', { name: 'Reset checklist' }).click();
+  await main.getByRole('listitem').getByRole('button').first().click();
+  await pickTheme('Dark');
+  await page.emulateMedia({ media: 'print' });
+  await page.waitForTimeout(300);
+  const printed = await page.evaluate(() => {
+    const shown = (el) => !!el && el.checkVisibility();
+    const step = document.querySelector('main li button[aria-pressed="true"]');
+    return {
+      header: shown(document.querySelector('header')),
+      footer: shown(document.querySelector('footer')),
+      buttons: [...document.querySelectorAll('main button')].filter(
+        (b) => !b.closest('li') && shown(b),
+      ).length,
+      bg: getComputedStyle(document.documentElement).backgroundColor,
+      text: getComputedStyle(document.querySelector('main h1')).color,
+      stepText: step?.innerText.trim().split(/\s/)[0],
+      strike: getComputedStyle(step.lastElementChild).textDecorationLine,
+    };
+  });
+  check('print: no header or footer', !printed.header && !printed.footer, JSON.stringify(printed));
+  check('print: no Print or Reset buttons', printed.buttons === 0, `${printed.buttons} shown`);
+  check(
+    'print: black on white in the dark theme',
+    printed.bg === 'rgb(255, 255, 255)' && printed.text === 'rgb(0, 0, 0)',
+    `${printed.text} on ${printed.bg}`,
+  );
+  check(
+    'print: a done step shows its number, not struck through',
+    printed.stepText === '1.' && printed.strike === 'none',
+    `"${printed.stepText}" ${printed.strike}`,
+  );
+  await page.screenshot({ path: shot('regression-print.png'), fullPage: true });
+  await page.emulateMedia({ media: null });
+  await pickTheme('System');
+  await page.getByRole('button', { name: 'Reset checklist' }).click();
+
   // 6. Layout at phone, tablet, and kitchen-display sizes. Each size gets its own touch-enabled
   //    browser context, so (pointer: coarse) and (hover: none) styles apply as on the device.
   //    It searches for the first letter of whichever recipe is open, so it never names one.

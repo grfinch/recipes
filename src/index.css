@@ -101,3 +101,34 @@ h1[tabindex='-1']:focus {
     font-size: 118.75%; /* 19px */
   }
 }
+
+/* Printing: black on white whatever the theme, with only the page's content (see the print
+   styles in each component's CSS module). Links print as plain text. */
+@media print {
+  :root,
+  :root[data-theme='dark'] {
+    color-scheme: light;
+    --bg: #fff;
+    --text: #000;
+    --muted: #555;
+    --line: #bbb;
+    --surface: #fff;
+    --link: #000;
+    --link-tint: transparent;
+    --done: #000;
+    --control-border: #555;
+  }
+
+  @page {
+    margin: 1.5cm;
+  }
+
+  /* Point sizes, so text doesn't follow the screen-size rules (like the Nest Hub's) */
+  :root {
+    font-size: 11pt;
+  }
+
+  a {
+    text-decoration: none;
+  }
+}

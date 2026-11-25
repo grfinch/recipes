@@ -9,12 +9,17 @@ export default function Recipe({ recipe }) {
 
   return (
     <div className={styles.recipe}>
-      {/* Title and Reset share a row when there's room, saving height on short screens */}
+      {/* Title and buttons share a row when there's room, saving height on short screens */}
       <div className={styles.titleRow}>
         <h1 tabIndex={-1}>{name}</h1>
-        <button type="button" onClick={reset} className={styles.resetButton}>
-          Reset checklist
-        </button>
+        <div className={styles.actions}>
+          <button type="button" onClick={() => window.print()} className={styles.actionButton}>
+            Print
+          </button>
+          <button type="button" onClick={reset} className={styles.actionButton}>
+            Reset checklist
+          </button>
+        </div>
       </div>
       <RecipeSection
         header={'Ingredients'}

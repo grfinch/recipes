@@ -142,3 +142,24 @@
 }
 
 /* | END Header bar | */
+
+/* Printing: the header bar and footer are site controls, not part of the recipe */
+@media print {
+  #root > .siteHeader,
+  #root > footer {
+    display: none;
+  }
+
+  #root {
+    min-height: 0;
+  }
+
+  #root > * {
+    max-width: none;
+    padding-inline: 0;
+  }
+
+  #root > main {
+    padding-bottom: 0;
+  }
+}

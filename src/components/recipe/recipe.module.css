@@ -20,7 +20,13 @@
   margin: 0;
 }
 
-.resetButton {
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.actionButton {
   flex: 0 0 auto;
   min-height: 44px;
   padding: 0.25rem 1rem;
@@ -30,13 +36,13 @@
   cursor: pointer;
 }
 
-.resetButton:focus-visible {
+.actionButton:focus-visible {
   outline: 3px solid var(--interactive-blue);
   outline-offset: 2px;
 }
 
 @media (hover: hover) {
-  .resetButton:hover {
+  .actionButton:hover {
     border-color: var(--interactive-blue);
   }
 }
@@ -108,4 +114,45 @@
   display: inline-block;
   min-height: 24px;
   padding: 0.25rem 0;
+}
+
+/* Printing: one column of just the recipe. The buttons and "Suggest a change" don't work on
+   paper. The site header and footer are hidden in src/index.css. */
+@media print {
+  .recipe {
+    display: block;
+    max-width: none;
+  }
+
+  .section {
+    max-width: none;
+  }
+
+  .actions,
+  .suggestChange {
+    display: none;
+  }
+
+  .titleRow {
+    margin: 0 0 0.5rem;
+  }
+
+  .titleRow h1 {
+    font-size: 22pt;
+  }
+
+  .section h2 {
+    margin: 1rem 0 0.25rem;
+    font-size: 15pt;
+  }
+
+  .groupTitle {
+    font-size: 12pt;
+  }
+
+  /* Keep a heading with the list under it */
+  .section h2,
+  .groupTitle {
+    break-after: avoid;
+  }
 }

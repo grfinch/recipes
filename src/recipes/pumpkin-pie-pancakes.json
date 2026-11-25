@@ -1,0 +1,40 @@
+{
+  "id": "pumpkin-pie-pancakes",
+  "name": "Pumpkin Pie Pancakes",
+  "course": "Breakfast",
+  "cookingMethod": "Stovetop",
+  "ingredients": [
+    {
+      "title": "Pancakes",
+      "items": [
+        "2 cups buttermilk pancake mix",
+        "1/2 cup cooked pumpkin",
+        "1 1/2 tsp pumpkin pie spice",
+        "2 Tbsp brown sugar",
+        "1 1/4 cups cold water"
+      ]
+    },
+    {
+      "title": "Butter sauce",
+      "items": ["1 cup sugar", "1 cube butter", "1/2 cup milk", "1 tsp vanilla"]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Pancakes",
+      "items": ["Mix all together."]
+    },
+    {
+      "title": "Butter sauce",
+      "items": [
+        "Melt together until hot but do not boil.",
+        "Use on waffles, pancakes or whatever else."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": ["Makes 16 pancakes."]
+    }
+  ]
+}

@@ -15,6 +15,19 @@ describe('RecipeSection', () => {
     expect(screen.getByRole('button', { name: /Simmer/ })).toBeInTheDocument()
   })
 
+  it('hides group dividers from screen readers', () => {
+    render(
+      <RecipeSection
+        header="Ingredients"
+        listItems={[['1 cup flour', '1 egg'], ['1 tsp salt']]}
+        ordered={false}
+        clickable
+      />,
+    )
+    // getAllByRole skips aria-hidden elements, so only the 3 real items count.
+    expect(screen.getAllByRole('listitem')).toHaveLength(3)
+  })
+
   it('treats identical items in one list as separate items', async () => {
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {})
     const user = userEvent.setup()

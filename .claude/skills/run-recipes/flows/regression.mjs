@@ -74,6 +74,28 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   check('step 1 unpressed after switching recipe', (await main.getByRole('button').first().getAttribute('aria-pressed')) === 'false')
   await page.screenshot({ path: shot('regression-3-switched.png') })
 
+  // Accessibility styling (CSS isn't applied in jsdom, so it's checked here)
+  const firstBox = page.getByRole('checkbox').first()
+  const checkTransform = () =>
+    firstBox.evaluate((el) => getComputedStyle(el, '::before').transform)
+  check('unchecked box shows no checkmark', /matrix\(0, 0, 0, 0/.test(await checkTransform()), await checkTransform())
+  await firstBox.check()
+  await page.waitForTimeout(200) // let the 120ms transition finish
+  check('checked box shows a checkmark shape', (await checkTransform()) === 'matrix(1, 0, 0, 1, 0, 0)', await checkTransform())
+  await page.screenshot({ path: shot('regression-4-checkmark.png') })
+
+  await input.focus()
+  await page.keyboard.press('Tab') // into the first ingredient checkbox
+  const boxOutline = await page.evaluate(() => {
+    const s = getComputedStyle(document.activeElement)
+    return `${document.activeElement.type} ${s.outlineStyle} ${s.outlineWidth}`
+  })
+  check('keyboard focus on a checkbox shows a solid outline', boxOutline === 'checkbox solid 3px', boxOutline)
+  await page.screenshot({ path: shot('regression-5-focus.png') })
+
+  const snapshot = await main.ariaSnapshot()
+  check('dividers are hidden from screen readers', !snapshot.includes('---'))
+
   const keyWarnings = consoleMsgs.filter((m) => /same key|unique "key"/i.test(m))
   check('no React key warnings', keyWarnings.length === 0, keyWarnings.join(' | '))
 }

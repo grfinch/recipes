@@ -1,0 +1,34 @@
+{
+  "id": "pizza-benders",
+  "name": "Pizza Benders",
+  "course": "Dinner",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "Rhodes frozen rolls (brown bag), 7-8 rolls per bender",
+        "Precious mozzarella cheese",
+        "Pepperoni, olives, etc.",
+        "Cooking spray",
+        "Plastic wrap",
+        "Ragú pizza sauce, for dipping"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Set rolls out to thaw the morning of, or refrigerate the night before.",
+        "Use 7-8 rolls per bender.",
+        "Roll thawed dough into a rectangle shape.",
+        "Roll a ruler down the dough and cut each side 1/4 of the way in on the ruler marks.",
+        "Fill center with cheese, pepperoni, olives, etc.",
+        "Criss-cross dough and pinch together at center.",
+        "Rise dough on sprayed cookie sheet, covering each bender with sprayed plastic wrap.",
+        "Let benders rise 4-5 hours!",
+        "Bake at 325°F for 20-25 minutes.",
+        "Dip in Ragú pizza sauce."
+      ]
+    }
+  ]
+}

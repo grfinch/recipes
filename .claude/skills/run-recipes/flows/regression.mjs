@@ -178,8 +178,10 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
       return {
         stepNumber: ratio(getComputedStyle(stepNumber).color, bg),
         checkboxBorder: ratio(getComputedStyle(box).borderTopColor, bg),
+        footer: ratio(getComputedStyle(document.querySelector('footer')).color, bg),
       };
     });
+    check(`${scheme}: footer text reaches 4.5:1`, ratios.footer >= 4.5, `${ratios.footer}:1`);
     check(
       `${scheme}: step numbers reach 4.5:1`,
       ratios.stepNumber >= 4.5,

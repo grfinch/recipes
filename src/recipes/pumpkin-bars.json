@@ -1,0 +1,53 @@
+{
+  "id": "pumpkin-bars",
+  "name": "Pumpkin Bars",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Bars",
+      "items": [
+        "4 eggs",
+        "1 2/3 cups sugar",
+        "1 cup vegetable oil (can use half applesauce)",
+        "1 can (15 oz) pumpkin",
+        "2 cups sifted all-purpose flour",
+        "2 tsp baking powder",
+        "2 tsp ground cinnamon",
+        "1 tsp salt",
+        "1 tsp baking soda"
+      ]
+    },
+    {
+      "title": "Icing",
+      "items": [
+        "1 pkg (8 oz) cream cheese, softened",
+        "1/2 cup butter, softened",
+        "2 cups powdered sugar",
+        "1 tsp vanilla"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Bars",
+      "items": [
+        "Preheat the oven to 350°F.",
+        "Using an electric mixer at medium speed, combine the eggs, sugar, oil and pumpkin until light and fluffy.",
+        "In a separate bowl, stir together the flour, baking powder, cinnamon, salt and baking soda.",
+        "Add the dry ingredients to the pumpkin mixture and mix at low speed until thoroughly combined and the batter is smooth.",
+        "Spread the batter into a greased jellyroll or 10x15 baking pan. Bake for 30 minutes.",
+        "Let cool completely before frosting. Cut into bars."
+      ]
+    },
+    {
+      "title": "Icing",
+      "items": [
+        "Combine the cream cheese and butter in a medium bowl with an electric mixer until smooth.",
+        "Add the sugar and mix at low speed until combined.",
+        "Stir in the vanilla and mix again.",
+        "Spread on cooled pumpkin bars."
+      ]
+    }
+  ]
+}

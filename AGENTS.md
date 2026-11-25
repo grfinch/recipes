@@ -8,6 +8,7 @@ This file provides guidance to AI coding agents working with code in this reposi
 - `npm run build`: production build to `dist/`
 - `npm run preview`: serve the built `dist/`
 - `npm run lint`: ESLint (flat config, `eslint.config.js`)
+- `npm run format` / `npm run format:check`: Prettier (single quotes, semicolons, 100 columns). Run `format` before committing; CI fails on unformatted files.
 - `npm test`: run Vitest once (jsdom + React Testing Library); `npm run test:watch` for watch mode
 - `npx vitest run src/components/search` or `npx vitest run -t "Escape"`: run one file or one test by name
 
@@ -17,7 +18,11 @@ Tests sit next to the code they test (`*.test.jsx`); shared setup is in `src/tes
 
 ## Deployment
 
-Pushing to `main` deploys to GitHub Pages through `.github/workflows/deploy.yml` (Node version from `.nvmrc`, `npm ci` then `npm run build`). `vite.config.js` sets `base: '/recipes'`, so the app is served from a sub-path. Asset URLs and any future routing must respect that base: use `import.meta.env.BASE_URL` or imported assets rather than root-absolute paths.
+`.github/workflows/ci.yml` has a `check` job (lint, format check, tests, build; Node version from `.nvmrc`) that runs on pull requests and on pushes to `main`. A push to `main` deploys to GitHub Pages (<https://grfinch.github.io/recipes/>), but only after `check` passes.
+
+Dependabot (`.github/dependabot.yml`) opens weekly update PRs. `.github/workflows/dependabot-auto-merge.yml` auto-merges patch and minor updates once `check` passes; majors need review. ESLint 10 is on hold until `eslint-plugin-react` and `eslint-plugin-jsx-a11y` support it.
+
+`vite.config.js` sets `base: '/recipes'`, so the app is served from a sub-path. Asset URLs and any future routing must respect that base: use `import.meta.env.BASE_URL` or imported assets rather than root-absolute paths.
 
 ## Architecture
 
@@ -47,7 +52,8 @@ The "checked" state on each item is local component state and is not persisted.
 - Component styles use CSS Modules (`*.module.css` imported as `styles`). Global styles live in `src/index.css` and `src/App.css`.
 - Component files are in PascalCase and match their default export (`RecipeSection.jsx` → `RecipeSection`). Hooks are camelCase (`useDebounce.js`). Folders and CSS modules are camelCase.
 - Import paths must match the file name's case exactly. Windows ignores case, but the Linux CI build doesn't, so a mismatch passes locally and breaks the deploy.
-- ESLint uses `eslint-plugin-react`, so components used only in JSX count as used. `no-unused-vars` exempts only `_`-prefixed names, and `react/prop-types` is off (React 19 ignores propTypes).
+- ESLint has separate blocks for different code: `src/` gets React, hooks (including the React Compiler rules), react-refresh, `jsx-a11y`, and browser globals. Config files and `.claude/` scripts get Node globals. The browser flows in `.claude/skills/` get both, because their `page.evaluate()` callbacks run in the page. `eslint-config-prettier` comes last, to turn off style rules.
+- `no-unused-vars` exempts only `_`-prefixed names (`eslint-plugin-react` marks JSX usage). `react/prop-types` is off, because React 19 ignores propTypes. Don't disable lint rules to get past an error: fix the cause, or ask.
 
 ## Accessibility
 

@@ -1,0 +1,31 @@
+{
+  "id": "gean-s-casserole",
+  "name": "Gean's Casserole",
+  "course": "Dinner",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "1 1/2 lb ground beef (raw)",
+        "1 pkg onion soup mix",
+        "Sliced carrots",
+        "Sliced potatoes",
+        "Fresh mushrooms, sliced (optional)",
+        "1 can cream of chicken soup",
+        "1 can cream of mushroom soup",
+        "2 soup cans of milk"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Press ground beef in a greased 9x13-inch pan.",
+        "Sprinkle soup mix over meat.",
+        "Put a layer of carrots over meat and then a layer of potatoes on top of the carrots. Put mushrooms on with potatoes.",
+        "Combine the soups and add the milk. Pour over the top.",
+        "Bake uncovered at 350°F for an hour to an hour and a half or until vegetables are tender."
+      ]
+    }
+  ]
+}

@@ -36,3 +36,26 @@ button {
     background-color: #ffffff;
   }
 }
+
+/* Links: underlined, so color isn't the only cue; 4.5:1 or more on both backgrounds */
+a {
+  color: #8b93ff; /* 5.7:1 on #242424 */
+}
+
+a:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+@media (prefers-color-scheme: light) {
+  a {
+    color: #4f46e5; /* 6.3:1 on #ffffff */
+  }
+}
+
+/* Headings get tabIndex={-1} so focus can land on them after navigating. They aren't
+   controls, so they show no focus ring. */
+h1[tabindex='-1']:focus {
+  outline: none;
+}

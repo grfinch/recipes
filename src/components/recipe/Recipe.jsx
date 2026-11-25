@@ -7,7 +7,7 @@ export default function Recipe({ recipe: { name, ingredients, instructions, note
 
   return (
     <>
-      <h1>{name}</h1>
+      <h1 tabIndex={-1}>{name}</h1>
       <button type="button" onClick={reset} className={styles.resetButton}>
         Reset checklist
       </button>

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
@@ -16,6 +16,13 @@ vi.mock('./recipes.json', () => ({
         name: 'Sausage Pasta',
         ingredients: [['1 Tbsp olive oil', '1 lb sausage']],
         instructions: ['Heat the oil', 'Boil pasta'],
+      },
+      {
+        name: 'Apple Crisp',
+        course: 'Dessert',
+        cookingMethod: 'Oven',
+        ingredients: [['4 apples', '1 cup oats']],
+        instructions: ['Bake'],
       },
     ],
   },
@@ -117,5 +124,109 @@ describe('App', () => {
       'aria-pressed',
       'false',
     );
+  });
+});
+
+// What Back, Forward, or clicking an in-page link does: the hash changes and hashchange fires.
+// jsdom fires hashchange asynchronously, so wait for it inside act().
+async function goToHash(hash) {
+  await act(async () => {
+    window.location.hash = hash;
+    await new Promise((resolve) => window.addEventListener('hashchange', resolve, { once: true }));
+  });
+}
+
+describe('Browse all recipes', () => {
+  it('links to the browse view from the header', () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    render(<App />);
+    const link = within(screen.getByRole('banner')).getByRole('link', { name: 'All recipes' });
+    expect(link).toHaveAttribute('href', '#/browse');
+    expect(link).not.toHaveAttribute('aria-current');
+  });
+
+  it('lists every recipe by name as a link to it, sorted by name', () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    const links = within(screen.getByRole('main')).getAllByRole('link');
+    expect(links.map((a) => [a.textContent, a.getAttribute('href')])).toEqual([
+      ['Apple Crisp', '#/apple-crisp'],
+      ['Lentil Stew', '#/lentil-stew'],
+      ['Sausage Pasta', '#/sausage-pasta'],
+    ]);
+    expect(screen.getByText('Dessert · Oven')).toBeInTheDocument();
+  });
+
+  it('deep-links to #/browse with its own title and no random recipe', () => {
+    const random = vi.spyOn(Math, 'random');
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('All recipes');
+    expect(random).not.toHaveBeenCalled();
+    expect(window.location.hash).toBe('#/browse');
+    expect(document.title).toBe("All recipes | Twig's Cook Book");
+    expect(screen.getByRole('link', { name: 'All recipes' })).toHaveAttribute(
+      'aria-current',
+      'page',
+    );
+  });
+
+  it('does not move focus on the first page load', () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+    expect(screen.getByRole('heading', { level: 1 })).not.toHaveFocus();
+  });
+
+  it('goes to browse from the header link, then opens a recipe, moving focus each time', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const user = userEvent.setup();
+    render(<App />);
+
+    await user.click(screen.getByRole('link', { name: 'All recipes' }));
+    const browseHeading = await screen.findByRole('heading', { level: 1, name: 'All recipes' });
+    expect(window.location.hash).toBe('#/browse');
+    expect(document.title).toBe("All recipes | Twig's Cook Book");
+    expect(browseHeading).toHaveFocus();
+
+    await user.click(screen.getByRole('link', { name: 'Apple Crisp' }));
+    const recipeHeading = await screen.findByRole('heading', { level: 1, name: 'Apple Crisp' });
+    expect(window.location.hash).toBe('#/apple-crisp');
+    expect(document.title).toBe("Apple Crisp | Twig's Cook Book");
+    expect(recipeHeading).toHaveFocus();
+    expect(screen.getByRole('checkbox', { name: /apples/ })).toBeInTheDocument();
+  });
+
+  it('follows hash changes between browse and recipes', async () => {
+    window.history.replaceState(null, '', '#/browse');
+    render(<App />);
+
+    await goToHash('#/sausage-pasta');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Sausage Pasta');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
+    expect(document.title).toBe("Sausage Pasta | Twig's Cook Book");
+
+    await goToHash('#/browse');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('All recipes');
+    expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
+  });
+
+  it('keeps a recipe checklist across a trip to browse and back', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const user = userEvent.setup();
+    render(<App />);
+    await user.click(screen.getByRole('checkbox', { name: /lentils/ }));
+
+    await user.click(screen.getByRole('link', { name: 'All recipes' }));
+    await user.click(await screen.findByRole('link', { name: 'Lentil Stew' }));
+    expect(await screen.findByRole('checkbox', { name: /lentils/ })).toBeChecked();
+  });
+
+  it('moves focus to the recipe heading after choosing a search result', async () => {
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    const user = userEvent.setup();
+    render(<App />);
+    await user.type(screen.getByLabelText('Search recipes'), 'pasta');
+    await user.click(await screen.findByRole('button', { name: 'Sausage Pasta' }));
+    expect(screen.getByRole('heading', { level: 1, name: 'Sausage Pasta' })).toHaveFocus();
   });
 });

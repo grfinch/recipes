@@ -1,0 +1,41 @@
+{
+  "id": "hot-fudge-sundae-cake",
+  "name": "Hot Fudge Sundae Cake",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Cake",
+      "items": [
+        "1 cup flour",
+        "3/4 cup sugar",
+        "2 Tbsp cocoa",
+        "2 tsp baking powder",
+        "1/4 tsp salt",
+        "1/2 cup milk",
+        "2 Tbsp oil",
+        "1 tsp vanilla",
+        "1 cup chopped nuts, optional"
+      ]
+    },
+    {
+      "title": "Topping",
+      "items": ["1 cup packed brown sugar", "1/4 cup cocoa", "1 3/4 cups very hot water"]
+    },
+    {
+      "items": ["Ice cream"]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Heat oven to 350°F.",
+        "Mix flour, sugar, 2 Tbsp cocoa, baking powder, and salt in an ungreased 9-inch square pan.",
+        "Mix in milk, oil, and vanilla until smooth. Stir in nuts. Spread evenly in pan.",
+        "Sprinkle with brown sugar and 1/4 cup cocoa. Pour hot water over batter.",
+        "Bake 40 minutes.",
+        "Spoon warm cake into dessert dishes and top with ice cream. Spoon sauce from pan onto each serving."
+      ]
+    }
+  ]
+}

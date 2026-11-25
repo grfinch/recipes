@@ -1,0 +1,37 @@
+{
+  "id": "easy-biscuits",
+  "name": "Easy Biscuits",
+  "course": "Bread",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "items": [
+        "4 cups baking mix (Jiffy or Bisquick), plus about 1/2 cup for the counter",
+        "1 cup sour cream",
+        "1 cup 7-Up soda (any clear carbonated drink will work)",
+        "1 cup melted butter"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat oven to 450°F.",
+        "Cut the sour cream into your biscuit mix.",
+        "Stir in 1/2 cup 7-Up. The dough will be very soft, don't worry.",
+        "Sprinkle additional baking mix on to your counter, about a 1/2 cup seems to work just fine.",
+        "Knead and fold dough until coated with your baking mix.",
+        "Pat dough out (no rolling pin needed) and cut biscuits using a round biscuit/cookie cutter.",
+        "Melt butter in a 9x13-inch pan. I stick my pan and butter in the oven for a few minutes. Just a few though, the butter will burn, so watch it.",
+        "Place cut biscuits on top of melted butter and bake for 12-15 minutes or until brown."
+      ]
+    }
+  ],
+  "notes": [
+    {
+      "items": [
+        "Don't have a biscuit cutter? No problem, you can certainly use a glass or empty soup can to cut out your biscuits. Improvising is fine."
+      ]
+    }
+  ]
+}

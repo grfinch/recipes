@@ -1,0 +1,22 @@
+{
+  "id": "pumpkin-pie-spice",
+  "name": "Pumpkin Pie Spice",
+  "course": "Sauce",
+  "cookingMethod": "No-cook",
+  "ingredients": [
+    {
+      "items": [
+        "3 Tbsp ground cinnamon",
+        "2 tsp ground ginger",
+        "2 tsp nutmeg",
+        "1-1/2 tsp ground allspice",
+        "1-1/2 tsp ground cloves"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": ["Mix together and put in a small jar."]
+    }
+  ]
+}

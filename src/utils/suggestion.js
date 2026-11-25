@@ -2,6 +2,9 @@
 // and the relay that turns a suggestion into a GitHub issue (relay/), so both enforce the same
 // limits. Plain data and functions only: no DOM, no React.
 
+// Where visitors can suggest things themselves when this copy has no relay
+export const ISSUES_URL = 'https://github.com/grfinch/recipes/issues/new';
+
 export const FIELDS = [
   { name: 'name', label: 'Recipe name', required: true, max: 120 },
   { name: 'ingredients', label: 'Ingredients', required: true, max: 10000 },

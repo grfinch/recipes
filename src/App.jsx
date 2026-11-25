@@ -3,6 +3,7 @@ import './App.css';
 import recipesData from './recipes.json';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
+import KeepScreenOn from './components/wakeLock/KeepScreenOn';
 import { hashFor, recipeFromHash } from './utils/recipeHash';
 
 const allRecipes = Array.isArray(recipesData?.recipes) ? recipesData.recipes : [];
@@ -46,6 +47,7 @@ function App() {
     <>
       <header>
         <SearchBox recipes={allRecipes} onSelect={handleSelect} />
+        <KeepScreenOn />
       </header>
 
       <main>

@@ -109,7 +109,7 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   await page.screenshot({ path: shot('regression-3-switched.png') });
 
   // Accessibility styling (CSS isn't applied in jsdom, so it's checked here)
-  const firstBox = page.getByRole('checkbox').first();
+  const firstBox = main.getByRole('checkbox').first();
   const checkTransform = () =>
     firstBox.evaluate((el) => getComputedStyle(el, '::before').transform);
   check(
@@ -127,8 +127,14 @@ export default async function regression({ page, shot, check, consoleMsgs }) {
   await page.screenshot({ path: shot('regression-4-checkmark.png') });
 
   await input.focus();
-  await page.keyboard.press('Tab'); // to Reset checklist
-  await page.keyboard.press('Tab'); // into the first ingredient checkbox
+  // Tab past the header controls and "Reset checklist" to the first ingredient checkbox
+  for (let i = 0; i < 6; i++) {
+    await page.keyboard.press('Tab');
+    const onIngredient = await page.evaluate(
+      () => document.activeElement?.matches('main li input[type="checkbox"]') ?? false,
+    );
+    if (onIngredient) break;
+  }
   const boxOutline = await page.evaluate(() => {
     const s = getComputedStyle(document.activeElement);
     return `${document.activeElement.type} ${s.outlineStyle} ${s.outlineWidth}`;

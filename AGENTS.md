@@ -47,6 +47,8 @@ This is a static, client-only React 19 app (plain JSX, no TypeScript, no router,
 
 Items are controlled: `Recipe` owns the "checked" state through `src/hooks/useCheckedItems.js` and passes `checked` and `onToggle` down through `RecipeSection`. The hook saves each recipe's checked item ids (`<section header>:<group>-<item>`) to `localStorage` under `recipes:checked:<recipe name>`, so they survive a reload. "Reset checklist" clears them. Ids are positions, so reordering a recipe's items in `recipes.json` moves any saved checks with them.
 
+**Keep screen on:** `KeepScreenOn` (in the header) is an opt-in checkbox backed by `src/hooks/useWakeLock.js` and the Screen Wake Lock API. It renders nothing in browsers without `navigator.wakeLock`. Browsers release the lock when the tab is hidden, so the hook requests it again on `visibilitychange`. If a request is refused, the box unchecks and a polite `aria-live` message explains why. It is deliberately not `role="status"`, so it stays separate from the search result count. jsdom has no Wake Lock API, so tests install a fake `navigator.wakeLock`.
+
 **Search:** `SearchBox` uses `src/hooks/useDebounce.js`, which returns `[value, setValue, debouncedValue, { cancel, flush, reset }]`. It filters by name, ingredients, instructions, and notes with a case-insensitive substring match. Results appear in a `position: fixed` overlay positioned from the input's bounding rect. Clicking outside or pressing Escape closes the overlay.
 
 ## Conventions

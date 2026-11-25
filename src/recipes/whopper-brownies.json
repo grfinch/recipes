@@ -1,0 +1,50 @@
+{
+  "id": "whopper-brownies",
+  "name": "Whopper Brownies",
+  "course": "Dessert",
+  "cookingMethod": "Oven",
+  "ingredients": [
+    {
+      "title": "Brownies",
+      "items": [
+        "1 cup butter, softened",
+        "2 cups sugar",
+        "4 eggs",
+        "1 1/2 tsp vanilla",
+        "1/2 tsp salt",
+        "1/2 cup cocoa",
+        "1/2 cup malted milk powder",
+        "1 1/3 cups flour"
+      ]
+    },
+    {
+      "title": "Frosting",
+      "items": [
+        "1/2 cup butter, softened",
+        "3-4 cups powdered sugar",
+        "1/2 cup malted milk powder",
+        "1/4 cup milk",
+        "1 tsp vanilla",
+        "1 cup Whoppers, chopped"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "title": "Brownies",
+      "items": [
+        "Cream butter and sugar together. Add eggs and blend well.",
+        "Add vanilla, salt, cocoa, malted milk powder and flour. You can also mix in some chopped Whoppers if you would like. Don't overbeat.",
+        "Pour into a greased 9x13 pan. Bake at 350°F for 20-25 minutes. Let cool."
+      ]
+    },
+    {
+      "title": "Frosting",
+      "items": [
+        "Mix all ingredients together (except the Whoppers).",
+        "Add more milk or powdered sugar to get to your desired consistency.",
+        "Spread over cool brownies and top with chopped Whoppers."
+      ]
+    }
+  ]
+}

@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import allRecipes from '../recipes/index.js';
 import {
   BROWSE_HASH,
-  PICK_HASH,
   RESERVED_SLUGS,
   SUGGEST_HASH,
   changeHashFor,
@@ -74,12 +73,11 @@ describe('recipeHash', () => {
     expect(RESERVED_SLUGS).toContain('suggest-change');
   });
 
-  it('reads the pick page from the hash, even if a recipe is named Pick', () => {
+  it('opens the old pick page as the browse page, even if a recipe is named Pick', () => {
     const withPick = [...recipes, { id: 'pick', name: 'Pick' }];
-    expect(viewFromHash(withPick, '#/pick')).toEqual({ page: 'pick' });
-    expect(viewFromHash(withPick, '#/pick?course=Dinner')).toEqual({ page: 'pick' });
+    expect(viewFromHash(withPick, '#/pick')).toEqual({ page: 'browse' });
+    expect(viewFromHash(withPick, '#/pick?have=rice')).toEqual({ page: 'browse', have: ['rice'] });
     expect(recipeFromHash(withPick, '#/pick')).toBeNull();
-    expect(hashForView({ page: 'pick' })).toBe(PICK_HASH);
     expect(RESERVED_SLUGS).toContain('pick');
   });
 
@@ -184,6 +182,27 @@ describe('recipeHash', () => {
       expect(hashForView({ page: 'browse', course: 'Dinner' })).toBe('#/browse?course=Dinner');
       expect(hashForView({ page: 'browse', course: [] })).toBe(BROWSE_HASH);
       expect(hashForView({ page: 'browse', course: undefined, method: null })).toBe(BROWSE_HASH);
+    });
+
+    it('reads the ingredients as have=, keeping terms no recipe uses', () => {
+      expect(view('#/browse?have=Chicken&have=%20rice%20&have=chicken&have=')).toEqual({
+        page: 'browse',
+        have: ['chicken', 'rice'],
+      });
+      // A comma splits a value, as in the box
+      expect(view('#/browse?have=tofu,+rice').have).toEqual(['tofu', 'rice']);
+      expect(view('#/browse?have=%20')).toEqual({ page: 'browse' });
+    });
+
+    it('puts the ingredients after the other filters, and round-trips them', () => {
+      const filtered = { page: 'browse', have: ['chicken', 'olive oil'], course: ['Dinner'] };
+      const hash = hashForView(filtered);
+      expect(hash).toBe('#/browse?course=Dinner&have=chicken&have=olive+oil');
+      expect(view(hash)).toEqual({
+        page: 'browse',
+        course: ['Dinner'],
+        have: ['chicken', 'olive oil'],
+      });
     });
 
     it('does not treat an encoded "?" as the start of a query', () => {

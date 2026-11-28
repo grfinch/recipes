@@ -2,7 +2,6 @@ import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
-import PickRecipe from './components/pick/PickRecipe';
 
 // Separate file because vi.mock replaces the recipe list for the whole file.
 vi.mock('./recipes/index.js', () => ({
@@ -38,7 +37,6 @@ vi.mock('./recipes/index.js', () => ({
       contributor: 'Gaven',
     },
     {
-      // No contributor: matches only "All" in the Shared by row
       id: 'lentil-stew',
       name: 'Lentil Stew',
       course: 'Dinner',
@@ -58,9 +56,15 @@ const count = () => main().getByRole('status');
 const ingredientsBox = () => main().getByRole('textbox', { name: /Ingredients you have/ });
 const result = () => main().queryByRole('region', { name: 'Your pick' });
 const pickedName = () => within(result()).getAllByRole('link')[0].textContent;
+// The names in the recipe list, not in the pick's card
+const listed = () =>
+  main()
+    .getAllByRole('listitem')
+    .filter((li) => !result()?.contains(li))
+    .map((li) => within(li).getByRole('link').textContent);
 
-function openPick() {
-  window.history.replaceState(null, '', '#/pick');
+function openBrowse(hash = '#/browse') {
+  window.history.replaceState(null, '', hash);
   render(<App />);
 }
 
@@ -75,60 +79,45 @@ async function waitForHashChange(change) {
   });
 }
 
-describe('Pick a recipe for me', () => {
-  it('opens from the footer link with its own title, focus, and aria-current', async () => {
-    const user = userEvent.setup();
-    window.history.replaceState(null, '', '#/lentil-stew');
-    render(<App />);
-    const footer = () => within(screen.getByRole('contentinfo'));
-    expect(footer().getByRole('link', { name: 'Pick a recipe for me' })).not.toHaveAttribute(
-      'aria-current',
-    );
-
-    await user.click(footer().getByRole('link', { name: 'Pick a recipe for me' }));
-    const heading = await screen.findByRole('heading', { level: 1, name: 'Pick a recipe for me' });
-    expect(window.location.hash).toBe('#/pick');
-    expect(document.title).toBe("Pick a recipe for me | Sharmi's Cook Book");
-    expect(heading).toHaveFocus();
-    expect(footer().getByRole('link', { name: 'Pick a recipe for me' })).toHaveAttribute(
-      'aria-current',
-      'page',
-    );
+describe('Ingredients and Pick one for me on All recipes', () => {
+  it('opens an old #/pick link as All recipes, keeping its filters', () => {
+    openBrowse('#/pick?course=Dinner');
+    expect(screen.getByRole('heading', { level: 1, name: 'All recipes' })).toBeInTheDocument();
+    expect(window.location.hash).toBe('#/browse?course=Dinner');
+    expect(chip('Course', 'Dinner')).toBeChecked();
+    const footer = within(screen.getByRole('contentinfo'));
+    expect(footer.queryByRole('link', { name: 'Pick a recipe for me' })).toBeNull();
   });
 
-  it('is linked from All recipes', () => {
-    window.history.replaceState(null, '', '#/browse');
-    render(<App />);
-    expect(main().getByRole('link', { name: 'Pick a recipe for me' })).toHaveAttribute(
-      'href',
-      '#/pick',
-    );
-  });
-
-  it('starts with every recipe to choose from and no pick', () => {
-    openPick();
-    expect(chip('Course', 'All')).toBeChecked();
-    expect(chip('Cooking method', 'All')).toBeChecked();
-    expect(chip('Shared by', 'All')).toBeChecked();
+  it('starts with every recipe listed, an empty ingredients box, and no pick', () => {
+    openBrowse();
     expect(ingredientsBox()).toHaveValue('');
     expect(ingredientsBox()).toHaveAccessibleDescription(/Separate them with commas/);
-    expect(count()).toHaveTextContent('4 recipes to choose from');
+    expect(count()).toHaveTextContent('4 recipes');
+    expect(main().getByRole('button', { name: 'Pick one for me' })).toBeInTheDocument();
     expect(result()).toBeNull();
   });
 
-  it('picks a recipe that fits the course, method, and ingredients', async () => {
+  it('lists only recipes with the ingredients, keeps them in the link, and picks from them', async () => {
     const user = userEvent.setup();
     vi.spyOn(Math, 'random').mockReturnValue(0);
-    openPick();
+    openBrowse();
+    const historyLength = window.history.length;
 
     await user.click(chip('Course', 'Dinner'));
-    expect(count()).toHaveTextContent('3 recipes match');
-    await user.click(chip('Cooking method', 'Instant-pot'));
-    expect(count()).toHaveTextContent('2 recipes match');
-    await user.type(ingredientsBox(), 'Chicken, rice');
-    expect(count()).toHaveTextContent('1 recipe matches');
+    await user.type(ingredientsBox(), 'Chicken, ');
+    // The box keeps what was typed; the link keeps the terms
+    expect(ingredientsBox()).toHaveValue('Chicken, ');
+    expect(window.location.hash).toBe('#/browse?course=Dinner&have=chicken');
+    expect(listed()).toEqual(['Chicken Curry', 'Teriyaki Chicken']);
+    await user.type(ingredientsBox(), 'rice');
+    expect(window.location.hash).toBe('#/browse?course=Dinner&have=chicken&have=rice');
+    expect(count()).toHaveTextContent('1 recipe');
+    expect(listed()).toEqual(['Teriyaki Chicken']);
+    // Typing and filtering add no history entries
+    expect(window.history.length).toBe(historyLength);
 
-    const button = main().getByRole('button', { name: 'Pick for me' });
+    const button = main().getByRole('button', { name: 'Pick one for me' });
     await user.click(button);
     expect(pickedName()).toBe('Teriyaki Chicken');
     expect(within(result()).getByRole('link', { name: 'Teriyaki Chicken' })).toHaveAttribute(
@@ -146,65 +135,35 @@ describe('Pick a recipe for me', () => {
     expect(button).toHaveFocus();
     expect(result().parentElement).toHaveAttribute('aria-live', 'polite');
     // Picking doesn't navigate or change the URL
-    expect(window.location.hash).toBe('#/pick');
+    expect(window.location.hash).toBe('#/browse?course=Dinner&have=chicken&have=rice');
   });
 
-  it('filters by who shared the recipe, listing each contributor A-Z', async () => {
+  it('reads the ingredients from the link, ignoring case, blanks, and repeats', () => {
+    openBrowse('#/browse?have=Chicken&have=chicken&have=%20');
+    expect(ingredientsBox()).toHaveValue('chicken');
+    expect(listed()).toEqual(['Chicken Curry', 'Teriyaki Chicken']);
+    expect(window.location.hash).toBe('#/browse?have=chicken');
+  });
+
+  it('matches plurals by their stem, and says when no recipe uses them all', async () => {
     const user = userEvent.setup();
-    vi.spyOn(Math, 'random').mockReturnValue(0);
-    openPick();
-    const row = within(main().getByRole('group', { name: 'Shared by' }));
-    // Each chip's label text, without its decorative check mark
-    const labels = row
-      .getAllByRole('checkbox')
-      .map((r) => r.labels[0].textContent.replace('✓', ''));
-    expect(labels).toEqual(['All', 'Gaven', 'Sharmi']);
-
-    await user.click(chip('Shared by', 'Sharmi'));
-    expect(count()).toHaveTextContent('2 recipes match');
-    await user.type(ingredientsBox(), 'chicken');
-    expect(count()).toHaveTextContent('1 recipe matches');
-    await user.click(main().getByRole('button', { name: 'Pick for me' }));
-    expect(pickedName()).toBe('Chicken Curry');
-
-    // Adding Gaven: Sharmi's or Gaven's chicken recipes
-    await user.click(chip('Shared by', 'Gaven'));
-    expect(result()).toBeNull();
-    expect(count()).toHaveTextContent('2 recipes match');
-  });
-
-  it('takes several choices in a row, and "All" clears them', async () => {
-    const user = userEvent.setup();
-    openPick();
-    await user.click(chip('Course', 'Dessert'));
-    expect(count()).toHaveTextContent('1 recipe matches');
-    await user.click(chip('Course', 'Dinner'));
-    expect(count()).toHaveTextContent('4 recipes match');
-    await user.click(chip('Cooking method', 'Oven'));
-    await user.click(chip('Cooking method', 'Stovetop'));
-    expect(count()).toHaveTextContent('2 recipes match');
-
-    await user.click(chip('Course', 'All'));
-    expect(chip('Course', 'All')).toBeChecked();
-    expect(chip('Course', 'Dinner')).not.toBeChecked();
-    expect(chip('Cooking method', 'Oven')).toBeChecked();
-    expect(count()).toHaveTextContent('2 recipes match');
-  });
-
-  it('has no Shared by row when no recipe credits anyone', () => {
-    render(<PickRecipe recipes={[{ id: 'x', name: 'X', ingredients: [], instructions: [] }]} />);
-    expect(screen.queryByRole('group', { name: 'Shared by' })).toBeNull();
-    expect(screen.getByRole('group', { name: 'Course' })).toBeInTheDocument();
+    openBrowse();
+    await user.type(ingredientsBox(), 'apple');
+    expect(listed()).toEqual(['Apple Crisp']);
+    await user.clear(ingredientsBox());
+    // Each is used somewhere, but never together
+    await user.type(ingredientsBox(), 'lentils, oat');
+    expect(count()).toHaveTextContent('No recipes match these filters.');
   });
 
   it('"Pick another" always changes the pick when there is more than one match', async () => {
     const user = userEvent.setup();
     vi.spyOn(Math, 'random').mockReturnValue(0);
-    openPick();
+    openBrowse();
     await user.type(ingredientsBox(), 'chicken');
-    expect(count()).toHaveTextContent('2 recipes match');
+    expect(count()).toHaveTextContent('2 recipes');
 
-    await user.click(main().getByRole('button', { name: 'Pick for me' }));
+    await user.click(main().getByRole('button', { name: 'Pick one for me' }));
     expect(pickedName()).toBe('Chicken Curry');
     await user.click(main().getByRole('button', { name: 'Pick another' }));
     expect(pickedName()).toBe('Teriyaki Chicken');
@@ -212,47 +171,44 @@ describe('Pick a recipe for me', () => {
     expect(pickedName()).toBe('Chicken Curry');
   });
 
-  it('drops the pick when the choices change', async () => {
+  it('drops the pick when a filter or the ingredients change', async () => {
     const user = userEvent.setup();
-    openPick();
-    await user.click(main().getByRole('button', { name: 'Pick for me' }));
+    openBrowse();
+    await user.click(main().getByRole('button', { name: 'Pick one for me' }));
     expect(result()).not.toBeNull();
-    await user.click(chip('Course', 'Dessert'));
+    await user.click(chip('Course', 'Dinner'));
     expect(result()).toBeNull();
-    expect(main().getByRole('button', { name: 'Pick for me' })).toBeInTheDocument();
+
+    await user.click(main().getByRole('button', { name: 'Pick one for me' }));
+    expect(result()).not.toBeNull();
+    await user.type(ingredientsBox(), 'r');
+    expect(result()).toBeNull();
+    expect(main().getByRole('button', { name: 'Pick one for me' })).toBeInTheDocument();
   });
 
-  it('names an ingredient no recipe uses, and Clear choices starts over', async () => {
+  it('names an ingredient no recipe uses, and Clear filters clears the ingredients too', async () => {
     const user = userEvent.setup();
-    openPick();
+    openBrowse();
     await user.click(chip('Course', 'Dinner'));
-    await user.click(chip('Shared by', 'Gaven'));
     await user.type(ingredientsBox(), 'chicken, tofu');
     expect(count()).toHaveTextContent('No recipes use tofu.');
-    expect(main().queryByRole('button', { name: 'Pick for me' })).toBeNull();
+    expect(main().queryByRole('button', { name: 'Pick one for me' })).toBeNull();
 
-    await user.click(main().getByRole('button', { name: 'Clear choices' }));
+    await user.click(main().getByRole('button', { name: 'Clear filters' }));
     expect(chip('Course', 'All')).toBeChecked();
     expect(chip('Course', 'All')).toHaveFocus();
-    expect(chip('Shared by', 'All')).toBeChecked();
     expect(ingredientsBox()).toHaveValue('');
-    expect(count()).toHaveTextContent('4 recipes to choose from');
+    expect(count()).toHaveTextContent('4 recipes');
+    expect(window.location.hash).toBe('#/browse');
   });
 
-  it('says when the choices clash but each ingredient is used somewhere', async () => {
-    const user = userEvent.setup();
-    openPick();
-    await user.click(chip('Course', 'Dessert'));
-    await user.type(ingredientsBox(), 'chicken');
-    expect(count()).toHaveTextContent('No recipes match all of these. Try fewer choices.');
-  });
-
-  it('keeps the choices and the pick after opening the recipe and coming Back', async () => {
+  it('keeps the filters and the pick after opening the recipe and coming Back', async () => {
     const user = userEvent.setup();
     vi.spyOn(Math, 'random').mockReturnValue(0);
-    openPick();
+    openBrowse();
     await user.click(chip('Cooking method', 'Instant-pot'));
-    await user.click(main().getByRole('button', { name: 'Pick for me' }));
+    await user.type(ingredientsBox(), 'rice');
+    await user.click(main().getByRole('button', { name: 'Pick one for me' }));
     expect(pickedName()).toBe('Lentil Stew');
 
     await user.click(within(result()).getByRole('link', { name: 'Lentil Stew' }));
@@ -261,8 +217,10 @@ describe('Pick a recipe for me', () => {
     ).toBeInTheDocument();
 
     await waitForHashChange(() => window.history.back());
-    expect(screen.getByRole('heading', { level: 1, name: 'Pick a recipe for me' })).toHaveFocus();
     expect(chip('Cooking method', 'Instant-pot')).toBeChecked();
+    expect(ingredientsBox()).toHaveValue('rice');
     expect(pickedName()).toBe('Lentil Stew');
+    // Focus goes back to the pick's link, where the visitor left
+    expect(within(result()).getByRole('link', { name: 'Lentil Stew' })).toHaveFocus();
   });
 });

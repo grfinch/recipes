@@ -3,7 +3,6 @@ import './App.css';
 import allRecipes from './recipes/index.js';
 import BrowseRecipes from './components/browse/BrowseRecipes';
 import SiteFooter from './components/footer/SiteFooter';
-import PickRecipe from './components/pick/PickRecipe';
 import Recipe from './components/recipe/Recipe';
 import SearchBox from './components/search/SearchBox';
 import SuggestChange from './components/suggest/SuggestChange';
@@ -11,13 +10,11 @@ import SuggestRecipe from './components/suggest/SuggestRecipe';
 import ThemePicker from './components/theme/ThemePicker';
 import KeepScreenOn from './components/wakeLock/KeepScreenOn';
 import { BROWSE_HASH, SUGGEST_HASH, hashFor, hashForView, viewFromHash } from './utils/recipeHash';
-import { NO_CHOICES } from './utils/recipePick';
 
 const SITE_TITLE = "Sharmi's Cook Book";
 const PAGE_TITLES = {
   browse: 'All recipes',
   suggest: 'Suggest a recipe',
-  pick: 'Pick a recipe for me',
 };
 
 function randomRecipeView() {
@@ -36,8 +33,8 @@ function sameView(a, b) {
 }
 
 function App() {
-  // view: { page: 'browse', course?, method?, by? } (each a list of values), { page: 'suggest' },
-  // { page: 'pick' }, { page: 'change', recipe }, or { page: 'recipe', recipe };
+  // view: { page: 'browse', course?, method?, by?, have? } (each a list of values),
+  // { page: 'suggest' }, { page: 'change', recipe }, or { page: 'recipe', recipe };
   // null only when there are no recipes.
   // The page in the URL hash, else a random recipe. The function form runs only on first render.
   const [view, setView] = useState(() => viewFromHash(allRecipes) ?? randomRecipeView());
@@ -51,9 +48,9 @@ function App() {
   if (view?.page === 'recipe' && view.recipe !== lastRecipe) setLastRecipe(view.recipe);
   const returnTo = view?.page === 'browse' ? lastRecipe : null;
 
-  // The Pick for me page's choices and pick. Kept here rather than in the page, so opening the
-  // picked recipe and coming Back shows the same choices and pick.
-  const [pickChoices, setPickChoices] = useState(NO_CHOICES);
+  // All recipes' random pick. Kept here rather than in the page, so opening the picked recipe
+  // and coming Back shows it again (the filters come back with the hash).
+  const [picked, setPicked] = useState(null);
 
   // Back/forward, header and browse links, and edited links change the hash: show that page.
   useEffect(() => {
@@ -118,6 +115,8 @@ function App() {
 
   function handleFiltersChange(filters) {
     const next = { page: 'browse', ...filters };
+    // A filter change drops the pick: it may no longer fit
+    setPicked(null);
     setView((prev) => (sameView(prev, next) ? prev : next));
   }
 
@@ -165,11 +164,11 @@ function App() {
             filters={browseFilters}
             onFiltersChange={handleFiltersChange}
             returnTo={returnTo}
+            picked={picked}
+            onPick={setPicked}
           />
         ) : view?.page === 'suggest' ? (
           <SuggestRecipe />
-        ) : view?.page === 'pick' ? (
-          <PickRecipe recipes={allRecipes} choices={pickChoices} onChoicesChange={setPickChoices} />
         ) : view?.page === 'change' ? (
           // key: another recipe's change page starts from that recipe's own draft
           <SuggestChange key={view.recipe.id} recipe={view.recipe} />

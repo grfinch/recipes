@@ -18,17 +18,11 @@ function withValues(filters, param, values) {
 // Side). "All" is checked while nothing else in its row is, and checking it clears the row.
 // Native checkboxes: Tab moves between chips and Space toggles one. The chip is the input's
 // <label>, so the visible text is its accessible name.
-// name: the checkboxes' name prefix, so another page (Pick for me) can reuse the chips.
-// filters: { course?, method?, by? }, each a list of values; onChange gets the new filters.
+// filters: { course?, method?, by? }, each a list of values; onChange gets the new filters, with
+// any other keys (the ingredients) kept.
 // options: { course: [...], method: [...], by?: [...] }; a row shows only when its options are
 // given.
-export default function BrowseFilters({
-  options,
-  filters,
-  onChange,
-  courseAllRef,
-  name = 'browse',
-}) {
+export default function BrowseFilters({ options, filters, onChange, courseAllRef }) {
   return (
     <div className={styles.filters}>
       {GROUPS.filter(({ param }) => options[param]).map(({ param, legend }) => {
@@ -44,7 +38,7 @@ export default function BrowseFilters({
                 <label key={value ?? ''} className={styles.chip}>
                   <input
                     type="checkbox"
-                    name={`${name}-${param}`}
+                    name={`browse-${param}`}
                     className={styles.input}
                     checked={value === null ? chosen.length === 0 : chosen.includes(value)}
                     onChange={() => {

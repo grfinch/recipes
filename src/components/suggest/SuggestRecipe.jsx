@@ -68,7 +68,7 @@ export default function SuggestRecipe({
           Thanks for the recipe!
         </h1>
         <p className={styles.intro}>
-          Twig reads every suggestion. If it&apos;s a good fit, it&apos;ll show up in the cook book
+          Gaven reads every suggestion. If it&apos;s a good fit, it&apos;ll show up in the cook book
           after a little tidying.
         </p>
         <div className={styles.actions}>
@@ -340,7 +340,7 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent, onClear }
         ) : null}
 
         <p className={styles.privacy}>
-          Your suggestion is posted publicly on GitHub, where Twig reviews it. Please don&apos;t
+          Your suggestion is posted publicly on GitHub, where Gaven reviews it. Please don&apos;t
           include personal details like your email or address.
         </p>
 

@@ -83,7 +83,7 @@ describe('Pick a recipe for me', () => {
     await user.click(footer().getByRole('link', { name: 'Pick a recipe for me' }));
     const heading = await screen.findByRole('heading', { level: 1, name: 'Pick a recipe for me' });
     expect(window.location.hash).toBe('#/pick');
-    expect(document.title).toBe("Pick a recipe for me | Twig's Cook Book");
+    expect(document.title).toBe("Pick a recipe for me | Sharmi's Cook Book");
     expect(heading).toHaveFocus();
     expect(footer().getByRole('link', { name: 'Pick a recipe for me' })).toHaveAttribute(
       'aria-current',

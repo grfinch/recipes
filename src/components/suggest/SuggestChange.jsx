@@ -97,7 +97,8 @@ export default function SuggestChange({
           Thanks for the suggestion!
         </h1>
         <p className={styles.intro}>
-          Twig reads every suggestion. If it makes {recipe.name} better, the recipe will be updated.
+          Gaven reads every suggestion. If it makes {recipe.name} better, the recipe will be
+          updated.
         </p>
         <div className={styles.actions}>
           <a href={hashFor(recipe)}>Back to {recipe.name}</a>
@@ -274,7 +275,7 @@ function ChangeForm({ recipe, endpoint, turnstileSiteKey, headingRef, backLink, 
         ) : null}
 
         <p className={styles.privacy}>
-          Your suggestion is posted publicly on GitHub, where Twig reviews it. Please don&apos;t
+          Your suggestion is posted publicly on GitHub, where Gaven reviews it. Please don&apos;t
           include personal details like your email or address.
         </p>
 

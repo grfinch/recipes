@@ -46,7 +46,7 @@ describe('App', () => {
     render(<App />);
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Sausage Pasta');
     expect(random).not.toHaveBeenCalled();
-    expect(document.title).toBe("Sausage Pasta | Twig's Cook Book");
+    expect(document.title).toBe("Sausage Pasta | Sharmi's Cook Book");
   });
 
   it('replaces an unknown hash with the recipe it shows', () => {
@@ -189,7 +189,7 @@ describe('Browse all recipes', () => {
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('All recipes');
     expect(random).not.toHaveBeenCalled();
     expect(window.location.hash).toBe('#/browse');
-    expect(document.title).toBe("All recipes | Twig's Cook Book");
+    expect(document.title).toBe("All recipes | Sharmi's Cook Book");
     expect(screen.getByRole('link', { name: 'All recipes' })).toHaveAttribute(
       'aria-current',
       'page',
@@ -210,13 +210,13 @@ describe('Browse all recipes', () => {
     await user.click(screen.getByRole('link', { name: 'All recipes' }));
     const browseHeading = await screen.findByRole('heading', { level: 1, name: 'All recipes' });
     expect(window.location.hash).toBe('#/browse');
-    expect(document.title).toBe("All recipes | Twig's Cook Book");
+    expect(document.title).toBe("All recipes | Sharmi's Cook Book");
     expect(browseHeading).toHaveFocus();
 
     await user.click(screen.getByRole('link', { name: 'Apple Crisp' }));
     const recipeHeading = await screen.findByRole('heading', { level: 1, name: 'Apple Crisp' });
     expect(window.location.hash).toBe('#/apple-crisp');
-    expect(document.title).toBe("Apple Crisp | Twig's Cook Book");
+    expect(document.title).toBe("Apple Crisp | Sharmi's Cook Book");
     expect(recipeHeading).toHaveFocus();
     expect(screen.getByRole('checkbox', { name: /apples/ })).toBeInTheDocument();
   });
@@ -228,7 +228,7 @@ describe('Browse all recipes', () => {
     await goToHash('#/sausage-pasta');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('Sausage Pasta');
     expect(screen.getByRole('heading', { level: 1 })).toHaveFocus();
-    expect(document.title).toBe("Sausage Pasta | Twig's Cook Book");
+    expect(document.title).toBe("Sausage Pasta | Sharmi's Cook Book");
 
     await goToHash('#/browse');
     expect(screen.getByRole('heading', { level: 1 })).toHaveTextContent('All recipes');
@@ -298,7 +298,7 @@ describe('Suggest a recipe', () => {
     await user.click(footer().getByRole('link', { name: 'Submit a new recipe' }));
     const heading = await screen.findByRole('heading', { level: 1, name: 'Suggest a recipe' });
     expect(window.location.hash).toBe('#/suggest');
-    expect(document.title).toBe("Suggest a recipe | Twig's Cook Book");
+    expect(document.title).toBe("Suggest a recipe | Sharmi's Cook Book");
     expect(heading).toHaveFocus();
     expect(footer().getByRole('link', { name: 'Submit a new recipe' })).toHaveAttribute(
       'aria-current',
@@ -331,7 +331,7 @@ describe('Getting back from All recipes', () => {
     const heading = await screen.findByRole('heading', { level: 1, name: 'Sausage Pasta' });
     expect(heading).toHaveFocus();
     expect(window.location.hash).toBe('#/sausage-pasta');
-    expect(document.title).toBe("Sausage Pasta | Twig's Cook Book");
+    expect(document.title).toBe("Sausage Pasta | Sharmi's Cook Book");
     expect(screen.getByRole('checkbox', { name: /sausage/ })).toBeChecked();
   });
 
@@ -377,7 +377,7 @@ describe('Suggest a change', () => {
     });
     expect(heading).toHaveFocus();
     expect(window.location.hash).toBe('#/suggest-change?recipe=apple-crisp');
-    expect(document.title).toBe("Suggest a change to Apple Crisp | Twig's Cook Book");
+    expect(document.title).toBe("Suggest a change to Apple Crisp | Sharmi's Cook Book");
 
     await user.click(screen.getByRole('link', { name: 'Back to Apple Crisp' }));
     expect(await screen.findByRole('heading', { level: 1, name: 'Apple Crisp' })).toHaveFocus();

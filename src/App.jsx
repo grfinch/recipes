@@ -13,7 +13,7 @@ import KeepScreenOn from './components/wakeLock/KeepScreenOn';
 import { BROWSE_HASH, SUGGEST_HASH, hashFor, hashForView, viewFromHash } from './utils/recipeHash';
 import { NO_CHOICES } from './utils/recipePick';
 
-const SITE_TITLE = "Twig's Cook Book";
+const SITE_TITLE = "Sharmi's Cook Book";
 const PAGE_TITLES = {
   browse: 'All recipes',
   suggest: 'Suggest a recipe',

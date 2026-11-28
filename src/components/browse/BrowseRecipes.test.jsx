@@ -1,7 +1,8 @@
-import { render, screen, within } from '@testing-library/react';
+import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { LETTER_GROUP_THRESHOLD } from '../../utils/recipeFilters';
+import { BACK_TO_TOP_THRESHOLD } from './BackToTop';
 import BrowseRecipes from './BrowseRecipes';
 
 // count recipes named "<Letter> recipe <n>", cycling through the given first letters
@@ -54,5 +55,45 @@ describe('BrowseRecipes on a long list', () => {
     rerender(<BrowseRecipes recipes={recipes} filters={{ course: 'Side' }} />);
     expect(screen.queryByRole('navigation', { name: 'Jump to letter' })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Zucchini' })).toBeInTheDocument();
+  });
+});
+
+describe('BrowseRecipes back to top', () => {
+  function scrollWindowTo(y) {
+    act(() => {
+      window.scrollY = y;
+      window.dispatchEvent(new Event('scroll'));
+    });
+  }
+
+  beforeEach(() => {
+    // jsdom doesn't scroll: record the call and act as if it had
+    window.scrollTo = vi.fn(({ top }) => scrollWindowTo(top));
+  });
+
+  afterEach(() => {
+    window.scrollY = 0;
+    delete window.scrollTo;
+  });
+
+  it('shows only once the visitor has scrolled down', () => {
+    render(<BrowseRecipes recipes={makeRecipes(60)} />);
+    expect(screen.queryByRole('button', { name: 'Back to top' })).not.toBeInTheDocument();
+
+    scrollWindowTo(BACK_TO_TOP_THRESHOLD + 1);
+    expect(screen.getByRole('button', { name: 'Back to top' })).toBeInTheDocument();
+
+    scrollWindowTo(0);
+    expect(screen.queryByRole('button', { name: 'Back to top' })).not.toBeInTheDocument();
+  });
+
+  it('scrolls to the top and moves focus to the heading', async () => {
+    const user = userEvent.setup();
+    render(<BrowseRecipes recipes={makeRecipes(60)} />);
+    scrollWindowTo(2000);
+    await user.click(screen.getByRole('button', { name: 'Back to top' }));
+    expect(window.scrollTo).toHaveBeenCalledWith(expect.objectContaining({ top: 0 }));
+    expect(screen.getByRole('heading', { level: 1, name: 'All recipes' })).toHaveFocus();
+    expect(screen.queryByRole('button', { name: 'Back to top' })).not.toBeInTheDocument();
   });
 });

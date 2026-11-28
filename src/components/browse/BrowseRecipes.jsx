@@ -6,6 +6,7 @@ import {
   groupByLetter,
   matchesFilters,
 } from '../../utils/recipeFilters';
+import BackToTop from './BackToTop';
 import BrowseFilters from './BrowseFilters';
 import styles from './browse.module.css';
 import filterStyles from './browseFilters.module.css';
@@ -39,6 +40,7 @@ export default function BrowseRecipes({
   returnTo = null,
 }) {
   const courseAllRef = useRef(null);
+  const h1Ref = useRef(null);
   const headingIdPrefix = useId();
   const sorted = [...recipes].sort((a, b) => a.name.localeCompare(b.name));
   const shown = sorted.filter((recipe) => matchesFilters(recipe, filters));
@@ -68,7 +70,9 @@ export default function BrowseRecipes({
         </a>
       ) : null}
       {/* tabIndex -1: App moves focus here after navigating */}
-      <h1 tabIndex={-1}>All recipes</h1>
+      <h1 ref={h1Ref} tabIndex={-1}>
+        All recipes
+      </h1>
       {sorted.length > 0 ? (
         <>
           <p className={styles.pick}>
@@ -128,6 +132,7 @@ export default function BrowseRecipes({
       <p className={styles.suggest}>
         Don&apos;t see a favorite? <a href={SUGGEST_HASH}>Suggest a recipe</a>
       </p>
+      <BackToTop headingRef={h1Ref} />
     </>
   );
 }

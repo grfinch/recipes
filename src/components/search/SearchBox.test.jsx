@@ -17,6 +17,12 @@ const recipes = [
     instructions: [{ items: ['Whisk and fry'] }],
     notes: [{ items: ['Great with maple syrup'] }],
   },
+  {
+    id: 'cafe-rio-salad',
+    name: 'Café Rio Salad',
+    ingredients: [{ items: ['1 head romaine', '1 jalapeño'] }],
+    instructions: [{ items: ['Toss together'] }],
+  },
 ];
 
 function setup() {
@@ -45,6 +51,16 @@ describe('SearchBox', () => {
       await user.type(input, term);
       expect(await screen.findByRole('button', { name: 'Pancakes' })).toBeInTheDocument();
     }
+  });
+
+  it('ignores accents, and highlights the accented letters in the name', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'cafe');
+    const result = await screen.findByRole('button', { name: 'Café Rio Salad' });
+    expect(result.querySelector('[class*="highlight"]')).toHaveTextContent(/^Café$/);
+    await user.clear(input);
+    await user.type(input, 'jalapeno');
+    expect(await screen.findByRole('button', { name: 'Café Rio Salad' })).toBeInTheDocument();
   });
 
   it('says so in the results panel when nothing matches', async () => {

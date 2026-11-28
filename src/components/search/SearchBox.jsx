@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import useDebounce from '../../hooks/useDebounce';
-import { matchesQuery } from '../../utils/recipeSearch';
+import { findMatch, matchesQuery } from '../../utils/recipeSearch';
 import styles from './search.module.css';
 
 export default function SearchBox({ recipes = [], onSelect }) {
@@ -35,15 +35,14 @@ export default function SearchBox({ recipes = [], onSelect }) {
     if (onSelect) onSelect(r);
   }
 
-  // highlight matching substring in the recipe name
+  // highlight the matching part of the recipe name, which may differ in case and accents
   function highlightMatch(text = '', needle = '') {
-    if (!needle) return text;
-    const lower = String(text).toLowerCase();
-    const idx = lower.indexOf(needle.toLowerCase());
-    if (idx === -1) return text;
-    const before = text.slice(0, idx);
-    const match = text.slice(idx, idx + needle.length);
-    const after = text.slice(idx + needle.length);
+    const range = findMatch(text, needle);
+    if (!range) return text;
+    const [start, end] = range;
+    const before = text.slice(0, start);
+    const match = text.slice(start, end);
+    const after = text.slice(end);
     return (
       <span>
         {before}

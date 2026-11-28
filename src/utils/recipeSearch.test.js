@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { matchesQuery } from './recipeSearch';
+import { findMatch, matchesQuery } from './recipeSearch';
 
 const stew = {
   id: 'lentil-stew',
@@ -41,5 +41,30 @@ describe('matchesQuery', () => {
   it('copes with a recipe that has no notes', () => {
     const { notes: _notes, ...noNotes } = stew;
     expect(matchesQuery(noNotes, 'lentils')).toBe(true);
+  });
+
+  it('ignores accents in the recipe and the query', () => {
+    expect(matchesQuery(stew, 'saute')).toBe(true);
+    expect(matchesQuery(stew, 'SAUTE')).toBe(true);
+    expect(matchesQuery({ ...stew, name: 'Café Rio Salad' }, 'cafe rio')).toBe(true);
+    expect(matchesQuery(stew, 'lëntil')).toBe(true);
+  });
+});
+
+describe('findMatch', () => {
+  it('finds the match in the original text, ignoring case', () => {
+    expect(findMatch('Lentil Stew', 'STEW')).toEqual([7, 11]);
+    expect(findMatch('Lentil Stew', 'soup')).toBeNull();
+    expect(findMatch('Lentil Stew', '  ')).toBeNull();
+  });
+
+  it('covers accented letters, whether or not the query has them', () => {
+    expect(findMatch('Café Rio', 'cafe')).toEqual([0, 4]);
+    expect(findMatch('Creamy Jalapeño Ranch', 'jalapeno')).toEqual([7, 15]);
+    // An accent stored as a separate combining mark (NFD: "e" then the accent) stays with its
+    // letter, so the highlight never splits them
+    const decomposed = 'Café Rio'.normalize('NFD');
+    expect(findMatch(decomposed, 'cafe')).toEqual([0, 5]);
+    expect(findMatch(decomposed, 'rio')).toEqual([6, 9]);
   });
 });

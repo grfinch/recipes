@@ -88,6 +88,20 @@ describe('validateRecipes', () => {
     expectError(check(valid({ contributor: 'S'.repeat(81) })), /contributor: must be at most 80/);
   });
 
+  it('rejects a credited name with an invisible character in it', () => {
+    expectError(check(valid({ contributor: '@\u200Bsam' })), /contributor: has an invisible/);
+    expectError(check(valid({ thanks: ['@\u200Bsam'] })), /thanks\[0\]: has an invisible/);
+  });
+
+  it('accepts an optional list of names to thank, each listed once', () => {
+    expect(check(valid({ thanks: ['Sam', 'Ana'] }))).toEqual([]);
+    expectError(check(valid({ thanks: [] })), /thanks: must be a non-empty array/);
+    expectError(check(valid({ thanks: 'Sam' })), /thanks: must be a non-empty array/);
+    expectError(check(valid({ thanks: ['Sam', ''] })), /thanks\[1\]: must be a non-empty string/);
+    expectError(check(valid({ thanks: ['S'.repeat(81)] })), /thanks\[0\]: must be at most 80/);
+    expectError(check(valid({ thanks: ['Sam', 'sam'] })), /thanks\[1\]: "sam" is already listed/);
+  });
+
   it('rejects groups in the old formats', () => {
     expectError(check(valid({ ingredients: [['1 egg']] })), /must be a group object/);
     expectError(

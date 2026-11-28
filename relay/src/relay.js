@@ -191,6 +191,10 @@ export function changeIssueBody(change, repo) {
     '',
     `Recipe: [\`${file}\`](https://github.com/${repo}/blob/main/${file})`,
     '',
+    // The form promises credit, so remind the owner where it goes
+    'If you use this change and a name is given, add it to the recipe\'s `"thanks"` list. ' +
+      'Type it rather than copying it: a zero-width space follows any `@` below.',
+    '',
     ...sections.flatMap((s) => [s, '']),
   ]
     .join('\n')

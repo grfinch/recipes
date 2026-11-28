@@ -229,4 +229,8 @@ describe('suggested changes to a recipe', () => {
     const body = changeIssueBody({ ...change, submitter: '@someone' }, 'grfinch/recipes');
     expect(body).toContain('### Your name\n\n```text\n@​someone\n```');
   });
+
+  it("reminds the owner to thank the visitor in the recipe's file", () => {
+    expect(changeIssueBody(change, 'grfinch/recipes')).toContain('`"thanks"` list');
+  });
 });

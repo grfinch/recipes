@@ -66,6 +66,7 @@ describe('relay', () => {
     expect(issue.labels).toEqual(['recipe-suggestion']);
     expect(issue.body).toContain('### Ingredients\n\n```text\n1 lb beef\n1 can beans\n```');
     expect(issue.body).toContain('### Course\n\n_Not given_');
+    expect(issue.body).toContain('add the `make-pr` label');
   });
 
   it('answers the CORS preflight only for allowed origins', async () => {
@@ -194,6 +195,7 @@ describe('suggested changes to a recipe', () => {
     expect(issue.body).toContain('### What kind of change\n\nSomething is wrong');
     expect(issue.body).toContain('### Your suggestion\n\n```text\nStep 2 says');
     expect(issue.body).toContain('### Your name\n\n_Not given_');
+    expect(issue.body).toContain('add the `make-pr` label');
     expect(issue.body).not.toContain('@claude');
   });
 

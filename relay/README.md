@@ -4,13 +4,13 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
 
 ```text
 #/suggest form ──POST──▶ this Worker ──▶ GitHub issue (recipe-suggestion)
-                                            │  you add the make-recipe-pr label
+                                            │  you add the make-pr label
                                             ▼
                          .github/workflows/recipe-suggestion.yml
                          Claude + add-recipe skill (unattended) ──▶ draft PR, or questions
 
 #/suggest-change form ──POST──▶ this Worker ──▶ GitHub issue (recipe-change)
-                                                  │  you add the make-change-pr label
+                                                  │  you add the make-pr label
                                                   ▼
                          .github/workflows/recipe-change.yml
                          Claude + apply-change skill (unattended) ──▶ draft PR, or questions
@@ -59,30 +59,29 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
 
 5. **Labels:** create them once.
 
-   ```bash
+   ````bash
    gh label create recipe-suggestion --color 0E8A16 --description "Suggested from the website"
-   gh label create make-recipe-pr   --color 1D76DB --description "Have Claude draft a PR for this suggestion"
+   gh label create make-pr          --color 1D76DB --description "Have Claude draft a PR for this suggestion or change"
    gh label create needs-info       --color FBCA04 --description "Claude needs answers before drafting"
    gh label create pr-opened        --color 5319E7 --description "A draft PR exists for this suggestion"
-   gh label create recipe-change    --color C5DEF5 --description "A change to a recipe, suggested from the website"
-   gh label create make-change-pr   --color 1D76DB --description "Have Claude draft a PR for this change"
-   ```
+   gh label create recipe-change    --color C5DEF5 --description "A change to a recipe, suggested from the website"   ```
+   ````
 
 `CLAUDE_CODE_OAUTH_TOKEN`, which the workflow uses, is already set for `claude.yml`.
 
 ## Handling a suggestion
 
 1. GitHub emails you when a `recipe-suggestion` issue is opened. Read it. If it's spam, close it.
-2. To have it drafted, add the `make-recipe-pr` label. Only labels you add start the workflow.
+2. To have it drafted, add the `make-pr` label. Only labels you add start the workflow.
 3. The workflow ends in one of these:
    - **Drafted:** a draft PR, `suggestion/<issue>-<id>`. It has the changes Claude made, its assumptions, questions for you, and the original submission. CI runs on it. Edit the branch if needed, mark it ready, and merge. Merging closes the issue.
-   - **Needs info:** Claude comments its questions and labels the issue `needs-info`. Answer in a comment; only your comments are passed back to Claude. Then add `make-recipe-pr` again.
+   - **Needs info:** Claude comments its questions and labels the issue `needs-info`. Answer in a comment; only your comments are passed back to Claude. Then add `make-pr` again.
    - **Rejected** (not a recipe, spam): Claude comments why and closes the issue.
    - **Failed:** the issue gets a link to the run, and the label is removed so you can retry.
 
 ## Handling a suggested change
 
-A `recipe-change` issue links to the recipe's file and says what kind of change it is. If it's spam, close it. If it's a good change, add the `make-change-pr` label. The workflow ends the same ways as for a suggestion (drafted, needs info, rejected, or failed), with `make-change-pr` in place of `make-recipe-pr`. A drafted PR is on `change/<issue>-<id>`. It makes the change, and if the visitor gave a name it credits them in the recipe's notes: "Tip from Ana: …" for a tip, or "Thanks to Ana for …" for a fix or improvement. The form promises that credit. Merging the PR closes the issue.
+A `recipe-change` issue links to the recipe's file and says what kind of change it is. If it's spam, close it. If it's a good change, add the same `make-pr` label: the issue's `recipe-change` label sends it to the change workflow rather than the suggestion one. It ends the same ways as a suggestion (drafted, needs info, rejected, or failed). A drafted PR is on `change/<issue>-<id>`. It makes the change, and if the visitor gave a name it credits them in the recipe's notes: "Tip from Ana: …" for a tip, or "Thanks to Ana for …" for a fix or improvement. The form promises that credit. Merging the PR closes the issue.
 
 The site sends changes only after this Worker knows about them. **Deploy the Worker (`npx wrangler deploy`) before the site change that added the form**, or every change suggestion fails with "wasn't sent".
 

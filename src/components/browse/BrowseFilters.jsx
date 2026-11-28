@@ -54,9 +54,6 @@ export default function BrowseFilters({
                     }}
                     ref={param === 'course' && value === null ? courseAllRef : undefined}
                   />
-                  <span className={styles.check} aria-hidden="true">
-                    ✓
-                  </span>
                   {value ?? 'All'}
                 </label>
               ))}

@@ -1,7 +1,7 @@
 name: Recipe suggestion
 
 # Turns a visitor's suggestion (an issue the relay in relay/ opened, labeled recipe-suggestion)
-# into a draft PR with the add-recipe skill, when the repo owner adds the make-recipe-pr label.
+# into a draft PR with the add-recipe skill, when the repo owner adds the make-pr label.
 #
 # Trust boundary: the issue text is untrusted. The owner's label is the approval to spend a
 # Claude run on it. Claude may only write to its temp folder and run write-recipe.mjs (which
@@ -21,7 +21,7 @@ concurrency:
 jobs:
   draft:
     if: >-
-      github.event.label.name == 'make-recipe-pr' &&
+      github.event.label.name == 'make-pr' &&
       contains(github.event.issue.labels.*.name, 'recipe-suggestion') &&
       github.event.sender.login == github.repository_owner
     runs-on: ubuntu-latest
@@ -154,7 +154,7 @@ jobs:
           # PRs opened with GITHUB_TOKEN don't trigger CI by themselves
           gh workflow run ci.yml --ref "$branch"
           gh issue comment "$ISSUE" --body "Drafted as $url. Review it there; merging it closes this issue."
-          gh issue edit "$ISSUE" --add-label pr-opened --remove-label make-recipe-pr
+          gh issue edit "$ISSUE" --add-label pr-opened --remove-label make-pr
           gh issue edit "$ISSUE" --remove-label needs-info 2>/dev/null || true
 
       - name: Ask for what's missing
@@ -168,15 +168,15 @@ jobs:
           if [ "$STATUS" = needs-info ]; then
             jq -r '"I couldn'\''t draft this yet: \(.reason)\n\n"
               + (.questions | map("- " + .) | join("\n"))
-              + "\n\nAnswer in a comment here, then add the `make-recipe-pr` label again."' \
+              + "\n\nAnswer in a comment here, then add the `make-pr` label again."' \
               "$OUT/result.json" | sed 's/@\([A-Za-z0-9_-]\)/@\xe2\x80\x8b\1/g' > "$OUT/comment.md"
             gh issue comment "$ISSUE" --body-file "$OUT/comment.md"
-            gh issue edit "$ISSUE" --add-label needs-info --remove-label make-recipe-pr
+            gh issue edit "$ISSUE" --add-label needs-info --remove-label make-pr
           else
             jq -r '"Not drafted: \(.reason)\n\nRemove the label and reopen this issue if that is wrong."' \
               "$OUT/result.json" | sed 's/@\([A-Za-z0-9_-]\)/@\xe2\x80\x8b\1/g' > "$OUT/comment.md"
             gh issue comment "$ISSUE" --body-file "$OUT/comment.md"
-            gh issue edit "$ISSUE" --remove-label make-recipe-pr
+            gh issue edit "$ISSUE" --remove-label make-pr
             gh issue close "$ISSUE" --reason "not planned"
           fi
 
@@ -186,5 +186,5 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
         run: |
-          gh issue comment "$ISSUE" --body "The draft run failed: $RUN_URL. Fix the cause, then add the \`make-recipe-pr\` label again."
-          gh issue edit "$ISSUE" --remove-label make-recipe-pr || true
+          gh issue comment "$ISSUE" --body "The draft run failed: $RUN_URL. Fix the cause, then add the \`make-pr\` label again."
+          gh issue edit "$ISSUE" --remove-label make-pr || true

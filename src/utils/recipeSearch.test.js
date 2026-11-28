@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { matchRanges, matchesQuery } from './recipeSearch';
+import { matchRanges, matchesQuery, searchRecipes } from './recipeSearch';
 
 const stew = {
   id: 'lentil-stew',
@@ -55,6 +55,47 @@ describe('matchesQuery', () => {
     expect(matchesQuery(stew, 'SAUTE')).toBe(true);
     expect(matchesQuery({ ...stew, name: 'Café Rio Salad' }, 'cafe rio')).toBe(true);
     expect(matchesQuery(stew, 'lëntil')).toBe(true);
+  });
+});
+
+describe('searchRecipes', () => {
+  const soup = {
+    id: 'potato-soup',
+    name: 'Baked Potato Soup',
+    ingredients: [{ items: ['4 cups chicken stock'] }],
+    instructions: [{ items: ['Simmer'] }],
+  };
+  const enchiladas = {
+    id: 'chicken-enchiladas',
+    name: 'Chicken Enchiladas',
+    ingredients: [{ items: ['2 cups chicken'] }],
+    instructions: [{ items: ['Bake'] }],
+  };
+  const friedRice = {
+    id: 'chicken-fried-rice',
+    name: 'Chicken Fried Rice',
+    ingredients: [{ items: ['1 cup rice', '1 cup chicken'] }],
+    instructions: [{ items: ['Fry'] }],
+  };
+  const byName = [soup, enchiladas, friedRice, stew];
+
+  it('lists recipes with the words in their name first, keeping the given order otherwise', () => {
+    expect(searchRecipes(byName, 'chicken').map((r) => r.id)).toEqual([
+      'chicken-enchiladas',
+      'chicken-fried-rice',
+      'potato-soup',
+    ]);
+  });
+
+  it('ranks by how many of the words are in the name', () => {
+    const soupWithRice = { ...soup, ingredients: [{ items: ['chicken stock', 'rice'] }] };
+    expect(
+      searchRecipes([soupWithRice, enchiladas, friedRice], 'chicken rice').map((r) => r.id),
+    ).toEqual(['chicken-fried-rice', 'potato-soup']);
+  });
+
+  it('returns nothing for an empty query', () => {
+    expect(searchRecipes(byName, ' ')).toEqual([]);
   });
 });
 

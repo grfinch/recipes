@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import useDebounce from '../../hooks/useDebounce';
-import { matchRanges, matchesQuery } from '../../utils/recipeSearch';
+import { matchRanges, searchRecipes } from '../../utils/recipeSearch';
 import styles from './search.module.css';
 
 export default function SearchBox({ recipes = [], onSelect }) {
@@ -21,7 +21,8 @@ export default function SearchBox({ recipes = [], onSelect }) {
 
   // Results come from the settled (debounced) query only. While the user is still
   // typing, this keeps the previous results instead of flashing an empty list.
-  const filtered = debq ? recipes.filter((r) => matchesQuery(r, debq)) : [];
+  // Name matches first (searchRecipes)
+  const filtered = debq ? searchRecipes(recipes, debq) : [];
 
   // Only show a count when there's text in the box and a settled search to count.
   // An empty box (on load, or after Escape clears it natively) shows nothing.

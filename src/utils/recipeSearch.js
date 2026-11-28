@@ -35,6 +35,22 @@ export function matchesQuery(recipe, query) {
   return words.every((word) => text.includes(word));
 }
 
+// The recipes matching the query, best first: those with more of the query's words in their
+// name come first, so "chicken" lists Chicken Enchiladas before a soup that uses chicken stock.
+// Ties keep the order given (App's list is sorted by name).
+export function searchRecipes(recipes, query) {
+  const words = queryWords(query);
+  const nameWords = (recipe) => {
+    const name = fold(recipe.name);
+    return words.filter((word) => name.includes(word)).length;
+  };
+  return recipes
+    .filter((recipe) => matchesQuery(recipe, query))
+    .map((recipe) => ({ recipe, score: nameWords(recipe) }))
+    .sort((a, b) => b.score - a.score)
+    .map(({ recipe }) => recipe);
+}
+
 // Where each word of the query appears in the text, ignoring case and accents, as sorted,
 // non-overlapping [start, end] positions in the original text (for highlighting). Folding can
 // change a string's length ("é" is two characters once its accent is split off), so it maps

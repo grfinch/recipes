@@ -74,6 +74,24 @@ describe('SearchBox', () => {
     expect(await screen.findByText('No recipes match')).toBeInTheDocument();
   });
 
+  it('lists name matches before other matches', async () => {
+    const user = userEvent.setup();
+    const soup = {
+      id: 'soup',
+      name: 'Baked Potato Soup',
+      ingredients: [{ items: ['4 cups chicken stock'] }],
+      instructions: [{ items: ['Simmer'] }],
+    };
+    const curry = { ...soup, id: 'curry', name: 'Chicken Curry' };
+    render(<SearchBox recipes={[soup, curry]} onSelect={() => {}} />);
+    await user.type(screen.getByLabelText('Search recipes'), 'chicken');
+    await screen.findByRole('list');
+    expect(screen.getAllByRole('button').map((b) => b.textContent)).toEqual([
+      'Chicken Curry',
+      'Baked Potato Soup',
+    ]);
+  });
+
   it('says so in the results panel when nothing matches', async () => {
     const { user, input } = setup();
     await user.type(input, 'zzz');

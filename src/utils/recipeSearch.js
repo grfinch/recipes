@@ -51,6 +51,47 @@ export function searchRecipes(recipes, query) {
     .map(({ recipe }) => recipe);
 }
 
+// Why a result matched, when its name doesn't say: the recipe line with the most of the query's
+// words that aren't in the name, as a short snippet. Ingredients come first, then steps, notes,
+// group titles, course and cooking method; ties go to the earliest line. Null when the name has
+// every word.
+export function matchContext(recipe, query, maxLength = 80) {
+  const name = fold(recipe.name);
+  const missing = queryWords(query).filter((word) => !name.includes(word));
+  if (missing.length === 0) return null;
+  const lines = [
+    ...GROUP_FIELDS.flatMap((field) => (recipe[field] ?? []).flatMap((g) => g.items ?? [])),
+    ...GROUP_FIELDS.flatMap((field) => (recipe[field] ?? []).map((g) => g.title)),
+    recipe.course,
+    recipe.cookingMethod,
+  ].filter((line) => typeof line === 'string');
+  let best = null;
+  let bestCount = 0;
+  for (const line of lines) {
+    const folded = fold(line);
+    const count = missing.filter((word) => folded.includes(word)).length;
+    if (count > bestCount) [best, bestCount] = [line, count];
+  }
+  return best === null ? null : snippet(best, missing, maxLength);
+}
+
+// A long line trimmed to about maxLength characters around its first match, cut at spaces,
+// with "…" where text was dropped.
+function snippet(line, words, maxLength) {
+  if (line.length <= maxLength) return line;
+  const first = matchRanges(line, words.join(' '))[0]?.[0] ?? 0;
+  let start = 0;
+  if (first > maxLength / 2) {
+    start = line.lastIndexOf(' ', first - 20) + 1;
+  }
+  let text = line.slice(start);
+  if (text.length > maxLength) {
+    const cut = text.lastIndexOf(' ', maxLength);
+    text = text.slice(0, cut > 0 ? cut : maxLength) + '…';
+  }
+  return (start > 0 ? '…' : '') + text;
+}
+
 // Where each word of the query appears in the text, ignoring case and accents, as sorted,
 // non-overlapping [start, end] positions in the original text (for highlighting). Folding can
 // change a string's length ("é" is two characters once its accent is split off), so it maps

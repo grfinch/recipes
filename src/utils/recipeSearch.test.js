@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { matchRanges, matchesQuery, searchRecipes } from './recipeSearch';
+import { matchContext, matchRanges, matchesQuery, searchRecipes } from './recipeSearch';
 
 const stew = {
   id: 'lentil-stew',
@@ -96,6 +96,42 @@ describe('searchRecipes', () => {
 
   it('returns nothing for an empty query', () => {
     expect(searchRecipes(byName, ' ')).toEqual([]);
+  });
+});
+
+describe('matchContext', () => {
+  it('is null when the name has every word', () => {
+    expect(matchContext(stew, 'lentil')).toBeNull();
+    expect(matchContext(stew, 'stew LENTIL')).toBeNull();
+  });
+
+  it('gives the line with the words the name lacks, ingredients first', () => {
+    expect(matchContext(stew, 'carrot')).toBe('1 carrot');
+    expect(matchContext(stew, 'lentil pressure')).toBe('Pressure cook on high');
+    expect(matchContext(stew, 'freezes')).toBe('Freezes well');
+    expect(matchContext(stew, 'saute')).toBe('Sauté');
+    expect(matchContext(stew, 'dinner')).toBe('Dinner');
+    // "1" is in both ingredients; "oil" picks the line that has both words
+    expect(matchContext(stew, '1 oil')).toBe('1 Tbsp olive oil');
+  });
+
+  it('trims a long line around the match', () => {
+    const long = {
+      ...stew,
+      instructions: [
+        {
+          items: [
+            'Heat the pot until it is very hot, then add the onions and cook for ten minutes, ' +
+              'stirring now and then, until they turn golden brown and smell sweet and rich.',
+          ],
+        },
+      ],
+    };
+    const text = matchContext(long, 'golden');
+    expect(text.startsWith('…')).toBe(true);
+    expect(text).toContain('golden');
+    expect(text.length).toBeLessThanOrEqual(82);
+    expect(matchContext(long, 'heat')).toMatch(/^Heat the pot .*…$/);
   });
 });
 

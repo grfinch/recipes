@@ -67,8 +67,11 @@ describe('SearchBox', () => {
     const { user, input } = setup();
     await user.type(input, 'stew carrot lentil');
     const result = await screen.findByRole('button', { name: 'Lentil Stew' });
-    const highlighted = [...result.querySelectorAll('[class*="highlight"]')];
+    const name = result.querySelector('[class*="resultName"]');
+    const highlighted = [...name.querySelectorAll('[class*="highlight"]')];
     expect(highlighted.map((el) => el.textContent)).toEqual(['Lentil', 'Stew']);
+    // "carrot" isn't in the name, so the line it came from shows under it
+    expect(result).toHaveAccessibleDescription('1 carrot');
     await user.clear(input);
     await user.type(input, 'lentil syrup');
     expect(await screen.findByText('No recipes match')).toBeInTheDocument();
@@ -86,10 +89,25 @@ describe('SearchBox', () => {
     render(<SearchBox recipes={[soup, curry]} onSelect={() => {}} />);
     await user.type(screen.getByLabelText('Search recipes'), 'chicken');
     await screen.findByRole('list');
-    expect(screen.getAllByRole('button').map((b) => b.textContent)).toEqual([
-      'Chicken Curry',
-      'Baked Potato Soup',
-    ]);
+    const [first, second] = screen.getAllByRole('button');
+    expect(first).toHaveAccessibleName('Chicken Curry');
+    expect(second).toHaveAccessibleName('Baked Potato Soup');
+  });
+
+  it('shows the matching line when the name has no match', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'flour');
+    const result = await screen.findByRole('button', { name: 'Pancakes' });
+    expect(result).toHaveAccessibleDescription('2 cups flour');
+    expect(result).toHaveTextContent('2 cups flour');
+  });
+
+  it('shows no extra line when the name has every word', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'lentil');
+    const result = await screen.findByRole('button', { name: 'Lentil Stew' });
+    expect(result).not.toHaveAccessibleDescription();
+    expect(result).toHaveTextContent(/^Lentil Stew$/);
   });
 
   it('says so in the results panel when nothing matches', async () => {

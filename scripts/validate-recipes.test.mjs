@@ -80,6 +80,14 @@ describe('validateRecipes', () => {
     expectError(check(valid({ notes: [] })), /notes: must be a non-empty array/);
   });
 
+  it('accepts an optional contributor, but not an empty, padded, or overlong one', () => {
+    expect(check(valid({ contributor: 'Sam' }))).toEqual([]);
+    expectError(check(valid({ contributor: '' })), /contributor: must be a non-empty string/);
+    expectError(check(valid({ contributor: 42 })), /contributor: must be a non-empty string/);
+    expectError(check(valid({ contributor: ' Sam' })), /contributor: has leading or trailing/);
+    expectError(check(valid({ contributor: 'S'.repeat(81) })), /contributor: must be at most 80/);
+  });
+
   it('rejects groups in the old formats', () => {
     expectError(check(valid({ ingredients: [['1 egg']] })), /must be a group object/);
     expectError(

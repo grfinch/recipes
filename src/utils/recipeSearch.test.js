@@ -28,6 +28,14 @@ describe('matchesQuery', () => {
     expect(matchesQuery(stew, 'instant-pot')).toBe(true);
   });
 
+  it('matches who shared the recipe', () => {
+    const shared = { ...stew, contributor: 'Sharmi' };
+    expect(matchesQuery(shared, 'sharmi')).toBe(true);
+    expect(matchesQuery(shared, 'sharmi lentil')).toBe(true);
+    expect(matchesQuery(stew, 'sharmi')).toBe(false);
+    expect(matchContext(shared, 'sharmi')).toBe('Shared by Sharmi');
+  });
+
   it('needs every word, but each word may match a different item', () => {
     expect(matchesQuery(stew, 'carrot lentils')).toBe(true);
     expect(matchesQuery(stew, 'lentil   dinner')).toBe(true);

@@ -12,7 +12,7 @@ export function fold(text) {
 // Everything a search can match, one piece per line, so a query can't match across the end
 // of one ingredient and the start of the next (e.g. "oil" + "1 carrot" as "oil 1").
 export function searchableText(recipe) {
-  const parts = [recipe.name, recipe.course, recipe.cookingMethod];
+  const parts = [recipe.name, recipe.course, recipe.cookingMethod, recipe.contributor];
   for (const field of GROUP_FIELDS) {
     for (const group of recipe[field] ?? []) parts.push(group.title, ...(group.items ?? []));
   }
@@ -25,8 +25,8 @@ export function queryWords(query) {
 }
 
 // Whether the recipe has every word of the query, ignoring case and accents. Each word is a
-// substring match against the name, course, cooking method, group titles, or one ingredient,
-// step, or note; different words may match different items, so "chicken rice" finds a recipe
+// substring match against the name, course, cooking method, contributor, group titles, or one
+// ingredient, step, or note; different words may match different items, so "chicken rice" finds a recipe
 // with chicken in one line and rice in another. An empty query matches nothing.
 export function matchesQuery(recipe, query) {
   const words = queryWords(query);
@@ -53,8 +53,8 @@ export function searchRecipes(recipes, query) {
 
 // Why a result matched, when its name doesn't say: the recipe line with the most of the query's
 // words that aren't in the name, as a short snippet. Ingredients come first, then steps, notes,
-// group titles, course and cooking method; ties go to the earliest line. Null when the name has
-// every word.
+// group titles, course, cooking method and contributor ("Shared by Sharmi"); ties go to the
+// earliest line. Null when the name has every word.
 export function matchContext(recipe, query, maxLength = 80) {
   const name = fold(recipe.name);
   const missing = queryWords(query).filter((word) => !name.includes(word));
@@ -64,6 +64,7 @@ export function matchContext(recipe, query, maxLength = 80) {
     ...GROUP_FIELDS.flatMap((field) => (recipe[field] ?? []).map((g) => g.title)),
     recipe.course,
     recipe.cookingMethod,
+    recipe.contributor && `Shared by ${recipe.contributor}`,
   ].filter((line) => typeof line === 'string');
   let best = null;
   let bestCount = 0;

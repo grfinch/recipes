@@ -13,7 +13,7 @@ export const FIELDS = [
   { name: 'cookingMethod', label: 'Cooking method', max: 40 },
   { name: 'notes', label: 'Tips, swaps, or servings', max: 5000 },
   { name: 'source', label: "Where it's from", max: 300 },
-  { name: 'submitter', label: 'Your name', max: 80 },
+  { name: 'submitter', label: 'Your name', required: true, missing: 'Enter your name.', max: 80 },
 ];
 
 export const EMPTY_SUGGESTION = Object.fromEntries(FIELDS.map((f) => [f.name, '']));
@@ -21,10 +21,10 @@ export const EMPTY_SUGGESTION = Object.fromEntries(FIELDS.map((f) => [f.name, ''
 // { fieldName: message } for each problem; empty when the suggestion can be sent.
 export function validateSuggestion(values) {
   const errors = {};
-  for (const { name, label, required, max } of FIELDS) {
+  for (const { name, label, required, missing, max } of FIELDS) {
     const value = typeof values?.[name] === 'string' ? values[name] : '';
     if (required && value.trim() === '') {
-      errors[name] = `Enter the ${label.toLowerCase()}.`;
+      errors[name] = missing ?? `Enter the ${label.toLowerCase()}.`;
     } else if (value.length > max) {
       errors[name] =
         `${label} is too long: ${value.length.toLocaleString('en-US')} characters, ` +

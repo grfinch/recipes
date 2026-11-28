@@ -20,6 +20,7 @@ async function fillRequired(user) {
   await user.type(screen.getByRole('textbox', { name: 'Recipe name' }), 'Grandma Soup');
   await user.type(screen.getByRole('textbox', { name: /^Ingredients/ }), '1 onion{Enter}2 carrots');
   await user.type(screen.getByRole('textbox', { name: /^Steps/ }), 'Chop. Simmer 20 min.');
+  await user.type(screen.getByRole('textbox', { name: 'Your name' }), 'Sam');
 }
 
 afterEach(() => {
@@ -46,8 +47,15 @@ describe('SuggestRecipe', () => {
       'One per line, with amounts if you know them.',
     );
     expect(screen.getByRole('textbox', { name: 'Steps' })).toBeRequired();
-    expect(screen.getByRole('textbox', { name: 'Your name (optional)' })).not.toBeRequired();
-    expect(screen.getByRole('textbox', { name: "Where it's from (optional)" })).toBeVisible();
+    expect(screen.getByRole('textbox', { name: 'Your name' })).toBeRequired();
+    expect(screen.getByRole('textbox', { name: 'Your name' })).toHaveAccessibleDescription(
+      'Shown publicly on the recipe as credit.',
+    );
+    expect(
+      screen.getByRole('textbox', { name: "Where it's from (optional)" }),
+    ).toHaveAccessibleDescription(
+      'A link, a cookbook, or a person, like “Grandma”. Shown in the recipe’s notes.',
+    );
     expect(
       screen.getByRole('textbox', { name: 'Tips, swaps, or servings (optional)' }),
     ).toBeVisible();
@@ -71,12 +79,13 @@ describe('SuggestRecipe', () => {
     await user.click(screen.getByRole('button', { name: 'Send suggestion' }));
     expect(fetch).not.toHaveBeenCalled();
     const summary = screen.getByRole('heading', {
-      name: 'There are 3 problems with your suggestion',
+      name: 'There are 4 problems with your suggestion',
     }).parentElement;
     expect(summary).toHaveFocus();
     expect(name).toHaveAttribute('aria-invalid', 'true');
     expect(name).toHaveAccessibleDescription('Enter the recipe name.');
 
+    expect(within(summary).getByRole('link', { name: 'Enter your name.' })).toBeVisible();
     await user.click(within(summary).getByRole('link', { name: 'Enter the steps.' }));
     expect(screen.getByRole('textbox', { name: 'Steps' })).toHaveFocus();
     expect(window.location.hash).toBe(''); // the summary links don't change the page
@@ -84,7 +93,7 @@ describe('SuggestRecipe', () => {
     // Fixing a field clears its error as you type
     await user.type(name, 'Soup');
     expect(name).not.toHaveAttribute('aria-invalid');
-    expect(screen.getByRole('heading', { name: 'There are 2 problems with your suggestion' }));
+    expect(screen.getByRole('heading', { name: 'There are 3 problems with your suggestion' }));
   });
 
   it('sends the suggestion, thanks the visitor, and clears the draft', async () => {
@@ -93,7 +102,8 @@ describe('SuggestRecipe', () => {
     render(<SuggestRecipe endpoint={ENDPOINT} turnstileSiteKey="" />);
     await fillRequired(user);
     await user.selectOptions(screen.getByRole('combobox', { name: /^Course/ }), 'Soup');
-    await user.type(screen.getByRole('textbox', { name: /^Your name/ }), '  Sam  ');
+    await user.clear(screen.getByRole('textbox', { name: 'Your name' }));
+    await user.type(screen.getByRole('textbox', { name: 'Your name' }), '  Sam  ');
     expect(localStorage.getItem(DRAFT_KEY)).toContain('Grandma Soup');
 
     await user.click(screen.getByRole('button', { name: 'Send suggestion' }));
@@ -141,7 +151,8 @@ describe('SuggestRecipe', () => {
     await user.click(screen.getByRole('button', { name: 'Copy my recipe' }));
     expect(await screen.findByText('Copied.')).toBeInTheDocument();
     await expect(navigator.clipboard.readText()).resolves.toBe(
-      'Recipe name:\nGrandma Soup\n\nIngredients:\n1 onion\n2 carrots\n\nSteps:\nChop. Simmer 20 min.',
+      'Recipe name:\nGrandma Soup\n\nIngredients:\n1 onion\n2 carrots\n\nSteps:\nChop. Simmer 20 min.' +
+        '\n\nYour name:\nSam',
     );
   });
 

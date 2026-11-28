@@ -106,6 +106,9 @@ describe('relay', () => {
     const missing = await handle(post({ ...valid, steps: '   ' }), env);
     expect(missing.status).toBe(400);
     expect((await missing.json()).errors).toHaveProperty('steps');
+    const anonymous = await handle(post({ ...valid, submitter: '' }), env);
+    expect(anonymous.status).toBe(400);
+    expect((await anonymous.json()).errors).toEqual({ submitter: 'Enter your name.' });
     expect((await handle(post({ ...valid, name: 'x'.repeat(121) }), env)).status).toBe(400);
     expect(githubCalls(fetch)).toHaveLength(0);
   });

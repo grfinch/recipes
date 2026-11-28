@@ -305,7 +305,7 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent, onClear }
           id={idFor('source')}
           label="Where it's from"
           optional
-          hint="A link, a cookbook, or a person, like “Grandma”."
+          hint="A link, a cookbook, or a person, like “Grandma”. Shown in the recipe’s notes."
           error={fieldErrors.source}
         >
           {(props) => <input type="text" {...props} {...textProps('source')} />}
@@ -314,12 +314,17 @@ function SuggestForm({ endpoint, turnstileSiteKey, headingRef, onSent, onClear }
         <Field
           id={idFor('submitter')}
           label="Your name"
-          optional
-          hint="Shown publicly as credit. Leave it blank to stay anonymous."
+          hint="Shown publicly on the recipe as credit."
           error={fieldErrors.submitter}
         >
           {(props) => (
-            <input type="text" autoComplete="name" {...props} {...textProps('submitter')} />
+            <input
+              type="text"
+              required
+              autoComplete="name"
+              {...props}
+              {...textProps('submitter')}
+            />
           )}
         </Field>
 

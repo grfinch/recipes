@@ -49,15 +49,13 @@ vi.mock('./recipes/index.js', () => ({
 const main = () => screen.getByRole('main');
 const group = (name) => within(main()).getByRole('group', { name });
 const chip = (groupName, name) => within(group(groupName)).getByRole('checkbox', { name });
-// Recipe links in the list only, not the "Back to <recipe>" link above the heading
-const shownNames = () => {
-  const list = within(main()).queryByRole('list');
-  return list
-    ? within(list)
-        .getAllByRole('link')
-        .map((a) => a.textContent)
-    : [];
-};
+// Recipe links in the letter sections' lists only, not the "Back to <recipe>" link above the
+// heading
+const shownNames = () =>
+  within(main())
+    .queryAllByRole('list')
+    .flatMap((list) => within(list).getAllByRole('link'))
+    .map((a) => a.textContent);
 // The browse page's own count, not the search box's role="status" in the header
 const count = () => within(main()).getByRole('status');
 

@@ -1,3 +1,5 @@
+import { ingredientTerms } from './recipePick.js';
+
 // Recipes are addressed by their permanent id, in a hash like #/instant-pot-lentil-stew. A hash works under the
 // GitHub Pages sub-path without a router or server rewrites, and needs no base URL.
 
@@ -5,8 +7,9 @@
 // recipe whose name slugifies to one of these (say, "Browse") can't take over the page.
 export const BROWSE_HASH = '#/browse';
 export const SUGGEST_HASH = '#/suggest';
-export const PICK_HASH = '#/pick';
 export const CHANGE_SLUG = 'suggest-change';
+// "pick" was the old Pick a recipe for me page, now part of All recipes: #/pick opens #/browse.
+// Still reserved, so an old link never opens a recipe named "Pick".
 export const RESERVED_SLUGS = ['browse', 'suggest', 'pick', CHANGE_SLUG];
 
 // Turns a name into an id: lowercase, accents dropped, anything else becomes "-". Used once,
@@ -45,10 +48,14 @@ function slugFromHash(hash) {
   }
 }
 
-// The All recipes page's filters (also used by Pick for me): URL parameter -> recipe field.
+// The All recipes page's filters: URL parameter -> recipe field.
 // "by" is who shared the recipe: #/browse?by=Sharmi. Kept free of JSON imports, because
 // scripts/validate-recipes.mjs imports this file in plain Node.
 export const BROWSE_FILTERS = { course: 'course', method: 'cookingMethod', by: 'contributor' };
+
+// The All recipes page's "Ingredients you have", one term per repeated parameter:
+// #/browse?have=chicken&have=rice. Not a recipe field, so it isn't in BROWSE_FILTERS.
+export const INGREDIENTS_PARAM = 'have';
 
 // A filter's chosen values as a list: filters hold arrays, but a single value is accepted too
 // (a recipe page's link to its course passes a string). Missing or empty: [].
@@ -76,6 +83,10 @@ function browseFiltersFromQuery(recipes, query) {
     }
     if (values.length > 0) filters[param] = values;
   }
+  // Ingredients are kept even when no recipe uses them, so the page can say so. Lowercase,
+  // trimmed, without blanks or repeats; a comma inside one value splits it, as in the box.
+  const have = ingredientTerms(params.getAll(INGREDIENTS_PARAM).join(','));
+  if (have.length > 0) filters[INGREDIENTS_PARAM] = have;
   return filters;
 }
 
@@ -86,36 +97,37 @@ export function recipeFromHash(recipes, hash = window.location.hash) {
   return recipes.find((r) => r.id === slug) ?? null;
 }
 
-// What the hash asks to show: { page: 'browse', course?, method?, by? } (each a list of values), { page: 'suggest' },
-// { page: 'pick' }, { page: 'change', recipe }, { page: 'recipe', recipe }, or null. Plain
-// #/browse is { page: 'browse' }; filter keys appear only when set. A change page for a recipe
-// that doesn't exist is null, like any unknown link.
+// What the hash asks to show: { page: 'browse', course?, method?, by?, have? } (each a list of
+// values), { page: 'suggest' }, { page: 'change', recipe }, { page: 'recipe', recipe }, or null.
+// Plain #/browse is { page: 'browse' }; filter keys appear only when set. The old #/pick page,
+// with any filters, is All recipes. A change page for a recipe that doesn't exist is null, like
+// any unknown link.
 export function viewFromHash(recipes, hash = window.location.hash) {
   if (slugFromHash(hash) === 'suggest') return { page: 'suggest' };
-  if (slugFromHash(hash) === 'pick') return { page: 'pick' };
   if (slugFromHash(hash) === CHANGE_SLUG) {
     const id = new URLSearchParams(splitHash(hash)[1]).get('recipe');
     const recipe = recipes.find((r) => r.id === id);
     return recipe ? { page: 'change', recipe } : null;
   }
-  if (slugFromHash(hash) === 'browse') {
+  if (slugFromHash(hash) === 'browse' || slugFromHash(hash) === 'pick') {
     return { page: 'browse', ...browseFiltersFromQuery(recipes, splitHash(hash)[1]) };
   }
   const recipe = recipeFromHash(recipes, hash);
   return recipe ? { page: 'recipe', recipe } : null;
 }
 
-// The hash for a view. Browse filters go in a query, in BROWSE_FILTERS order, each value of a
-// filter in the order given: #/browse?course=Appetizer&course=Side&method=Oven&by=Sharmi
+// The hash for a view. Browse filters go in a query, in BROWSE_FILTERS order and then the
+// ingredients, each value of a filter in the order given:
+// #/browse?course=Appetizer&course=Side&method=Oven&by=Sharmi&have=chicken
 export function hashForView(view) {
   if (view.page === 'suggest') return SUGGEST_HASH;
-  if (view.page === 'pick') return PICK_HASH;
   if (view.page === 'change') return changeHashFor(view.recipe);
   if (view.page !== 'browse') return hashFor(view.recipe);
   const params = new URLSearchParams();
   for (const param of Object.keys(BROWSE_FILTERS)) {
     for (const value of filterValues(view[param])) params.append(param, value);
   }
+  for (const term of filterValues(view[INGREDIENTS_PARAM])) params.append(INGREDIENTS_PARAM, term);
   const query = params.toString();
   return query ? `${BROWSE_HASH}?${query}` : BROWSE_HASH;
 }

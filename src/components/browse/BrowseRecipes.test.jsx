@@ -1,7 +1,7 @@
 import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
-import { LETTER_GROUP_THRESHOLD } from '../../utils/recipeFilters';
+import { JUMP_BAR_THRESHOLD } from '../../utils/recipeFilters';
 import { BACK_TO_TOP_THRESHOLD } from './BackToTop';
 import BrowseRecipes from './BrowseRecipes';
 
@@ -14,11 +14,22 @@ function makeRecipes(count, letters = ['A', 'B', 'M']) {
 }
 
 describe('BrowseRecipes on a long list', () => {
-  it('keeps a short list as one plain list, with no letter sections', () => {
-    render(<BrowseRecipes recipes={makeRecipes(LETTER_GROUP_THRESHOLD)} />);
+  it('splits a short list into letter sections too, but with no jump bar', () => {
+    render(<BrowseRecipes recipes={makeRecipes(JUMP_BAR_THRESHOLD)} />);
     expect(screen.queryByRole('navigation', { name: 'Jump to letter' })).not.toBeInTheDocument();
-    expect(screen.queryByRole('heading', { level: 2 })).not.toBeInTheDocument();
-    expect(screen.getAllByRole('list')).toHaveLength(1);
+    expect(screen.getAllByRole('heading', { level: 2 }).map((h) => h.textContent)).toEqual([
+      'A',
+      'B',
+      'M',
+    ]);
+    expect(screen.getAllByRole('list')).toHaveLength(3);
+    expect(screen.getAllByRole('link', { name: /recipe \d+/ })).toHaveLength(JUMP_BAR_THRESHOLD);
+  });
+
+  it('gives a single recipe its letter heading', () => {
+    render(<BrowseRecipes recipes={[{ id: 'zucchini', name: 'Zucchini', course: 'Side' }]} />);
+    expect(screen.getByRole('heading', { level: 2, name: 'Z' })).toBeInTheDocument();
+    expect(screen.getByRole('link', { name: 'Zucchini' })).toBeInTheDocument();
   });
 
   it('splits a long list into A-Z sections, with a button for each letter in use', () => {
@@ -46,7 +57,7 @@ describe('BrowseRecipes on a long list', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'M' })).toHaveFocus();
   });
 
-  it('groups only the recipes the filters show, and drops the sections when few are left', () => {
+  it('groups only the recipes the filters show, and drops the jump bar when few are left', () => {
     const recipes = [...makeRecipes(70), { id: 'zucchini', name: 'Zucchini', course: 'Side' }];
     const { rerender } = render(<BrowseRecipes recipes={recipes} filters={{ course: 'Dinner' }} />);
     expect(screen.getByRole('heading', { level: 2, name: 'A' })).toBeInTheDocument();
@@ -55,6 +66,7 @@ describe('BrowseRecipes on a long list', () => {
     rerender(<BrowseRecipes recipes={recipes} filters={{ course: 'Side' }} />);
     expect(screen.queryByRole('navigation', { name: 'Jump to letter' })).not.toBeInTheDocument();
     expect(screen.getByRole('link', { name: 'Zucchini' })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 2, name: 'Z' })).toBeInTheDocument();
   });
 });
 

@@ -1,8 +1,6 @@
-// Helpers for the "Pick a recipe for me" page: which recipes use the ingredients a visitor has
-// on hand, and a random pick from them.
-
-// The page's choices before any are made: every course and method, no ingredients, no pick.
-export const NO_CHOICES = { filters: {}, ingredients: '', picked: null };
+// Helpers for All recipes' "Ingredients you have" box and "Pick one for me" button: which
+// recipes use the ingredients a visitor has on hand, and a random pick from them. Kept free of
+// imports, because recipeHash.js uses it and scripts/validate-recipes.mjs imports that in Node.
 
 // The ingredients typed into the box, split on commas: "Chicken, rice," -> ['chicken', 'rice'].
 // Lowercase, trimmed, and without blanks or repeats.

@@ -38,9 +38,9 @@ export function matchesFilters(recipe, filters) {
   });
 }
 
-// The All recipes list splits into A-Z sections, with a jump bar, once it shows more recipes
-// than this. Shorter lists stay one plain list.
-export const LETTER_GROUP_THRESHOLD = 30;
+// The All recipes list is always in A-Z sections, but it gets a "Jump to letter" bar only once
+// it shows more recipes than this. On a shorter list the bar would just push the list down.
+export const JUMP_BAR_THRESHOLD = 30;
 
 // The section a recipe name files under: its first letter, upper-cased and without accents
 // ("Éclairs" → "E"), or "#" for a name that starts with a digit, symbol, or another script.

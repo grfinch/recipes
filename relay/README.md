@@ -10,7 +10,10 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
                          Claude + add-recipe skill (unattended) ──▶ draft PR, or questions
 
 #/suggest-change form ──POST──▶ this Worker ──▶ GitHub issue (recipe-change)
-                                                  you edit the recipe by hand
+                                                  │  you add the make-change-pr label
+                                                  ▼
+                         .github/workflows/recipe-change.yml
+                         Claude + apply-change skill (unattended) ──▶ draft PR, or questions
 ```
 
 ## What it checks
@@ -62,6 +65,7 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
    gh label create needs-info       --color FBCA04 --description "Claude needs answers before drafting"
    gh label create pr-opened        --color 5319E7 --description "A draft PR exists for this suggestion"
    gh label create recipe-change    --color C5DEF5 --description "A change to a recipe, suggested from the website"
+   gh label create make-change-pr   --color 1D76DB --description "Have Claude draft a PR for this change"
    ```
 
 `CLAUDE_CODE_OAUTH_TOKEN`, which the workflow uses, is already set for `claude.yml`.
@@ -78,7 +82,7 @@ A Cloudflare Worker that receives a recipe suggestion from the cook book's `#/su
 
 ## Handling a suggested change
 
-A `recipe-change` issue links to the recipe's file and says what kind of change it is. No workflow runs on it. If it's a good change, edit the recipe (or ask Claude to, in a session of your own) and put `Closes #<issue>` in the PR. If it's spam, close it.
+A `recipe-change` issue links to the recipe's file and says what kind of change it is. If it's spam, close it. If it's a good change, add the `make-change-pr` label. The workflow ends the same ways as for a suggestion (drafted, needs info, rejected, or failed), with `make-change-pr` in place of `make-recipe-pr`. A drafted PR is on `change/<issue>-<id>`. It makes the change, and if the visitor gave a name it credits them in the recipe's notes: "Tip from Ana: …" for a tip, or "Thanks to Ana for …" for a fix or improvement. The form promises that credit. Merging the PR closes the issue.
 
 The site sends changes only after this Worker knows about them. **Deploy the Worker (`npx wrangler deploy`) before the site change that added the form**, or every change suggestion fails with "wasn't sent".
 

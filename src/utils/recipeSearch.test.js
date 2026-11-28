@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { findMatch, matchesQuery } from './recipeSearch';
+import { matchRanges, matchesQuery } from './recipeSearch';
 
 const stew = {
   id: 'lentil-stew',
@@ -28,9 +28,16 @@ describe('matchesQuery', () => {
     expect(matchesQuery(stew, 'instant-pot')).toBe(true);
   });
 
-  it("doesn't match across two items", () => {
-    expect(matchesQuery(stew, 'oil 1')).toBe(false);
+  it('needs every word, but each word may match a different item', () => {
+    expect(matchesQuery(stew, 'carrot lentils')).toBe(true);
+    expect(matchesQuery(stew, 'lentil   dinner')).toBe(true);
+    expect(matchesQuery(stew, 'lentil soup')).toBe(false);
+  });
+
+  it("doesn't match one word across two items", () => {
+    // "oil" ends one ingredient and "1" starts the next; "oil,1" is one word
     expect(matchesQuery(stew, 'oil,1')).toBe(false);
+    expect(matchesQuery(stew, 'oil,1 carrot')).toBe(false);
   });
 
   it('matches nothing for an empty or unknown query', () => {
@@ -51,20 +58,29 @@ describe('matchesQuery', () => {
   });
 });
 
-describe('findMatch', () => {
-  it('finds the match in the original text, ignoring case', () => {
-    expect(findMatch('Lentil Stew', 'STEW')).toEqual([7, 11]);
-    expect(findMatch('Lentil Stew', 'soup')).toBeNull();
-    expect(findMatch('Lentil Stew', '  ')).toBeNull();
+describe('matchRanges', () => {
+  it('finds each word in the original text, ignoring case', () => {
+    expect(matchRanges('Lentil Stew', 'STEW')).toEqual([[7, 11]]);
+    expect(matchRanges('Lentil Stew', 'stew lentil')).toEqual([
+      [0, 6],
+      [7, 11],
+    ]);
+    expect(matchRanges('Lentil Stew', 'soup')).toEqual([]);
+    expect(matchRanges('Lentil Stew', '  ')).toEqual([]);
+  });
+
+  it('merges overlapping words', () => {
+    expect(matchRanges('Pancakes', 'pan pancake')).toEqual([[0, 7]]);
+    expect(matchRanges('Pancakes', 'panc cakes')).toEqual([[0, 8]]);
   });
 
   it('covers accented letters, whether or not the query has them', () => {
-    expect(findMatch('Café Rio', 'cafe')).toEqual([0, 4]);
-    expect(findMatch('Creamy Jalapeño Ranch', 'jalapeno')).toEqual([7, 15]);
+    expect(matchRanges('Café Rio', 'cafe')).toEqual([[0, 4]]);
+    expect(matchRanges('Creamy Jalapeño Ranch', 'jalapeno')).toEqual([[7, 15]]);
     // An accent stored as a separate combining mark (NFD: "e" then the accent) stays with its
     // letter, so the highlight never splits them
     const decomposed = 'Café Rio'.normalize('NFD');
-    expect(findMatch(decomposed, 'cafe')).toEqual([0, 5]);
-    expect(findMatch(decomposed, 'rio')).toEqual([6, 9]);
+    expect(matchRanges(decomposed, 'cafe')).toEqual([[0, 5]]);
+    expect(matchRanges(decomposed, 'rio')).toEqual([[6, 9]]);
   });
 });

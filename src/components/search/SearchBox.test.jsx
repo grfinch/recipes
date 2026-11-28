@@ -63,6 +63,17 @@ describe('SearchBox', () => {
     expect(await screen.findByRole('button', { name: 'Café Rio Salad' })).toBeInTheDocument();
   });
 
+  it('matches every word of the query, in any item, and highlights each in the name', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'stew carrot lentil');
+    const result = await screen.findByRole('button', { name: 'Lentil Stew' });
+    const highlighted = [...result.querySelectorAll('[class*="highlight"]')];
+    expect(highlighted.map((el) => el.textContent)).toEqual(['Lentil', 'Stew']);
+    await user.clear(input);
+    await user.type(input, 'lentil syrup');
+    expect(await screen.findByText('No recipes match')).toBeInTheDocument();
+  });
+
   it('says so in the results panel when nothing matches', async () => {
     const { user, input } = setup();
     await user.type(input, 'zzz');

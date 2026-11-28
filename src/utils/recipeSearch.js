@@ -19,20 +19,27 @@ export function searchableText(recipe) {
   return fold(parts.filter((part) => typeof part === 'string').join('\n'));
 }
 
-// Case- and accent-insensitive substring match against the name, course, cooking method,
-// group titles, and every ingredient, step, and note. An empty query matches nothing.
-export function matchesQuery(recipe, query) {
-  const q = fold(query).trim();
-  return q !== '' && searchableText(recipe).includes(q);
+// The query's words, folded: "Chicken  rice" -> ['chicken', 'rice'].
+export function queryWords(query) {
+  return fold(query).split(/\s+/).filter(Boolean);
 }
 
-// Where the query appears in the text, ignoring case and accents, as [start, end] positions in
-// the original text (for highlighting), or null. Folding can change a string's length ("é" is
-// two characters once its accent is split off), so it maps each folded character back to the
-// original character it came from.
-export function findMatch(text, query) {
-  const needle = fold(query).trim();
-  if (!needle) return null;
+// Whether the recipe has every word of the query, ignoring case and accents. Each word is a
+// substring match against the name, course, cooking method, group titles, or one ingredient,
+// step, or note; different words may match different items, so "chicken rice" finds a recipe
+// with chicken in one line and rice in another. An empty query matches nothing.
+export function matchesQuery(recipe, query) {
+  const words = queryWords(query);
+  if (words.length === 0) return false;
+  const text = searchableText(recipe);
+  return words.every((word) => text.includes(word));
+}
+
+// Where each word of the query appears in the text, ignoring case and accents, as sorted,
+// non-overlapping [start, end] positions in the original text (for highlighting). Folding can
+// change a string's length ("é" is two characters once its accent is split off), so it maps
+// each folded character back to the original character it came from.
+export function matchRanges(text, query) {
   const source = String(text ?? '');
   let folded = '';
   const origin = []; // origin[i]: where folded[i] starts in the original text
@@ -44,10 +51,23 @@ export function findMatch(text, query) {
     pos += char.length;
   }
   origin.push(source.length);
-  const at = folded.indexOf(needle);
-  if (at === -1) return null;
-  const last = origin[at + needle.length - 1];
-  // End after the whole original character holding the match's last folded character
-  const end = origin.find((o) => o > last) ?? source.length;
-  return [origin[at], end];
+
+  const ranges = [];
+  for (const word of queryWords(query)) {
+    const at = folded.indexOf(word);
+    if (at === -1) continue;
+    const last = origin[at + word.length - 1];
+    // End after the whole original character holding the match's last folded character
+    ranges.push([origin[at], origin.find((o) => o > last) ?? source.length]);
+  }
+
+  // Merge overlaps, so "pan pancake" highlights "Pancake" once
+  ranges.sort((a, b) => a[0] - b[0]);
+  const merged = [];
+  for (const [start, end] of ranges) {
+    const prev = merged[merged.length - 1];
+    if (prev && start <= prev[1]) prev[1] = Math.max(prev[1], end);
+    else merged.push([start, end]);
+  }
+  return merged;
 }

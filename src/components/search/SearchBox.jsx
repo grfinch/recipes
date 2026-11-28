@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import useDebounce from '../../hooks/useDebounce';
-import { findMatch, matchesQuery } from '../../utils/recipeSearch';
+import { matchRanges, matchesQuery } from '../../utils/recipeSearch';
 import styles from './search.module.css';
 
 export default function SearchBox({ recipes = [], onSelect }) {
@@ -35,21 +35,23 @@ export default function SearchBox({ recipes = [], onSelect }) {
     if (onSelect) onSelect(r);
   }
 
-  // highlight the matching part of the recipe name, which may differ in case and accents
-  function highlightMatch(text = '', needle = '') {
-    const range = findMatch(text, needle);
-    if (!range) return text;
-    const [start, end] = range;
-    const before = text.slice(0, start);
-    const match = text.slice(start, end);
-    const after = text.slice(end);
-    return (
-      <span>
-        {before}
-        <span className={styles.highlight}>{match}</span>
-        {after}
-      </span>
-    );
+  // highlight each query word in the recipe name, which may differ in case and accents
+  function highlightMatch(text = '', query = '') {
+    const ranges = matchRanges(text, query);
+    if (ranges.length === 0) return text;
+    const pieces = [];
+    let pos = 0;
+    for (const [start, end] of ranges) {
+      pieces.push(text.slice(pos, start));
+      pieces.push(
+        <span key={start} className={styles.highlight}>
+          {text.slice(start, end)}
+        </span>,
+      );
+      pos = end;
+    }
+    pieces.push(text.slice(pos));
+    return <span>{pieces}</span>;
   }
 
   // While the overlay is open: keep it positioned under the input, and close it

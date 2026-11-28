@@ -17,6 +17,12 @@ const recipes = [
     instructions: [{ items: ['Whisk and fry'] }],
     notes: [{ items: ['Great with maple syrup'] }],
   },
+  {
+    id: 'cafe-rio-salad',
+    name: 'Café Rio Salad',
+    ingredients: [{ items: ['1 head romaine', '1 jalapeño'] }],
+    instructions: [{ items: ['Toss together'] }],
+  },
 ];
 
 function setup() {
@@ -45,6 +51,63 @@ describe('SearchBox', () => {
       await user.type(input, term);
       expect(await screen.findByRole('button', { name: 'Pancakes' })).toBeInTheDocument();
     }
+  });
+
+  it('ignores accents, and highlights the accented letters in the name', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'cafe');
+    const result = await screen.findByRole('button', { name: 'Café Rio Salad' });
+    expect(result.querySelector('[class*="highlight"]')).toHaveTextContent(/^Café$/);
+    await user.clear(input);
+    await user.type(input, 'jalapeno');
+    expect(await screen.findByRole('button', { name: 'Café Rio Salad' })).toBeInTheDocument();
+  });
+
+  it('matches every word of the query, in any item, and highlights each in the name', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'stew carrot lentil');
+    const result = await screen.findByRole('button', { name: 'Lentil Stew' });
+    const name = result.querySelector('[class*="resultName"]');
+    const highlighted = [...name.querySelectorAll('[class*="highlight"]')];
+    expect(highlighted.map((el) => el.textContent)).toEqual(['Lentil', 'Stew']);
+    // "carrot" isn't in the name, so the line it came from shows under it
+    expect(result).toHaveAccessibleDescription('1 carrot');
+    await user.clear(input);
+    await user.type(input, 'lentil syrup');
+    expect(await screen.findByText('No recipes match')).toBeInTheDocument();
+  });
+
+  it('lists name matches before other matches', async () => {
+    const user = userEvent.setup();
+    const soup = {
+      id: 'soup',
+      name: 'Baked Potato Soup',
+      ingredients: [{ items: ['4 cups chicken stock'] }],
+      instructions: [{ items: ['Simmer'] }],
+    };
+    const curry = { ...soup, id: 'curry', name: 'Chicken Curry' };
+    render(<SearchBox recipes={[soup, curry]} onSelect={() => {}} />);
+    await user.type(screen.getByLabelText('Search recipes'), 'chicken');
+    await screen.findByRole('list');
+    const [first, second] = screen.getAllByRole('button');
+    expect(first).toHaveAccessibleName('Chicken Curry');
+    expect(second).toHaveAccessibleName('Baked Potato Soup');
+  });
+
+  it('shows the matching line when the name has no match', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'flour');
+    const result = await screen.findByRole('button', { name: 'Pancakes' });
+    expect(result).toHaveAccessibleDescription('2 cups flour');
+    expect(result).toHaveTextContent('2 cups flour');
+  });
+
+  it('shows no extra line when the name has every word', async () => {
+    const { user, input } = setup();
+    await user.type(input, 'lentil');
+    const result = await screen.findByRole('button', { name: 'Lentil Stew' });
+    expect(result).not.toHaveAccessibleDescription();
+    expect(result).toHaveTextContent(/^Lentil Stew$/);
   });
 
   it('says so in the results panel when nothing matches', async () => {

@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useId } from 'react';
 import useDebounce from '../../hooks/useDebounce';
-import { matchesQuery } from '../../utils/recipeSearch';
+import { matchContext, matchRanges, searchRecipes } from '../../utils/recipeSearch';
 import styles from './search.module.css';
 
 export default function SearchBox({ recipes = [], onSelect }) {
@@ -12,6 +12,7 @@ export default function SearchBox({ recipes = [], onSelect }) {
   const [overlayStyle, setOverlayStyle] = useState(null);
   // Set by Escape; cleared when the user types again
   const [dismissed, setDismissed] = useState(false);
+  const idPrefix = useId();
 
   // compute filtered results directly (useMemo not necessary here)
   const debq = String(debouncedQuery || '')
@@ -21,7 +22,8 @@ export default function SearchBox({ recipes = [], onSelect }) {
 
   // Results come from the settled (debounced) query only. While the user is still
   // typing, this keeps the previous results instead of flashing an empty list.
-  const filtered = debq ? recipes.filter((r) => matchesQuery(r, debq)) : [];
+  // Name matches first (searchRecipes)
+  const filtered = debq ? searchRecipes(recipes, debq) : [];
 
   // Only show a count when there's text in the box and a settled search to count.
   // An empty box (on load, or after Escape clears it natively) shows nothing.
@@ -35,22 +37,23 @@ export default function SearchBox({ recipes = [], onSelect }) {
     if (onSelect) onSelect(r);
   }
 
-  // highlight matching substring in the recipe name
-  function highlightMatch(text = '', needle = '') {
-    if (!needle) return text;
-    const lower = String(text).toLowerCase();
-    const idx = lower.indexOf(needle.toLowerCase());
-    if (idx === -1) return text;
-    const before = text.slice(0, idx);
-    const match = text.slice(idx, idx + needle.length);
-    const after = text.slice(idx + needle.length);
-    return (
-      <span>
-        {before}
-        <span className={styles.highlight}>{match}</span>
-        {after}
-      </span>
-    );
+  // highlight each query word in the recipe name, which may differ in case and accents
+  function highlightMatch(text = '', query = '') {
+    const ranges = matchRanges(text, query);
+    if (ranges.length === 0) return text;
+    const pieces = [];
+    let pos = 0;
+    for (const [start, end] of ranges) {
+      pieces.push(text.slice(pos, start));
+      pieces.push(
+        <span key={start} className={styles.highlight}>
+          {text.slice(start, end)}
+        </span>,
+      );
+      pos = end;
+    }
+    pieces.push(text.slice(pos));
+    return <span>{pieces}</span>;
   }
 
   // While the overlay is open: keep it positioned under the input, and close it
@@ -153,13 +156,33 @@ export default function SearchBox({ recipes = [], onSelect }) {
           </div>
           {filtered.length > 0 && (
             <ul className={styles.resultsList}>
-              {filtered.map((r, i) => (
-                <li key={r.id} className={i === 0 ? '' : styles.resultItem}>
-                  <button onClick={() => handleSelect(r)} className={styles.resultButton}>
-                    <div className={styles.resultName}>{highlightMatch(r.name, debq)}</div>
-                  </button>
-                </li>
-              ))}
+              {filtered.map((r, i) => {
+                // The line that matched, when the name doesn't show why. The button's name
+                // stays the recipe name; screen readers hear the line as its description.
+                const context = matchContext(r, debq);
+                const nameId = `${idPrefix}-${r.id}-name`;
+                const contextId = `${idPrefix}-${r.id}-context`;
+                return (
+                  <li key={r.id} className={i === 0 ? '' : styles.resultItem}>
+                    <button
+                      type="button"
+                      onClick={() => handleSelect(r)}
+                      className={styles.resultButton}
+                      aria-labelledby={context ? nameId : undefined}
+                      aria-describedby={context ? contextId : undefined}
+                    >
+                      <span id={nameId} className={styles.resultName}>
+                        {highlightMatch(r.name, debq)}
+                      </span>
+                      {context ? (
+                        <span id={contextId} className={styles.resultContext}>
+                          {highlightMatch(context, debq)}
+                        </span>
+                      ) : null}
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           )}
         </div>

@@ -89,7 +89,25 @@
 }
 
 .resultName {
+  display: block;
   font-weight: 600;
+}
+
+/* The line that matched, under the name: muted, smaller, and at most two lines */
+.resultContext {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  overflow: hidden;
+  margin-top: 2px;
+  font-size: 0.875rem;
+  color: var(--muted);
+}
+
+.resultContext .highlight {
+  color: inherit;
+  text-decoration-thickness: 1px;
 }
 
 /* The matched text: link color plus an underline, so color isn't the only cue */

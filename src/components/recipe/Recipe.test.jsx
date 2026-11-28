@@ -63,19 +63,10 @@ test('credits the contributor under the title, as plain text', () => {
   expect(screen.queryByRole('link', { name: 'Sam' })).not.toBeInTheDocument();
 });
 
-test('shows no credit when the recipe has no contributor or thanks', () => {
+test('shows no credit when the recipe has no contributor', () => {
   render(<Recipe recipe={recipe} />);
 
   expect(screen.queryByText('Shared by')).not.toBeInTheDocument();
-  expect(screen.queryByText('Thanks to')).not.toBeInTheDocument();
-});
-
-test('thanks the people whose suggested changes were used, in order', () => {
-  render(<Recipe recipe={{ ...recipe, contributor: 'Sam', thanks: ['Ana', 'Lee'] }} />);
-
-  const term = screen.getByText('Thanks to');
-  expect(term).toHaveRole('term');
-  expect(term.nextElementSibling).toHaveTextContent(/^Ana, Lee$/);
 });
 
 test('credits the contributor even when the recipe has no course or cooking method', () => {

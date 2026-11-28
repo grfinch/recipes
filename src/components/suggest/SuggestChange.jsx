@@ -250,7 +250,7 @@ function ChangeForm({ recipe, endpoint, turnstileSiteKey, headingRef, backLink, 
           id={idFor('submitter')}
           label="Your name"
           optional
-          hint="Shown publicly. If we use your suggestion, the recipe thanks you by name. Leave it blank to stay anonymous."
+          hint="Shown publicly as credit. Leave it blank to stay anonymous."
           error={fieldErrors.submitter}
         >
           {(props) => (

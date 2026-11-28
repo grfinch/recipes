@@ -10,11 +10,10 @@ const DETAILS = [
 ];
 
 export default function Recipe({ recipe }) {
-  const { id, name, contributor, thanks, ingredients, instructions, notes } = recipe;
+  const { id, name, contributor, ingredients, instructions, notes } = recipe;
   const details = DETAILS.filter(({ key }) => recipe[key]);
   const [checked, toggle, reset] = useCheckedItems(id);
-  const hasThanks = thanks?.length > 0;
-  const hasDetails = details.length > 0 || Boolean(contributor) || hasThanks;
+  const hasDetails = details.length > 0 || Boolean(contributor);
 
   return (
     <div className={styles.recipe}>
@@ -45,13 +44,6 @@ export default function Recipe({ recipe }) {
             <div className={styles.detail}>
               <dt>Shared by</dt>
               <dd>{contributor}</dd>
-            </div>
-          ) : null}
-          {/* Credit for visitors whose suggested changes were used */}
-          {hasThanks ? (
-            <div className={styles.detail}>
-              <dt>Thanks to</dt>
-              <dd>{thanks.join(', ')}</dd>
             </div>
           ) : null}
         </dl>

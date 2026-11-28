@@ -22,27 +22,11 @@ const KNOWN_KEYS = [
   'instructions',
   'notes',
   'contributor',
-  'thanks',
 ];
 
-// The most a credited name can be: the "Your name" limit on both suggest forms
-// (src/utils/suggestion.js, src/utils/recipeChange.js), so a name sent through either fits
+// The most a contributor's name can be: the suggest form's "Your name" limit
+// (src/utils/suggestion.js), so a name sent through the form always fits
 export const CONTRIBUTOR_MAX = 80;
-
-// Zero-width and other invisible characters. The relay puts a zero-width space after every
-// "@" in an issue, so a name copied by hand from one can carry it onto the page.
-const INVISIBLE = /[\u200B-\u200F\u2060\uFEFF]/;
-
-// A credited name: non-empty, trimmed, short enough, and nothing invisible in it
-function checkName(value, where, errors) {
-  if (!checkText(value, where, errors)) return;
-  if (value.length > CONTRIBUTOR_MAX) {
-    errors.push(`${where}: must be at most ${CONTRIBUTOR_MAX} characters`);
-  }
-  if (INVISIBLE.test(value)) {
-    errors.push(`${where}: has an invisible character (often after "@"); retype the name`);
-  }
-}
 
 // Every recipe file as { file, recipe }, or { file, error } if it isn't valid JSON.
 export function loadRecipeFiles(dir = RECIPES_DIR) {
@@ -136,23 +120,12 @@ function checkRecipe(recipe, file, label, categories, errors) {
   // Optional, but leave it out rather than writing an empty list
   if (recipe.notes !== undefined) checkGroups(recipe.notes, `${label}.notes`, errors);
   // Optional: who shared the recipe, shown on its page as credit
-  if (recipe.contributor !== undefined) {
-    checkName(recipe.contributor, `${label}.contributor`, errors);
-  }
-  // Optional: people whose suggested changes were used, thanked on the page in this order
-  if (recipe.thanks !== undefined) {
-    if (!Array.isArray(recipe.thanks) || recipe.thanks.length === 0) {
-      errors.push(`${label}.thanks: must be a non-empty array of names (or left out)`);
-    } else {
-      const seen = new Set();
-      recipe.thanks.forEach((name, i) => {
-        checkName(name, `${label}.thanks[${i}]`, errors);
-        if (typeof name !== 'string') return;
-        const key = name.trim().toLowerCase();
-        if (seen.has(key)) errors.push(`${label}.thanks[${i}]: "${name}" is already listed`);
-        seen.add(key);
-      });
-    }
+  if (
+    recipe.contributor !== undefined &&
+    checkText(recipe.contributor, `${label}.contributor`, errors) &&
+    recipe.contributor.length > CONTRIBUTOR_MAX
+  ) {
+    errors.push(`${label}.contributor: must be at most ${CONTRIBUTOR_MAX} characters`);
   }
 }
 

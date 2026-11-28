@@ -1,7 +1,7 @@
 import { Fragment, useId, useRef, useState } from 'react';
 import { SUGGEST_HASH, filterValues, hashFor } from '../../utils/recipeHash';
 import {
-  LETTER_GROUP_THRESHOLD,
+  JUMP_BAR_THRESHOLD,
   filterOptions,
   groupByLetter,
   matchesFilters,
@@ -98,8 +98,9 @@ export default function BrowseRecipes({
   const sorted = [...recipes].sort((a, b) => a.name.localeCompare(b.name));
   const shown = sorted.filter((recipe) => matchesFilters(recipe, filters) && usesAll(recipe, have));
   const current = shown.includes(picked) ? picked : null;
-  // A long list gets A-Z sections and a jump bar; a short one stays a single plain list
-  const sections = shown.length > LETTER_GROUP_THRESHOLD ? groupByLetter(shown) : null;
+  // Always A-Z sections; only a long list gets the jump bar
+  const sections = groupByLetter(shown);
+  const showJumpBar = shown.length > JUMP_BAR_THRESHOLD;
   const headingId = (letter) => `${headingIdPrefix}-letter-${letter === '#' ? 'other' : letter}`;
 
   // Buttons, not #letter links: the hash is the page's address. Focus the section's heading so
@@ -191,37 +192,33 @@ export default function BrowseRecipes({
               <PickCard recipe={current} terms={have} onlyOne={shown.length === 1} />
             ) : null}
           </div>
-          {sections ? (
-            <>
-              <nav aria-label="Jump to letter">
-                <ul className={styles.jumpBar}>
-                  {sections.map(({ letter }) => (
-                    <li key={letter}>
-                      <button
-                        type="button"
-                        className={styles.jumpButton}
-                        onClick={() => jumpTo(letter)}
-                      >
-                        {letter}
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
-              {sections.map(({ letter, recipes: inSection }) => (
-                // A Fragment, not a <section>: 26 extra landmarks would crowd the landmark list
-                <Fragment key={letter}>
-                  {/* tabIndex -1: the jump bar moves focus here */}
-                  <h2 id={headingId(letter)} tabIndex={-1} className={styles.letterHeading}>
-                    {letter}
-                  </h2>
-                  <RecipeList recipes={inSection} />
-                </Fragment>
-              ))}
-            </>
-          ) : shown.length > 0 ? (
-            <RecipeList recipes={shown} />
+          {showJumpBar ? (
+            <nav aria-label="Jump to letter">
+              <ul className={styles.jumpBar}>
+                {sections.map(({ letter }) => (
+                  <li key={letter}>
+                    <button
+                      type="button"
+                      className={styles.jumpButton}
+                      onClick={() => jumpTo(letter)}
+                    >
+                      {letter}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </nav>
           ) : null}
+          {sections.map(({ letter, recipes: inSection }) => (
+            // A Fragment, not a <section>: 26 extra landmarks would crowd the landmark list
+            <Fragment key={letter}>
+              {/* tabIndex -1: the jump bar moves focus here */}
+              <h2 id={headingId(letter)} tabIndex={-1} className={styles.letterHeading}>
+                {letter}
+              </h2>
+              <RecipeList recipes={inSection} />
+            </Fragment>
+          ))}
         </>
       ) : (
         <p>No recipes yet.</p>

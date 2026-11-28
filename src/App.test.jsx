@@ -172,8 +172,10 @@ describe('Browse all recipes', () => {
   it('lists every recipe by name as a link to it, sorted by name', () => {
     window.history.replaceState(null, '', '#/browse');
     render(<App />);
-    const list = within(screen.getByRole('main')).getByRole('list');
-    const links = within(list).getAllByRole('link');
+    // One list per letter section, in A-Z order
+    const links = within(screen.getByRole('main'))
+      .getAllByRole('list')
+      .flatMap((list) => within(list).getAllByRole('link'));
     expect(links.map((a) => [a.textContent, a.getAttribute('href')])).toEqual([
       ['Apple Crisp', '#/apple-crisp'],
       ['Lentil Stew', '#/lentil-stew'],

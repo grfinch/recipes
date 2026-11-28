@@ -7,6 +7,8 @@ import styles from './recipe.module.css';
 const DETAILS = [
   { key: 'course', label: 'Course', filter: 'course' },
   { key: 'cookingMethod', label: 'Cooking method', filter: 'method' },
+  // Credit for whoever shared the recipe, linking to everything else they shared
+  { key: 'contributor', label: 'Shared by', filter: 'by' },
 ];
 
 export default function Recipe({ recipe }) {

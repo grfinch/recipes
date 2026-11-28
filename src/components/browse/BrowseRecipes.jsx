@@ -30,7 +30,7 @@ function RecipeList({ recipes }) {
   );
 }
 
-// filters: { course?, method? } from the URL; onFiltersChange gets the new filters object.
+// filters: { course?, method?, by? } from the URL, each a list of values; onFiltersChange gets the new filters object.
 // returnTo: the recipe the visitor came from, if any, for a "Back to" link above the list.
 export default function BrowseRecipes({
   recipes = [],

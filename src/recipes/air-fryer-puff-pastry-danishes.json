@@ -1,0 +1,33 @@
+{
+  "id": "air-fryer-puff-pastry-danishes",
+  "name": "Air Fryer Puff Pastry Danishes",
+  "course": "Dessert",
+  "cookingMethod": "Air fryer",
+  "ingredients": [
+    {
+      "items": [
+        "1 package (8 ounces) cream cheese, softened",
+        "1/4 cup sugar",
+        "2 Tbsp all-purpose flour",
+        "1/2 tsp vanilla extract",
+        "2 large egg yolks",
+        "1 Tbsp water",
+        "1 package (17.3 ounces) frozen puff pastry, thawed",
+        "2/3 cup seedless raspberry jam or jam of choice"
+      ]
+    }
+  ],
+  "instructions": [
+    {
+      "items": [
+        "Preheat air fryer to 325°F.",
+        "Beat cream cheese, sugar, flour and vanilla until smooth; beat in 1 egg yolk.",
+        "Mix water and remaining egg yolk.",
+        "On a lightly floured surface, unfold each sheet of puff pastry; roll into a 12-in. square. Cut each into nine 4-in. squares.",
+        "Top each square with 1 Tbsp cream cheese mixture and 1 rounded tsp jam. Bring 2 opposite corners of pastry over filling, sealing with yolk mixture. Brush tops with remaining yolk mixture.",
+        "In batches, place in a single layer on greased tray in air-fryer basket. Cook until golden brown, 8-10 minutes. Serve warm. Refrigerate leftovers."
+      ]
+    }
+  ],
+  "contributor": "Sharmi"
+}

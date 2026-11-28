@@ -36,8 +36,8 @@ function sameView(a, b) {
 }
 
 function App() {
-  // view: { page: 'browse', course?, method? }, { page: 'suggest' }, { page: 'pick' },
-  // { page: 'change', recipe }, or { page: 'recipe', recipe };
+  // view: { page: 'browse', course?, method?, by? } (each a list of values), { page: 'suggest' },
+  // { page: 'pick' }, { page: 'change', recipe }, or { page: 'recipe', recipe };
   // null only when there are no recipes.
   // The page in the URL hash, else a random recipe. The function form runs only on first render.
   const [view, setView] = useState(() => viewFromHash(allRecipes) ?? randomRecipeView());

@@ -52,3 +52,29 @@ test('shows the course and cooking method, each linking to the browse page filte
   expect(screen.getByText('Course')).toBeInTheDocument();
   expect(screen.getByText('Cooking method')).toBeInTheDocument();
 });
+
+test('credits the contributor under the title, linking to everything they shared', () => {
+  render(<Recipe recipe={{ ...recipe, contributor: 'Sam Lee' }} />);
+
+  const term = screen.getByText('Shared by');
+  expect(term).toHaveRole('term');
+  expect(term.nextElementSibling).toHaveRole('definition');
+  expect(screen.getByRole('link', { name: 'Sam Lee' })).toHaveAttribute(
+    'href',
+    '#/browse?by=Sam+Lee',
+  );
+});
+
+test('shows no credit when the recipe has no contributor', () => {
+  render(<Recipe recipe={recipe} />);
+
+  expect(screen.queryByText('Shared by')).not.toBeInTheDocument();
+});
+
+test('credits the contributor even when the recipe has no course or cooking method', () => {
+  const { course: _course, cookingMethod: _method, ...bare } = recipe;
+  render(<Recipe recipe={{ ...bare, contributor: 'Sam' }} />);
+
+  expect(screen.getByText('Shared by')).toBeInTheDocument();
+  expect(screen.getByText('Sam')).toBeInTheDocument();
+});

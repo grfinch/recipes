@@ -52,6 +52,17 @@ describe('recipeHash', () => {
     expect(RESERVED_SLUGS).toContain('suggest');
   });
 
+  it('reads and writes the "Shared by" filter as by=, after course and method', () => {
+    const shared = [
+      { id: 'stew', name: 'Stew', course: 'Dinner', cookingMethod: 'Oven', contributor: 'Sharmi' },
+    ];
+    expect(viewFromHash(shared, '#/browse?by=sharmi')).toEqual({ page: 'browse', by: ['Sharmi'] });
+    expect(viewFromHash(shared, '#/browse?by=Nobody')).toEqual({ page: 'browse' });
+    expect(hashForView({ page: 'browse', by: 'Sharmi', course: 'Dinner' })).toBe(
+      '#/browse?course=Dinner&by=Sharmi',
+    );
+  });
+
   it('reads the suggest-a-change page for a recipe, and nothing for an unknown recipe', () => {
     const [stew] = recipes;
     const hash = '#/suggest-change?recipe=instant-pot-lentil-stew';
@@ -97,16 +108,16 @@ describe('recipeHash', () => {
     it('reads course and method, and leaves plain #/browse unchanged', () => {
       expect(view('#/browse')).toEqual({ page: 'browse' });
       expect(view('#/browse?')).toEqual({ page: 'browse' });
-      expect(view('#/browse?course=Dinner')).toEqual({ page: 'browse', course: 'Dinner' });
+      expect(view('#/browse?course=Dinner')).toEqual({ page: 'browse', course: ['Dinner'] });
       expect(view('#/browse?course=Dinner&method=Instant-pot')).toEqual({
         page: 'browse',
-        course: 'Dinner',
-        method: 'Instant-pot',
+        course: ['Dinner'],
+        method: ['Instant-pot'],
       });
       expect(view('#/browse?method=Oven&course=Dinner')).toEqual({
         page: 'browse',
-        course: 'Dinner',
-        method: 'Oven',
+        course: ['Dinner'],
+        method: ['Oven'],
       });
     });
 
@@ -114,13 +125,16 @@ describe('recipeHash', () => {
       expect(view('#/browse?sort=name&cookingMethod=Oven&q=stew')).toEqual({ page: 'browse' });
       expect(view('#/browse?sort=name&course=Dinner')).toEqual({
         page: 'browse',
-        course: 'Dinner',
+        course: ['Dinner'],
       });
     });
 
     it('drops bad values: unused, unknown, empty, or blank', () => {
       expect(view('#/browse?course=Lunch')).toEqual({ page: 'browse' }); // a category nobody uses
-      expect(view('#/browse?course=Pizza&method=Oven')).toEqual({ page: 'browse', method: 'Oven' });
+      expect(view('#/browse?course=Pizza&method=Oven')).toEqual({
+        page: 'browse',
+        method: ['Oven'],
+      });
       expect(view('#/browse?course=&method=%20%20')).toEqual({ page: 'browse' });
       expect(view('#/browse?course')).toEqual({ page: 'browse' });
       expect(view('#/browse?method=Dinner')).toEqual({ page: 'browse' }); // a course, not a method
@@ -129,32 +143,46 @@ describe('recipeHash', () => {
     it('matches values ignoring case and spaces around them, using the recipe spelling', () => {
       expect(view('#/browse?course=dinner&method=INSTANT-POT')).toEqual({
         page: 'browse',
-        course: 'Dinner',
-        method: 'Instant-pot',
+        course: ['Dinner'],
+        method: ['Instant-pot'],
       });
-      expect(view('#/browse?course=%20Dinner%20')).toEqual({ page: 'browse', course: 'Dinner' });
+      expect(view('#/browse?course=%20Dinner%20')).toEqual({ page: 'browse', course: ['Dinner'] });
     });
 
-    it('uses the first of repeated parameters', () => {
-      expect(view('#/browse?course=Dinner&course=Side+%26+Snack')).toEqual({
+    it('keeps every value of a repeated parameter, once each, in the order given', () => {
+      expect(view('#/browse?course=Side+%26+Snack&course=dinner&course=Dinner')).toEqual({
         page: 'browse',
-        course: 'Dinner',
+        course: ['Side & Snack', 'Dinner'],
+      });
+      expect(view('#/browse?course=Lunch&course=Dinner')).toEqual({
+        page: 'browse',
+        course: ['Dinner'],
       });
     });
 
     it('decodes spaces as + or %20, and encoded & and =', () => {
-      expect(view('#/browse?method=Slow+cooker').method).toBe('Slow cooker');
-      expect(view('#/browse?method=Slow%20cooker').method).toBe('Slow cooker');
-      expect(view('#/browse?course=Side%20%26%20Snack').course).toBe('Side & Snack');
+      expect(view('#/browse?method=Slow+cooker').method).toEqual(['Slow cooker']);
+      expect(view('#/browse?method=Slow%20cooker').method).toEqual(['Slow cooker']);
+      expect(view('#/browse?course=Side%20%26%20Snack').course).toEqual(['Side & Snack']);
       expect(view('#/browse?course=%E0%A4%A')).toEqual({ page: 'browse' }); // malformed, no throw
     });
 
     it('builds the hash with course first, encoded, and round-trips it', () => {
-      const filtered = { page: 'browse', method: 'Slow cooker', course: 'Side & Snack' };
+      const filtered = { page: 'browse', method: ['Slow cooker'], course: ['Side & Snack'] };
       const hash = hashForView(filtered);
       expect(hash).toBe('#/browse?course=Side+%26+Snack&method=Slow+cooker');
-      expect(view(hash)).toEqual({ page: 'browse', course: 'Side & Snack', method: 'Slow cooker' });
+      expect(view(hash)).toEqual({
+        page: 'browse',
+        course: ['Side & Snack'],
+        method: ['Slow cooker'],
+      });
+      expect(hashForView({ page: 'browse', course: ['Dinner'] })).toBe('#/browse?course=Dinner');
+      expect(hashForView({ page: 'browse', course: ['Dinner', 'Side & Snack'] })).toBe(
+        '#/browse?course=Dinner&course=Side+%26+Snack',
+      );
+      // A single value, as a recipe page's links pass it, works too
       expect(hashForView({ page: 'browse', course: 'Dinner' })).toBe('#/browse?course=Dinner');
+      expect(hashForView({ page: 'browse', course: [] })).toBe(BROWSE_HASH);
       expect(hashForView({ page: 'browse', course: undefined, method: null })).toBe(BROWSE_HASH);
     });
 

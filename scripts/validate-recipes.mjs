@@ -21,7 +21,12 @@ const KNOWN_KEYS = [
   'ingredients',
   'instructions',
   'notes',
+  'contributor',
 ];
+
+// The most a contributor's name can be: the suggest form's "Your name" limit
+// (src/utils/suggestion.js), so a name sent through the form always fits
+export const CONTRIBUTOR_MAX = 80;
 
 // Every recipe file as { file, recipe }, or { file, error } if it isn't valid JSON.
 export function loadRecipeFiles(dir = RECIPES_DIR) {
@@ -114,6 +119,14 @@ function checkRecipe(recipe, file, label, categories, errors) {
   checkGroups(recipe.instructions, `${label}.instructions`, errors);
   // Optional, but leave it out rather than writing an empty list
   if (recipe.notes !== undefined) checkGroups(recipe.notes, `${label}.notes`, errors);
+  // Optional: who shared the recipe, shown on its page as credit
+  if (
+    recipe.contributor !== undefined &&
+    checkText(recipe.contributor, `${label}.contributor`, errors) &&
+    recipe.contributor.length > CONTRIBUTOR_MAX
+  ) {
+    errors.push(`${label}.contributor: must be at most ${CONTRIBUTOR_MAX} characters`);
+  }
 }
 
 // entries: [{ file, recipe }] or [{ file, error }], as loadRecipeFiles returns.

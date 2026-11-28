@@ -10,9 +10,10 @@ const DETAILS = [
 ];
 
 export default function Recipe({ recipe }) {
-  const { id, name, ingredients, instructions, notes } = recipe;
+  const { id, name, contributor, ingredients, instructions, notes } = recipe;
   const details = DETAILS.filter(({ key }) => recipe[key]);
   const [checked, toggle, reset] = useCheckedItems(id);
+  const hasDetails = details.length > 0 || Boolean(contributor);
 
   return (
     <div className={styles.recipe}>
@@ -28,7 +29,7 @@ export default function Recipe({ recipe }) {
           </button>
         </div>
       </div>
-      {details.length > 0 ? (
+      {hasDetails ? (
         <dl className={styles.details}>
           {details.map(({ key, label, filter }) => (
             <div key={key} className={styles.detail}>
@@ -38,6 +39,13 @@ export default function Recipe({ recipe }) {
               </dd>
             </div>
           ))}
+          {/* Credit for whoever suggested the recipe; plain text, since there's nothing to filter */}
+          {contributor ? (
+            <div className={styles.detail}>
+              <dt>Shared by</dt>
+              <dd>{contributor}</dd>
+            </div>
+          ) : null}
         </dl>
       ) : null}
       <RecipeSection

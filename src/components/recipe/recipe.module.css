@@ -51,10 +51,13 @@
   margin: 1.5rem 0 0.25rem;
 }
 
-/* Course and cooking method, one quiet line under the title: "Course Dinner  Cooking method Oven" */
+/* Course, cooking method and credit, one quiet line under the title:
+   "Course: Dinner  Cooking method: Oven  Shared by: Sam". Baseline-aligned, so the plain-text
+   credit lines up with the padded links. */
 .details {
   display: flex;
   flex-wrap: wrap;
+  align-items: baseline;
   gap: 0.25rem 1.5rem;
   margin: 0;
 }

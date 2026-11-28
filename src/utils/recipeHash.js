@@ -45,23 +45,36 @@ function slugFromHash(hash) {
   }
 }
 
-// The All recipes page's filters: URL parameter -> recipe field. Kept free of JSON imports,
-// because scripts/validate-recipes.mjs imports this file in plain Node.
-export const BROWSE_FILTERS = { course: 'course', method: 'cookingMethod' };
+// The All recipes page's filters (also used by Pick for me): URL parameter -> recipe field.
+// "by" is who shared the recipe: #/browse?by=Sharmi. Kept free of JSON imports, because
+// scripts/validate-recipes.mjs imports this file in plain Node.
+export const BROWSE_FILTERS = { course: 'course', method: 'cookingMethod', by: 'contributor' };
 
-// The browse filters a query string asks for, keeping only values some recipe uses. Matching
-// ignores case and returns the recipe's spelling, so the URL can be rewritten to it. Unknown
-// parameters and unused or empty values are dropped; a repeated parameter uses its first value.
+// A filter's chosen values as a list: filters hold arrays, but a single value is accepted too
+// (a recipe page's link to its course passes a string). Missing or empty: [].
+export function filterValues(value) {
+  if (Array.isArray(value)) return value;
+  return value ? [value] : [];
+}
+
+// The browse filters a query string asks for, each a list of values some recipe uses. A filter
+// with several values repeats its parameter: ?course=Appetizer&course=Side. Matching ignores
+// case and returns the recipe's spelling, so the URL can be rewritten to it. Unknown parameters,
+// unused or empty values, and repeats are dropped; a filter with no values left is left out.
 function browseFiltersFromQuery(recipes, query) {
   const params = new URLSearchParams(query);
   const filters = {};
   for (const [param, field] of Object.entries(BROWSE_FILTERS)) {
-    const wanted = params.get(param)?.trim().toLowerCase();
-    if (!wanted) continue;
-    const match = recipes.find(
-      (r) => typeof r[field] === 'string' && r[field].toLowerCase() === wanted,
-    );
-    if (match) filters[param] = match[field];
+    const values = [];
+    for (const raw of params.getAll(param)) {
+      const wanted = raw.trim().toLowerCase();
+      if (!wanted) continue;
+      const match = recipes.find(
+        (r) => typeof r[field] === 'string' && r[field].toLowerCase() === wanted,
+      );
+      if (match && !values.includes(match[field])) values.push(match[field]);
+    }
+    if (values.length > 0) filters[param] = values;
   }
   return filters;
 }
@@ -73,7 +86,7 @@ export function recipeFromHash(recipes, hash = window.location.hash) {
   return recipes.find((r) => r.id === slug) ?? null;
 }
 
-// What the hash asks to show: { page: 'browse', course?, method? }, { page: 'suggest' },
+// What the hash asks to show: { page: 'browse', course?, method?, by? } (each a list of values), { page: 'suggest' },
 // { page: 'pick' }, { page: 'change', recipe }, { page: 'recipe', recipe }, or null. Plain
 // #/browse is { page: 'browse' }; filter keys appear only when set. A change page for a recipe
 // that doesn't exist is null, like any unknown link.
@@ -92,8 +105,8 @@ export function viewFromHash(recipes, hash = window.location.hash) {
   return recipe ? { page: 'recipe', recipe } : null;
 }
 
-// The hash for a view. Browse filters go in a query, course first:
-// #/browse?course=Dinner&method=Slow+cooker
+// The hash for a view. Browse filters go in a query, in BROWSE_FILTERS order, each value of a
+// filter in the order given: #/browse?course=Appetizer&course=Side&method=Oven&by=Sharmi
 export function hashForView(view) {
   if (view.page === 'suggest') return SUGGEST_HASH;
   if (view.page === 'pick') return PICK_HASH;
@@ -101,7 +114,7 @@ export function hashForView(view) {
   if (view.page !== 'browse') return hashFor(view.recipe);
   const params = new URLSearchParams();
   for (const param of Object.keys(BROWSE_FILTERS)) {
-    if (view[param]) params.set(param, view[param]);
+    for (const value of filterValues(view[param])) params.append(param, value);
   }
   const query = params.toString();
   return query ? `${BROWSE_HASH}?${query}` : BROWSE_HASH;

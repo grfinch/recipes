@@ -2,6 +2,7 @@ import { act, render, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import App from './App';
+import PickRecipe from './components/pick/PickRecipe';
 
 // Separate file because vi.mock replaces the recipe list for the whole file.
 vi.mock('./recipes/index.js', () => ({
@@ -13,6 +14,7 @@ vi.mock('./recipes/index.js', () => ({
       cookingMethod: 'Oven',
       ingredients: [{ items: ['4 apples', '1 cup oats'] }],
       instructions: [{ items: ['Bake'] }],
+      contributor: 'Sharmi',
     },
     {
       id: 'chicken-curry',
@@ -21,6 +23,7 @@ vi.mock('./recipes/index.js', () => ({
       cookingMethod: 'Stovetop',
       ingredients: [{ items: ['2 lb chicken thighs', '1 can coconut milk'] }],
       instructions: [{ items: ['Simmer'] }],
+      contributor: 'Sharmi',
     },
     {
       id: 'teriyaki-chicken',
@@ -32,8 +35,10 @@ vi.mock('./recipes/index.js', () => ({
         { title: 'Rice', items: ['2 cups rice'] },
       ],
       instructions: [{ items: ['Pressure cook'] }],
+      contributor: 'Gaven',
     },
     {
+      // No contributor: matches only "All" in the Shared by row
       id: 'lentil-stew',
       name: 'Lentil Stew',
       course: 'Dinner',
@@ -48,7 +53,7 @@ afterEach(() => vi.restoreAllMocks());
 
 const main = () => within(screen.getByRole('main'));
 const chip = (groupName, name) =>
-  within(main().getByRole('group', { name: groupName })).getByRole('radio', { name });
+  within(main().getByRole('group', { name: groupName })).getByRole('checkbox', { name });
 const count = () => main().getByRole('status');
 const ingredientsBox = () => main().getByRole('textbox', { name: /Ingredients you have/ });
 const result = () => main().queryByRole('region', { name: 'Your pick' });
@@ -104,6 +109,7 @@ describe('Pick a recipe for me', () => {
     openPick();
     expect(chip('Course', 'All')).toBeChecked();
     expect(chip('Cooking method', 'All')).toBeChecked();
+    expect(chip('Shared by', 'All')).toBeChecked();
     expect(ingredientsBox()).toHaveValue('');
     expect(ingredientsBox()).toHaveAccessibleDescription(/Separate them with commas/);
     expect(count()).toHaveTextContent('4 recipes to choose from');
@@ -143,6 +149,54 @@ describe('Pick a recipe for me', () => {
     expect(window.location.hash).toBe('#/pick');
   });
 
+  it('filters by who shared the recipe, listing each contributor A-Z', async () => {
+    const user = userEvent.setup();
+    vi.spyOn(Math, 'random').mockReturnValue(0);
+    openPick();
+    const row = within(main().getByRole('group', { name: 'Shared by' }));
+    // Each chip's label text, without its decorative check mark
+    const labels = row
+      .getAllByRole('checkbox')
+      .map((r) => r.labels[0].textContent.replace('✓', ''));
+    expect(labels).toEqual(['All', 'Gaven', 'Sharmi']);
+
+    await user.click(chip('Shared by', 'Sharmi'));
+    expect(count()).toHaveTextContent('2 recipes match');
+    await user.type(ingredientsBox(), 'chicken');
+    expect(count()).toHaveTextContent('1 recipe matches');
+    await user.click(main().getByRole('button', { name: 'Pick for me' }));
+    expect(pickedName()).toBe('Chicken Curry');
+
+    // Adding Gaven: Sharmi's or Gaven's chicken recipes
+    await user.click(chip('Shared by', 'Gaven'));
+    expect(result()).toBeNull();
+    expect(count()).toHaveTextContent('2 recipes match');
+  });
+
+  it('takes several choices in a row, and "All" clears them', async () => {
+    const user = userEvent.setup();
+    openPick();
+    await user.click(chip('Course', 'Dessert'));
+    expect(count()).toHaveTextContent('1 recipe matches');
+    await user.click(chip('Course', 'Dinner'));
+    expect(count()).toHaveTextContent('4 recipes match');
+    await user.click(chip('Cooking method', 'Oven'));
+    await user.click(chip('Cooking method', 'Stovetop'));
+    expect(count()).toHaveTextContent('2 recipes match');
+
+    await user.click(chip('Course', 'All'));
+    expect(chip('Course', 'All')).toBeChecked();
+    expect(chip('Course', 'Dinner')).not.toBeChecked();
+    expect(chip('Cooking method', 'Oven')).toBeChecked();
+    expect(count()).toHaveTextContent('2 recipes match');
+  });
+
+  it('has no Shared by row when no recipe credits anyone', () => {
+    render(<PickRecipe recipes={[{ id: 'x', name: 'X', ingredients: [], instructions: [] }]} />);
+    expect(screen.queryByRole('group', { name: 'Shared by' })).toBeNull();
+    expect(screen.getByRole('group', { name: 'Course' })).toBeInTheDocument();
+  });
+
   it('"Pick another" always changes the pick when there is more than one match', async () => {
     const user = userEvent.setup();
     vi.spyOn(Math, 'random').mockReturnValue(0);
@@ -172,6 +226,7 @@ describe('Pick a recipe for me', () => {
     const user = userEvent.setup();
     openPick();
     await user.click(chip('Course', 'Dinner'));
+    await user.click(chip('Shared by', 'Gaven'));
     await user.type(ingredientsBox(), 'chicken, tofu');
     expect(count()).toHaveTextContent('No recipes use tofu.');
     expect(main().queryByRole('button', { name: 'Pick for me' })).toBeNull();
@@ -179,6 +234,7 @@ describe('Pick a recipe for me', () => {
     await user.click(main().getByRole('button', { name: 'Clear choices' }));
     expect(chip('Course', 'All')).toBeChecked();
     expect(chip('Course', 'All')).toHaveFocus();
+    expect(chip('Shared by', 'All')).toBeChecked();
     expect(ingredientsBox()).toHaveValue('');
     expect(count()).toHaveTextContent('4 recipes to choose from');
   });

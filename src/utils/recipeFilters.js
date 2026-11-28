@@ -1,10 +1,11 @@
 import categories from '../recipeCategories.json';
-import { BROWSE_FILTERS } from './recipeHash';
+import { BROWSE_FILTERS, filterValues } from './recipeHash';
 
 const CATEGORY_ORDER = { course: categories.courses, method: categories.cookingMethods };
 
 // Order values as recipeCategories.json lists them; any value it doesn't list goes last, A-Z.
-function byCategoryOrder(order) {
+// With no list (contributors), plain A-Z.
+function byCategoryOrder(order = []) {
   const rank = (value) => {
     const i = order.indexOf(value);
     return i === -1 ? order.length : i;
@@ -13,23 +14,28 @@ function byCategoryOrder(order) {
 }
 
 // The choices for each browse filter: only values some recipe uses, so no choice is ever empty.
-// Returns { course: [...], method: [...] }.
+// Returns { course: [...], method: [...], by?: [...] }. `by` (who shared it) is left out when no
+// recipe credits anyone, since "All" alone would be no choice.
 export function filterOptions(recipes) {
   const options = {};
   for (const [param, field] of Object.entries(BROWSE_FILTERS)) {
     const used = new Set(
       recipes.map((r) => r[field]).filter((v) => typeof v === 'string' && v !== ''),
     );
+    if (param === 'by' && used.size === 0) continue;
     options[param] = [...used].sort(byCategoryOrder(CATEGORY_ORDER[param]));
   }
   return options;
 }
 
-// Whether a recipe passes the filters ({ course?, method? }); a missing filter means "All".
+// Whether a recipe passes the filters ({ course?, method?, by? }, each a list of values). It must
+// have one of the chosen values in every filter: Appetizer or Side, and Oven. A missing or empty
+// filter means "All".
 export function matchesFilters(recipe, filters) {
-  return Object.entries(BROWSE_FILTERS).every(
-    ([param, field]) => !filters[param] || recipe[field] === filters[param],
-  );
+  return Object.entries(BROWSE_FILTERS).every(([param, field]) => {
+    const values = filterValues(filters[param]);
+    return values.length === 0 || values.includes(recipe[field]);
+  });
 }
 
 // The All recipes list splits into A-Z sections, with a jump bar, once it shows more recipes

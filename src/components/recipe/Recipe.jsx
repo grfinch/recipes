@@ -7,13 +7,14 @@ import styles from './recipe.module.css';
 const DETAILS = [
   { key: 'course', label: 'Course', filter: 'course' },
   { key: 'cookingMethod', label: 'Cooking method', filter: 'method' },
+  // Credit for whoever shared the recipe, linking to everything else they shared
+  { key: 'contributor', label: 'Shared by', filter: 'by' },
 ];
 
 export default function Recipe({ recipe }) {
-  const { id, name, contributor, ingredients, instructions, notes } = recipe;
+  const { id, name, ingredients, instructions, notes } = recipe;
   const details = DETAILS.filter(({ key }) => recipe[key]);
   const [checked, toggle, reset] = useCheckedItems(id);
-  const hasDetails = details.length > 0 || Boolean(contributor);
 
   return (
     <div className={styles.recipe}>
@@ -29,7 +30,7 @@ export default function Recipe({ recipe }) {
           </button>
         </div>
       </div>
-      {hasDetails ? (
+      {details.length > 0 ? (
         <dl className={styles.details}>
           {details.map(({ key, label, filter }) => (
             <div key={key} className={styles.detail}>
@@ -39,13 +40,6 @@ export default function Recipe({ recipe }) {
               </dd>
             </div>
           ))}
-          {/* Credit for whoever suggested the recipe; plain text, since there's nothing to filter */}
-          {contributor ? (
-            <div className={styles.detail}>
-              <dt>Shared by</dt>
-              <dd>{contributor}</dd>
-            </div>
-          ) : null}
         </dl>
       ) : null}
       <RecipeSection

@@ -5,6 +5,7 @@ import App from './App';
 
 // Separate file because vi.mock replaces the recipe list for the whole file. Four recipes over
 // three courses and four methods; Lunch, Grill, and the other listed categories go unused.
+// Two contributors; Pancakes has none.
 vi.mock('./recipes/index.js', () => ({
   default: [
     {
@@ -14,6 +15,7 @@ vi.mock('./recipes/index.js', () => ({
       cookingMethod: 'Oven',
       ingredients: [{ items: ['4 apples'] }],
       instructions: [{ items: ['Bake'] }],
+      contributor: 'Sharmi',
     },
     {
       id: 'lentil-stew',
@@ -22,6 +24,7 @@ vi.mock('./recipes/index.js', () => ({
       cookingMethod: 'Instant-pot',
       ingredients: [{ items: ['1 cup lentils'] }],
       instructions: [{ items: ['Pressure cook'] }],
+      contributor: 'Gaven',
     },
     {
       id: 'pancakes',
@@ -38,13 +41,14 @@ vi.mock('./recipes/index.js', () => ({
       cookingMethod: 'Slow cooker',
       ingredients: [{ items: ['1 pork shoulder'] }],
       instructions: [{ items: ['Cook on low'] }],
+      contributor: 'Sharmi',
     },
   ],
 }));
 
 const main = () => screen.getByRole('main');
 const group = (name) => within(main()).getByRole('group', { name });
-const chip = (groupName, name) => within(group(groupName)).getByRole('radio', { name });
+const chip = (groupName, name) => within(group(groupName)).getByRole('checkbox', { name });
 // Recipe links in the list only, not the "Back to <recipe>" link above the heading
 const shownNames = () => {
   const list = within(main()).queryByRole('list');
@@ -78,10 +82,10 @@ describe('All recipes filters', () => {
     openBrowse();
     const labels = (name) =>
       within(group(name))
-        .getAllByRole('radio')
+        .getAllByRole('checkbox')
         .map((r) => r.labels[0].textContent);
     // The check mark is aria-hidden; accessible names are the visible words only
-    expect(within(group('Course')).getAllByRole('radio').length).toBe(4);
+    expect(within(group('Course')).getAllByRole('checkbox').length).toBe(4);
     expect(labels('Course').map((t) => t.replace('✓', ''))).toEqual([
       'All',
       'Breakfast',
@@ -95,8 +99,8 @@ describe('All recipes filters', () => {
       'Stovetop',
       'Slow cooker',
     ]);
-    expect(within(group('Course')).queryByRole('radio', { name: 'Lunch' })).toBeNull();
-    expect(within(group('Cooking method')).queryByRole('radio', { name: 'Grill' })).toBeNull();
+    expect(within(group('Course')).queryByRole('checkbox', { name: 'Lunch' })).toBeNull();
+    expect(within(group('Cooking method')).queryByRole('checkbox', { name: 'Grill' })).toBeNull();
   });
 
   it('starts on "All" for both filters with plain #/browse', () => {
@@ -126,12 +130,90 @@ describe('All recipes filters', () => {
     expect(shownNames()).toEqual(['Pulled Pork']);
     expect(window.location.hash).toBe('#/browse?method=Slow+cooker');
 
+    // A second method adds to the first: Slow cooker or Oven
     await user.click(chip('Cooking method', 'Oven'));
-    expect(shownNames()).toEqual(['Apple Crisp']);
+    expect(shownNames()).toEqual(['Apple Crisp', 'Pulled Pork']);
 
     await user.click(chip('Cooking method', 'All'));
     expect(shownNames()).toHaveLength(4);
     expect(window.location.hash).toBe('#/browse');
+  });
+
+  it('takes several choices in a row, and "All" clears them', async () => {
+    const user = userEvent.setup();
+    openBrowse();
+
+    await user.click(chip('Course', 'Breakfast'));
+    await user.click(chip('Course', 'Dessert'));
+    expect(chip('Course', 'Breakfast')).toBeChecked();
+    expect(chip('Course', 'Dessert')).toBeChecked();
+    expect(chip('Course', 'All')).not.toBeChecked();
+    expect(shownNames()).toEqual(['Apple Crisp', 'Pancakes']);
+    expect(count()).toHaveTextContent('2 recipes');
+    // Values follow the chips' order, not the order they were clicked
+    expect(window.location.hash).toBe('#/browse?course=Breakfast&course=Dessert');
+
+    // Unchecking one keeps the other
+    await user.click(chip('Course', 'Breakfast'));
+    expect(shownNames()).toEqual(['Apple Crisp']);
+    expect(window.location.hash).toBe('#/browse?course=Dessert');
+
+    await user.click(chip('Course', 'Dinner'));
+    await user.click(chip('Course', 'All'));
+    expect(chip('Course', 'All')).toBeChecked();
+    expect(chip('Course', 'Dessert')).not.toBeChecked();
+    expect(chip('Course', 'Dinner')).not.toBeChecked();
+    expect(shownNames()).toHaveLength(4);
+    expect(window.location.hash).toBe('#/browse');
+
+    // Unchecking the last choice goes back to "All"
+    await user.click(chip('Course', 'Dinner'));
+    await user.click(chip('Course', 'Dinner'));
+    expect(chip('Course', 'All')).toBeChecked();
+    expect(window.location.hash).toBe('#/browse');
+  });
+
+  it('keeps "All" checked when it is clicked again', async () => {
+    const user = userEvent.setup();
+    openBrowse();
+    await user.click(chip('Course', 'All'));
+    expect(chip('Course', 'All')).toBeChecked();
+    expect(shownNames()).toHaveLength(4);
+  });
+
+  it('opens a deep link with several values in a filter', () => {
+    openBrowse('#/browse?course=dessert&course=Breakfast&course=Dessert&course=Lunch');
+    expect(chip('Course', 'Breakfast')).toBeChecked();
+    expect(chip('Course', 'Dessert')).toBeChecked();
+    expect(shownNames()).toEqual(['Apple Crisp', 'Pancakes']);
+    // Repeats and unused values dropped, spelling fixed, the link's order kept
+    expect(window.location.hash).toBe('#/browse?course=Dessert&course=Breakfast');
+  });
+
+  it('filters by who shared the recipe, A-Z, alone or with the other filters', async () => {
+    const user = userEvent.setup();
+    openBrowse();
+    const labels = within(group('Shared by'))
+      .getAllByRole('checkbox')
+      .map((r) => r.labels[0].textContent.replace('✓', ''));
+    expect(labels).toEqual(['All', 'Gaven', 'Sharmi']);
+    expect(chip('Shared by', 'All')).toBeChecked();
+
+    await user.click(chip('Shared by', 'Sharmi'));
+    expect(shownNames()).toEqual(['Apple Crisp', 'Pulled Pork']);
+    expect(count()).toHaveTextContent('2 recipes');
+    expect(window.location.hash).toBe('#/browse?by=Sharmi');
+
+    await user.click(chip('Course', 'Dinner'));
+    expect(shownNames()).toEqual(['Pulled Pork']);
+    expect(window.location.hash).toBe('#/browse?course=Dinner&by=Sharmi');
+  });
+
+  it('opens a "Shared by" deep link, tidying its case', () => {
+    openBrowse('#/browse?by=gaven');
+    expect(chip('Shared by', 'Gaven')).toBeChecked();
+    expect(shownNames()).toEqual(['Lentil Stew']);
+    expect(window.location.hash).toBe('#/browse?by=Gaven');
   });
 
   it('keeps the browse count separate from the search box status', async () => {
@@ -144,11 +226,13 @@ describe('All recipes filters', () => {
     expect(count()).toHaveTextContent('4 recipes');
   });
 
-  it('works from the keyboard: arrow keys change the chip, and focus stays on it', async () => {
+  it('works from the keyboard: Tab moves between chips, Space toggles, focus stays', async () => {
     const user = userEvent.setup();
     openBrowse();
     chip('Course', 'All').focus();
-    await user.keyboard('{ArrowRight}');
+    await user.tab();
+    expect(chip('Course', 'Breakfast')).toHaveFocus();
+    await user.keyboard(' ');
     expect(chip('Course', 'Breakfast')).toBeChecked();
     expect(chip('Course', 'Breakfast')).toHaveFocus();
     expect(shownNames()).toEqual(['Pancakes']);

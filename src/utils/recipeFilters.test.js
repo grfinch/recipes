@@ -33,6 +33,30 @@ describe('filterOptions', () => {
   });
 });
 
+describe('filterOptions: who shared it', () => {
+  it('lists each contributor once, A-Z, skipping recipes with none', () => {
+    const shared = [
+      { contributor: 'Sharmi' },
+      { contributor: 'Gaven' },
+      {},
+      { contributor: 'Sharmi' },
+      { contributor: '' },
+      { contributor: 'Kristen' },
+    ];
+    expect(filterOptions(shared).by).toEqual(['Gaven', 'Kristen', 'Sharmi']);
+  });
+
+  it('leaves the filter out when no recipe credits anyone', () => {
+    expect(filterOptions(recipes)).not.toHaveProperty('by');
+  });
+
+  it('matches a recipe by its contributor', () => {
+    expect(matchesFilters({ contributor: 'Gaven' }, { by: 'Gaven' })).toBe(true);
+    expect(matchesFilters({ contributor: 'Gaven' }, { by: 'Sharmi' })).toBe(false);
+    expect(matchesFilters({}, { by: 'Sharmi' })).toBe(false);
+  });
+});
+
 describe('matchesFilters', () => {
   it('treats a missing filter as "All"', () => {
     expect(recipes.filter((r) => matchesFilters(r, {}))).toHaveLength(5);
@@ -45,6 +69,16 @@ describe('matchesFilters', () => {
     expect(ids({ method: 'Oven' })).toEqual(['a', 'c']);
     expect(ids({ course: 'Dinner', method: 'Instant-pot' })).toEqual(['d']);
     expect(ids({ course: 'Dessert', method: 'Instant-pot' })).toEqual([]);
+  });
+
+  it('matches any chosen value within a filter, and every filter', () => {
+    const ids = (f) => recipes.filter((r) => matchesFilters(r, f)).map((r) => r.id);
+    expect(ids({ course: [] })).toHaveLength(5);
+    expect(ids({ course: ['Dessert', 'Breakfast'] })).toEqual(['a', 'c']);
+    expect(ids({ course: ['Dinner', 'Breakfast'], method: ['Oven', 'Slow cooker'] })).toEqual([
+      'b',
+      'c',
+    ]);
   });
 });
 

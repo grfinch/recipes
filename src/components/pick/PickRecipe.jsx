@@ -16,8 +16,9 @@ const orList = (items) => new Intl.ListFormat('en', { type: 'disjunction' }).for
 
 // The "Pick a recipe for me" page: narrow down by course, cooking method, and ingredients on
 // hand, then get a random recipe that fits.
-// choices: { filters: { course?, method? }, ingredients (the box's text), picked (a recipe or
-// null) }. App holds them, so they're still there after opening the pick and coming Back.
+// choices: { filters: { course?, method?, by? } (each a list), ingredients (the box's text), picked
+// (a recipe or null) }. App holds them, so they're still there after opening the pick and
+// coming Back.
 export default function PickRecipe({
   recipes = [],
   choices = NO_CHOICES,

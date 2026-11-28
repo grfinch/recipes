@@ -1,13 +1,27 @@
+import { filterValues } from '../../utils/recipeHash';
 import styles from './browseFilters.module.css';
 
 const GROUPS = [
   { param: 'course', legend: 'Course' },
   { param: 'method', legend: 'Cooking method' },
+  // Who shared the recipe; filterOptions leaves it out when no recipe credits anyone
+  { param: 'by', legend: 'Shared by' },
 ];
 
-// One row of radio chips per filter. Native radios: Tab reaches the checked chip, arrow keys
-// change it. The chip is the input's <label>, so the visible text is its accessible name.
-// name: the radio groups' name prefix, so another page (Pick for me) can reuse the chips.
+// The filters with one of them set to these values; no values leaves it out ("All")
+function withValues(filters, param, values) {
+  const { [param]: _old, ...rest } = filters;
+  return values.length > 0 ? { ...rest, [param]: values } : rest;
+}
+
+// One row of checkbox chips per filter, so a row can have several choices (Appetizer and
+// Side). "All" is checked while nothing else in its row is, and checking it clears the row.
+// Native checkboxes: Tab moves between chips and Space toggles one. The chip is the input's
+// <label>, so the visible text is its accessible name.
+// name: the checkboxes' name prefix, so another page (Pick for me) can reuse the chips.
+// filters: { course?, method?, by? }, each a list of values; onChange gets the new filters.
+// options: { course: [...], method: [...], by?: [...] }; a row shows only when its options are
+// given.
 export default function BrowseFilters({
   options,
   filters,
@@ -17,29 +31,39 @@ export default function BrowseFilters({
 }) {
   return (
     <div className={styles.filters}>
-      {GROUPS.map(({ param, legend }) => (
-        <fieldset key={param} className={styles.group}>
-          <legend className={styles.legend}>{legend}</legend>
-          <div className={styles.chips}>
-            {[null, ...options[param]].map((value) => (
-              <label key={value ?? ''} className={styles.chip}>
-                <input
-                  type="radio"
-                  name={`${name}-${param}`}
-                  className={styles.input}
-                  checked={(filters[param] ?? null) === value}
-                  onChange={() => onChange({ ...filters, [param]: value ?? undefined })}
-                  ref={param === 'course' && value === null ? courseAllRef : undefined}
-                />
-                <span className={styles.check} aria-hidden="true">
-                  ✓
-                </span>
-                {value ?? 'All'}
-              </label>
-            ))}
-          </div>
-        </fieldset>
-      ))}
+      {GROUPS.filter(({ param }) => options[param]).map(({ param, legend }) => {
+        const chosen = filterValues(filters[param]);
+        // Toggle one value, keeping the row's values in the order the chips show them
+        const toggle = (value) =>
+          options[param].filter((v) => (v === value ? !chosen.includes(v) : chosen.includes(v)));
+        return (
+          <fieldset key={param} className={styles.group}>
+            <legend className={styles.legend}>{legend}</legend>
+            <div className={styles.chips}>
+              {[null, ...options[param]].map((value) => (
+                <label key={value ?? ''} className={styles.chip}>
+                  <input
+                    type="checkbox"
+                    name={`${name}-${param}`}
+                    className={styles.input}
+                    checked={value === null ? chosen.length === 0 : chosen.includes(value)}
+                    onChange={() => {
+                      // "All" stays checked when clicked again; there's nothing to clear
+                      if (value === null && chosen.length === 0) return;
+                      onChange(withValues(filters, param, value === null ? [] : toggle(value)));
+                    }}
+                    ref={param === 'course' && value === null ? courseAllRef : undefined}
+                  />
+                  <span className={styles.check} aria-hidden="true">
+                    ✓
+                  </span>
+                  {value ?? 'All'}
+                </label>
+              ))}
+            </div>
+          </fieldset>
+        );
+      })}
     </div>
   );
 }
